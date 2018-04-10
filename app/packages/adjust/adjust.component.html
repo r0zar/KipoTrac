@@ -1,0 +1,37 @@
+<ActionBar class="action-bar">
+    <NavigationButton visibility="collapsed"></NavigationButton>
+    <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
+    <Label class="action-bar-title" text="Adjust Package" horizontalAlignment="center"></Label>
+    <ActionItem ios.position="right" android.position="right">
+        <Label text="Done" class="action-item" verticalAlignment="center" (tap)="onDoneButtonTap()"></Label>
+    </ActionItem>
+</ActionBar>
+
+<GridLayout class="page page-content">
+    <ScrollView>
+        <StackLayout class="item-list">
+
+          <RadDataForm tkExampleTitle tkToggleNavButton [source]="adjustment" [isReadOnly]="false">
+            <TKEntityProperty tkDataFormProperty name="Quantity" displayName="Quantity net change" [valuesProvider]="items">
+              <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="UnitOfMeasure" [valuesProvider]="unitsOfWeight">
+              <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="AdjustmentReason" valuesProvider="Package Display Sample, Enforcement Testing, Free Medicinal Cannabis Goods, Incorrect Quantity, Mandated Destruction, Non-Metrc User Transfer, On-Site Testing, Over Pulled , Oversold, Plants Unpacked, Scale Variance, Spoilage, Theft, Under Pulled , Undersold, Voluntary Surrender, Waste (Unusable Product), Weight Change Due to Moisture">
+              <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="AdjustmentDate">
+              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+            </TKEntityProperty>
+
+            <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
+              <TKEntityProperty tkPropertyGroupProperties name="Label"></TKEntityProperty>
+            </TKPropertyGroup>
+          </RadDataForm>
+
+        </StackLayout>
+    </ScrollView>
+    <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
+
+</GridLayout>

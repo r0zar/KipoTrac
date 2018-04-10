@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Page } from "ui/page";
 import { RouterExtensions } from "nativescript-angular/router";
+import { DataFormEventData } from "nativescript-pro-ui/dataform";
 import { Switch } from "ui/switch";
 import * as dialogs from "ui/dialogs";
 import firebase = require("nativescript-plugin-firebase");

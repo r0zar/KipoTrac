@@ -1,0 +1,79 @@
+<ActionBar class="action-bar">
+    <!--
+    Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!--
+    Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left"></ActionItem>
+    <Label class="action-bar-title" text="Plants"></Label>
+</ActionBar>
+
+<!--
+RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+http://docs.telerik.com/devtools/nativescript-ui/Controls/Angular/SideDrawer/getting-started
+The RadSideDrawer component is designed to be used as a root element and
+it shouldn't have any other siblings other than the <ActionBar> component.
+-->
+<RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
+    <!--
+    Use the tkDrawerContent directive to display the content of the app drawer on this page.
+    -->
+    <StackLayout tkDrawerContent>
+        <MyDrawer [selectedPage]="'Mature Plants'"></MyDrawer>
+    </StackLayout>
+
+    <!--
+    Use the tkMainContent directive to display the content of the page when you have an app drawer.
+    -->
+    <GridLayout class="page page-content" tkMainContent>
+
+        <TabView (selectedIndexChanged)="onSelectedIndexChanged($event)">
+            <!--
+            To add a new TabView item, add a new layout component with a tabItem Angular directive.
+            Assign the tabItem directive an object that declares the tab item button's title and icon source.
+            -->
+            <StackLayout *tabItem="{title: 'Vegetative', iconSource: getIconSource('vegetative')}">
+              <GridLayout rows="0, *">
+                <RadListView row="1" [items]="vegetativePlants" (itemTap)="onPlantsItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated1($event)">
+                  <ng-template let-item="item">
+                      <StackLayout [class.odd]="odd" [class.even]="even">
+                        <GridLayout columns="auto, *, 70" rows="auto, auto">
+                          <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf18c;"></Label>
+                          <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.PlantBatchName'></Label>
+                          <Label col="2" class="m-t-20 m-b-20 m-l-10 m-r-10" [text]='item.Id'></Label>
+                        </GridLayout>
+                      </StackLayout>
+                  </ng-template>
+                </RadListView>
+                <GridLayout row="1" *ngIf="!vegetativePlants.length" class="page page-content" tkMainContent>
+                    <Label class="page-icon fa" text="&#xf18c;"></Label>
+                    <Label class="page-placeholder" text="No active vegetative plants."></Label>
+                </GridLayout>
+              </GridLayout>
+            </StackLayout>
+            <StackLayout *tabItem="{title: 'Flowering', iconSource: getIconSource('flowering')}">
+              <GridLayout rows="0, *">
+                <RadListView row="1" [items]="floweringPlants" (itemTap)="onPlantsItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated2($event)">
+                  <ng-template let-item="item">
+                      <StackLayout [class.odd]="odd" [class.even]="even">
+                        <GridLayout columns="auto, *" rows="auto, auto">
+                          <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf1bb;"></Label>
+                          <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.Label'></Label>
+                        </GridLayout>
+                      </StackLayout>
+                  </ng-template>
+                </RadListView>
+                <GridLayout row="1" *ngIf="!floweringPlants.length" class="page page-content" tkMainContent>
+                    <Label class="page-icon fa" text="&#xf1bb;"></Label>
+                    <Label class="page-placeholder" text="No active flowering plants."></Label>
+                </GridLayout>
+              </GridLayout>
+            </StackLayout>
+        </TabView>
+        <!-- <Label class="page-icon fa" text="&#xf06c;" (tap)="onScanBarcodeTap()"></Label>
+        <Label class="page-placeholder" text="Nothing to see here"></Label> -->
+    </GridLayout>
+</RadSideDrawer>

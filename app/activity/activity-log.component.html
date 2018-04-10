@@ -1,0 +1,19 @@
+<ActionBar class="action-bar">
+    <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
+    <Label class="action-bar-title" text="Activity Log"></Label>
+</ActionBar>
+
+<ScrollView class="page page-content">
+  <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
+  <RadListView [items]="activities" (itemTap)="onActivityItemTap($event)">
+      <ng-template let-item="item">
+          <StackLayout>
+            <GridLayout columns="auto, auto, *" rows="auto, auto">
+              <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" [text]='item.objectIcon'></Label>
+              <Label col="1" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf067;"></Label>
+              <Label col="2" class="m-t-20 m-b-20 m-l-20 m-r-10" [text]='item.message'></Label>
+            </GridLayout>
+          </StackLayout>
+      </ng-template>
+  </RadListView>
+</ScrollView>

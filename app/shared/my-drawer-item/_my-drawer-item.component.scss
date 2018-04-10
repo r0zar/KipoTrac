@@ -1,5 +1,4 @@
 // Custom common variables
-@import '../../app-variables';
 
 $sidedrawer-list-item-offset-left: 15;
 $sidedrawer-list-icon-offset: 10;
@@ -8,8 +7,8 @@ $sidedrawer-list-icon-size: 20;
 .sidedrawer-list-item {
     padding-left: $sidedrawer-list-item-offset-left;
     Label {
+        color: black;
         vertical-align: center;
-        color: $blue-dark;
     }
     .fa {
         width: $sidedrawer-list-icon-size;
@@ -18,7 +17,7 @@ $sidedrawer-list-icon-size: 20;
     &.selected {
         background-color: #7a4116;
         Label {
-            color: $item-active-color;
+            color: #f1f1f1;
         }
     }
 }

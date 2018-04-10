@@ -1,0 +1,72 @@
+// Import the theme’s variables. If you’re using a color scheme
+// other than “light”, switch the path to the alternative scheme,
+// for example '~nativescript-theme-core/scss/dark'.
+@import '~nativescript-theme-core/scss/orange';
+
+// Customize any of the theme’s variables here, for instance $btn-color: red;
+
+// Import the theme’s main ruleset.
+@import '~nativescript-theme-core/scss/index';
+
+// Place any CSS rules you want to apply on both iOS and Android here.
+// This is where the vast majority of your CSS code goes.
+
+/* Import shared animations */
+@import './shared/animate';
+
+/* Import custom theme */
+@import "./shared/custom";
+
+/* Font icon */
+.fa {
+  font-family: "FontAwesome";
+}
+
+.fa-b {
+  font-family: "fa-brands-400";
+}
+
+.fa-small {
+  padding-top: 3px;
+  font-size: 12;
+}
+
+.fa-large {
+  font-size: 36;
+}
+
+.fa-s {
+  font-family: "fa-solid-900";
+}
+
+.fa-r {
+  font-family: "fa-regular-400";
+}
+
+.login-stack > .loading {
+  animation-name: pulse;
+  animation-duration: 3s;
+}
+
+.login-stack > .login-failed {
+  animation-name: shake;
+  animation-duration: 3s;
+}
+
+.page-content {
+
+  .page-placeholder {
+    @extend .text-muted;
+    font-size: 12;
+    vertical-align: center;
+    horizontal-align: center;
+  }
+
+  .page-icon {
+    @extend .text-muted;
+    font-size: 72;
+    vertical-align: top;
+    horizontal-align: center;
+    margin-top: 20%;
+  }
+}

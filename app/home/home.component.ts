@@ -7,8 +7,6 @@ import firebase = require("nativescript-plugin-firebase");
 import { alert } from "ui/dialogs";
 import { Data } from "../shared/data.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
-import { registerElement } from "nativescript-angular/element-registry";
-registerElement("BarcodeScanner", () => require("nativescript-barcodescanner").BarcodeScannerView);
 
 
 @Component({

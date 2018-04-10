@@ -17,3 +17,5 @@ report/
 test-results.xml
 .tmp_backup/
 app/App_Resources
+
+app/shared/shared.env.json
