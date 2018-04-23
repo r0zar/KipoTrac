@@ -37,9 +37,6 @@ export class CreateComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
         this._strain = new Strain({})
-        // this is for creating unique ids in the sandbox
-        firebase.getCurrentUser()
-          .then(user => {this.uid = user.uid})
     }
 
     get strain(): Strain {
@@ -55,8 +52,6 @@ export class CreateComponent implements OnInit {
     * Check out the data service as nounes/shared/noun.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
-        // this is for creating unique ids in the sandbox
-        _.extend(this._strain, {Name: `${this._strain.Name} ${this.uid}`})
 
         this._isLoading = true
         this._metrcService.createStrains(this._strain)

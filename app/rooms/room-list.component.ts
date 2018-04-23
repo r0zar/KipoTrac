@@ -41,23 +41,13 @@ export class RoomListComponent implements OnInit {
         this._sideDrawerTransition = new SlideInOnTopTransition();
         this._isLoading = true;
 
-        // this is for creating unique ids in the sandbox
-        firebase.getCurrentUser()
-          .then(user => this.uid = user.uid)
-          .then(() => {
+        // main rooms lookup logic
+        this._metrcService.getRooms()
+            .subscribe((rooms: Array<Room>) => {
 
-            // main rooms lookup logic
-            this._metrcService.getRooms()
-                .subscribe((rooms: Array<Room>) => {
-
-                    // this is for creating unique ids in the sandbox
-                    rooms = _.filter(rooms, room => _.includes(room.Name, this.uid))
-                    _.forEach(rooms, room => {room.Name = room.Name.replace(this.uid, '')})
-
-                    this._rooms = new ObservableArray(rooms);
-                    this._isLoading = false;
-                })
-          })
+                this._rooms = new ObservableArray(rooms);
+                this._isLoading = false;
+            })
         /* ***********************************************************
         * The data is retrieved remotely from FireBase.
         * The actual data retrieval code is wrapped in a data service.
@@ -86,10 +76,6 @@ export class RoomListComponent implements OnInit {
       // main rooms lookup logic
       this._metrcService.getRooms()
           .subscribe((rooms: Array<Room>) => {
-
-              // this is for creating unique ids in the sandbox
-              rooms = _.filter(rooms, room => _.includes(room.Name, this.uid))
-              _.forEach(rooms, room => {room.Name = room.Name.replace(this.uid, '')})
 
               this._rooms = new ObservableArray(rooms);
               this._isLoading = false;

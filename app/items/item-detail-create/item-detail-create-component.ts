@@ -23,6 +23,7 @@ export class ItemDetailCreateComponent implements OnInit {
     private _item: Item;
     private _strains: any;
     private _unitsOfMeasure: any;
+    private categories: any;
     private _itemCategories: any;
     private units: any;
     private uid: string;
@@ -40,32 +41,30 @@ export class ItemDetailCreateComponent implements OnInit {
     * private property that holds it inside the component.
     *************************************************************/
     ngOnInit(): void {
-        // this is for creating unique ids in the sandbox
-        firebase.getCurrentUser()
-          .then(user => {this.uid = user.uid})
 
         this._item = new Item({UnitOfMeasure: 'Each'})
 
         this._metrcService.getStrains()
             .subscribe((strains: Array<any>) => {
-
-                // this is for creating unique ids in the sandbox
-                strains = _.filter(strains, strain => _.includes(strain.Name, this.uid))
-                _.forEach(strains, strain => {strain.Name = strain.Name.replace(this.uid, '')})
-
                 this._strains = _.map(strains, 'Name')
             });
 
+        this._metrcService.getStrains()
+          .subscribe((strains: Array<any>) => {
+              this._strains = _.map(strains, 'Name')
+          });
+
         this._metrcService.getUnitsOfMeasure()
-            .subscribe((units: Array<any>) => {
-                this.units = units
-                this._unitsOfMeasure = units
-            });
+          .subscribe((units: Array<any>) => {
+              this.units = units
+              this._unitsOfMeasure = _.map(units, 'Name')
+          });
 
         this._metrcService.getItemCategories()
-            .subscribe((categories: Array<any>) => {
-                this._itemCategories = categories
-            });
+          .subscribe((categories: Array<any>) => {
+              this.categories = categories
+              this._itemCategories = _.map(categories, 'Name')
+          });
 
     }
 
@@ -78,16 +77,16 @@ export class ItemDetailCreateComponent implements OnInit {
     }
 
     get itemCategories(): any {
-        return _.map(this._itemCategories, 'Name');
+        return this._itemCategories;
     }
 
     get unitsOfMeasure(): any {
-        return _.map(this._unitsOfMeasure, 'Name');
+        return this._unitsOfMeasure;
     }
 
     dfPropertyCommitted(): void {
-      let quantityType = _.find(this._itemCategories, {Name: this._item.ItemCategory}).QuantityType
-      this._unitsOfMeasure = _.filter(this.units, {QuantityType: quantityType})
+      // let quantityType = _.find(this.categories, {Name: this._item.ItemCategory}).QuantityType
+      // this._unitsOfMeasure = _.filter(this.units, {QuantityType: quantityType})
     }
 
     onTap(): void {
@@ -111,9 +110,6 @@ export class ItemDetailCreateComponent implements OnInit {
     * Check out the data service as items/shared/item.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
-        // this is for creating unique ids in the sandbox
-        _.extend(this._item, {Name: `${this._item.Name} ${this.uid}`})
-
         this._metrcService.createItem(this._item)
             .subscribe((item: Item) => this._routerExtensions.backToPreviousPage());
     }

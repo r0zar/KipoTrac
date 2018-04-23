@@ -45,23 +45,14 @@ export class BatchListComponent implements OnInit {
         this._sideDrawerTransition = new SlideInOnTopTransition();
         this._isLoading = true;
 
-        // this is for creating unique ids in the sandbox
-        firebase.getCurrentUser()
-          .then(user => this.uid = user.uid)
-          .then(() => {
+        // main rooms lookup logic
+        this._metrcService.getBatches()
+            .subscribe((batches: Array<Batch>) => {
 
-            // main rooms lookup logic
-            this._metrcService.getBatches()
-                .subscribe((batches: Array<Batch>) => {
 
-                    // this is for creating unique ids in the sandbox
-                    batches = _.filter(batches, batch => _.includes(batch.Name, this.uid))
-                    _.forEach(batches, batch => {batch.Name = batch.Name.replace(this.uid, '')})
-
-                    this._batches = new ObservableArray(batches);
-                    this._isLoading = false;
-                })
-          })
+                this._batches = new ObservableArray(batches);
+                this._isLoading = false;
+            })
 
 
         /* ***********************************************************
@@ -107,10 +98,6 @@ export class BatchListComponent implements OnInit {
       // main rooms lookup logic
       this._metrcService.getBatches()
           .subscribe((batches: Array<Batch>) => {
-
-              // this is for creating unique ids in the sandbox
-              batches = _.filter(batches, batch => _.includes(batch.Name, this.uid))
-              _.forEach(batches, batch => {batch.Name = batch.Name.replace(this.uid, '')})
 
               this._batches = new ObservableArray(batches);
               this._isLoading = false;

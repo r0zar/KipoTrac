@@ -7,6 +7,10 @@ import { Room } from "../shared/room.model";
 import { MetrcService } from "../../shared/metrc.service";
 import { alert } from "ui/dialogs";
 
+import { ObservableArray } from "data/observable-array";
+import { Activity } from "../../activity/activity.model";
+import { ActivityService } from "../../activity/activity.service"
+
 import _ = require('lodash');
 
 /* ***********************************************************
@@ -16,16 +20,19 @@ import _ = require('lodash');
 @Component({
     moduleId: module.id,
     selector: "Create",
-    templateUrl: "./create.component.html"
+    templateUrl: "./create.component.html",
+    providers: [ActivityService]
 })
 export class CreateComponent implements OnInit {
     private _room: Room;
     private _isLoading: boolean = false;
     private uid: string;
+    private _activities: ObservableArray<Activity> = new ObservableArray<Activity>([]);
 
     constructor(
         private _metrcService: MetrcService,
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private Activities: ActivityService
     ) { }
 
     /* ***********************************************************
@@ -35,9 +42,11 @@ export class CreateComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
         this._room = new Room({})
-        // this is for creating unique ids in the sandbox
-        firebase.getCurrentUser()
-          .then(user => {this.uid = user.uid})
+
+        this.Activities.load()
+          .subscribe((activities: Array<Activity>) => {
+            this._activities = new ObservableArray(activities);
+          });
     }
 
     get room(): Room {
@@ -53,10 +62,10 @@ export class CreateComponent implements OnInit {
     * Check out the data service as nounes/shared/noun.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
-        // this is for creating unique ids in the sandbox
-        _.extend(this._room, {Name: `${this._room.Name} ${this.uid}`})
 
         this._isLoading = true
+        this._activities.push(new Activity({object: 'room', status: 'created', createdAt: new Date()}))
+        //firebase.update("/activity/" + batchModel.Id, updateModel);
         this._metrcService.createRooms(this._room)
           .finally(() => {
             this._isLoading = false

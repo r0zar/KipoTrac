@@ -11,11 +11,11 @@
     <ScrollView>
         <StackLayout class="item-list">
 
-          <RadDataForm tkExampleTitle tkToggleNavButton [source]="item" [isReadOnly]="false" (propertyCommitted)="dfPropertyCommitted()">
-            <TKEntityProperty tkDataFormProperty name="Strain" displayName="Strain" [valuesProvider]="strains">
+          <RadDataForm height="600" tkExampleTitle tkToggleNavButton [source]="item" [isReadOnly]="false" (propertyCommitted)="dfPropertyCommitted()">
+            <TKEntityProperty tkDataFormProperty name="Strain" [valuesProvider]="strains">
                 <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
-            <TKEntityProperty tkDataFormProperty name="ItemCategory" displayName="Item Category" [valuesProvider]="itemCategories">
+            <TKEntityProperty tkDataFormProperty name="ItemCategory" displayName="Product Category" [valuesProvider]="itemCategories">
                 <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
             <TKEntityProperty tkDataFormProperty name="UnitOfMeasure" displayName="Unit Of Measure" [valuesProvider]="unitsOfMeasure">
@@ -29,15 +29,10 @@
                 <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryName"></TKEntityProperty>
                 <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryType"></TKEntityProperty>
                 <TKEntityProperty tkPropertyGroupProperties name="QuantityType"></TKEntityProperty>
-                  <!-- these apparently arnt part of the body...? -->
                 <TKEntityProperty tkPropertyGroupProperties name="StrainId"></TKEntityProperty>
                 <TKEntityProperty tkPropertyGroupProperties name="StrainName"></TKEntityProperty>
             </TKPropertyGroup>
-
-
           </RadDataForm>
-
-          <Button class="btn btn-primary btn-active" id="button" text="Generate Name" (tap)="onTap()"></Button>
 
         </StackLayout>
     </ScrollView>

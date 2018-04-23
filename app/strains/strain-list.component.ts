@@ -41,23 +41,13 @@ export class StrainListComponent implements OnInit {
         this._sideDrawerTransition = new SlideInOnTopTransition();
         this._isLoading = true;
 
-        // this is for creating unique ids in the sandbox
-        firebase.getCurrentUser()
-          .then(user => this.uid = user.uid)
-          .then(() => {
+        // main rooms lookup logic
+        this._metrcService.getStrains()
+            .subscribe((strains: Array<Strain>) => {
 
-            // main rooms lookup logic
-            this._metrcService.getStrains()
-                .subscribe((strains: Array<Strain>) => {
-
-                    // this is for creating unique ids in the sandbox
-                    strains = _.filter(strains, strain => _.includes(strain.Name, this.uid))
-                    _.forEach(strains, strain => {strain.Name = strain.Name.replace(this.uid, '')})
-
-                    this._strains = new ObservableArray(strains);
-                    this._isLoading = false;
-                })
-          })
+                this._strains = new ObservableArray(strains);
+                this._isLoading = false;
+            })
 
     }
 
@@ -73,10 +63,6 @@ export class StrainListComponent implements OnInit {
         // main rooms lookup logic
         this._metrcService.getStrains()
             .subscribe((strains: Array<Strain>) => {
-
-                // this is for creating unique ids in the sandbox
-                strains = _.filter(strains, strain => _.includes(strain.Name, this.uid))
-                _.forEach(strains, strain => {strain.Name = strain.Name.replace(this.uid, '')})
 
                 this._strains = new ObservableArray(strains);
                 this._isLoading = false;
