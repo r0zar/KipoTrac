@@ -1,32 +1,32 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
-import { alert } from "ui/dialogs";
 import { EventData } from "data/observable";
 import { DataFormEventData } from "nativescript-pro-ui/dataform";
 import firebase = require("nativescript-plugin-firebase");
-
-import { Room } from "../shared/room.model";
 import { MetrcService } from "../../shared/metrc.service";
+import { alert } from "ui/dialogs";
 import { AuthService } from "../../shared/auth.service";
 
 import _ = require('lodash');
 
-/* ***********************************************************
-* This is the noun verb component.
-* This component gets the selected data noun, provides options to verb the noun and saves the changes.
-*************************************************************/
+export class Facility {
+  apiKey: string;
+  constructor(options: any) {
+    this.apiKey = options.apiKey || '';
+  }
+}
+
 @Component({
     moduleId: module.id,
-    selector: "Edit",
-    templateUrl: "./edit.component.html"
+    selector: "Create",
+    templateUrl: "./create.component.html"
 })
-export class EditComponent implements OnInit {
-    private _room: Room;
+export class CreateComponent implements OnInit {
+    private _facility: Facility;
     private _isLoading: boolean = false;
 
     constructor(
         private _metrcService: MetrcService,
-        private _pageRoute: PageRoute,
         private _routerExtensions: RouterExtensions
     ) { }
 
@@ -36,18 +36,11 @@ export class EditComponent implements OnInit {
     * private property that holds it inside the component.
     *************************************************************/
     ngOnInit(): void {
-
-        this._pageRoute.activatedRoute
-            .switchMap((activatedRoute) => activatedRoute.params)
-            .forEach((params) => {
-              this._metrcService.getRoom(params.id)
-                .subscribe((room: Room) => this._room = new Room(room));
-            });
-
+        this._facility = new Facility({apiKey: "FusVbe4Yv6W1DGNuxKNhByXU6RO6jSUPcbRCoRDD98VNXc4D"})
     }
 
-    get room(): Room {
-        return this._room;
+    get facility(): Facility {
+        return this._facility;
     }
 
     get isLoading(): boolean {
@@ -60,13 +53,15 @@ export class EditComponent implements OnInit {
     *************************************************************/
     onDoneButtonTap(): void {
         this._isLoading = true
-        this._metrcService.updateRooms(this._room)
-            .finally(() => this._isLoading = false)
-            .subscribe(() => {
-              // save the event to the activity log
-              firebase.push("/users/" + AuthService.token + '/activity', {object: 'room', status: 'edited', createdAt: Date.now()});
-              this._routerExtensions.backToPreviousPage()
-            });
+        AuthService.apiKey = this._facility.apiKey
+        firebase.setValue("/users/" + AuthService.token + '/key', this._facility.apiKey)
+        .then(() => {
+          // save the event to the activity log
+          firebase.push("/users/" + AuthService.token + '/activity', {object: 'API key', status: 'added', createdAt: Date.now()});
+
+          this._isLoading = false
+          this._routerExtensions.navigate(['/facilities'], {animated: true, transition: {name: "slideBottom", duration: 200, curve: "ease"}})
+        })
     }
 
     /* ***********************************************************

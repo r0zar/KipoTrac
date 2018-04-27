@@ -8,13 +8,13 @@
 </ActionBar>
 <ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView, fabView)">
 	<StackLayout>
-		<StackLayout #topView height="200" style="background-image: url('https://michigan-marijuana-lawyer.com/wp-content/uploads/2018/02/cannabis-property.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+		<StackLayout #topView height="300" style="background-image: url('https://michigan-marijuana-lawyer.com/wp-content/uploads/2018/02/cannabis-property.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
       <GridLayout rows="0, *">
           <FAB #fabView row="1" (tap)="fabTap()" icon="~/images/starr.png" rippleColor="#f1f1f1" class="fab-button" [backgroundColor]="facility.selected" style="height: 60; width: 60; margin: 15; horizontal-align: right; vertical-align: bottom; "></FAB>
       </GridLayout>
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">
-      <RadDataForm height="500" kExampleTitle tkToggleNavButton [source]="facility" [isReadOnly]="true">
+      <RadDataForm height="600" kExampleTitle tkToggleNavButton [source]="facility" [isReadOnly]="true">
       <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Facility Details" hidden="false">
           <TKEntityProperty tkPropertyGroupProperties name="Name"></TKEntityProperty>
           <TKEntityProperty tkPropertyGroupProperties name="Alias"></TKEntityProperty>

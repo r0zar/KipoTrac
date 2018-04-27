@@ -2,14 +2,14 @@
   "description": "California's first fully mobile seed to sale app.",
   "license": "SEE LICENSE IN <your-license-filename>",
   "readme": "SEE app/README.md",
-  "repository": "<fill-your-repository-here>",
+  "repository": "https://github.com/r0zar/KipoTrac",
   "nativescript": {
     "id": "com.kipotrac.mobile",
     "tns-ios": {
       "version": "3.4.1"
     },
     "tns-android": {
-      "version": "3.4.2"
+      "version": "3.4.1"
     }
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~5.2.0",
     "@angular/router": "~5.2.0",
     "lodash": "^4.17.5",
+    "moment": "^2.22.1",
     "nativescript-angular": "~5.2.0",
     "nativescript-barcodescanner": "^2.7.6",
     "nativescript-floatingactionbutton": "^4.1.3",
@@ -32,17 +33,32 @@
     "nativescript-theme-core": "~1.0.4",
     "reflect-metadata": "~0.1.10",
     "rxjs": "~5.5.0",
-    "tns-core-modules": "~3.4.0",
+    "tns-core-modules": "3",
     "zone.js": "~0.8.18"
   },
   "devDependencies": {
+    "@angular/compiler-cli": "~5.2.0",
+    "@ngtools/webpack": "~1.9.4",
     "babel-traverse": "6.26.0",
     "babel-types": "6.26.0",
     "babylon": "6.18.0",
+    "clean-webpack-plugin": "~0.1.19",
+    "copy-webpack-plugin": "~4.3.0",
+    "css-loader": "~0.28.7",
+    "extract-text-webpack-plugin": "~3.0.2",
     "lazy": "1.0.11",
     "nativescript-dev-sass": "^1.3.6",
     "nativescript-dev-typescript": "~0.6.0",
-    "typescript": "~2.6.2"
+    "nativescript-dev-webpack": "^0.11.0",
+    "nativescript-worker-loader": "~0.8.1",
+    "raw-loader": "~0.5.1",
+    "resolve-url-loader": "~2.2.1",
+    "sass-loader": "~6.0.6",
+    "typescript": "~2.6.2",
+    "uglifyjs-webpack-plugin": "~1.1.6",
+    "webpack": "~3.10.0",
+    "webpack-bundle-analyzer": "^2.9.1",
+    "webpack-sources": "~1.1.0"
   },
   "author": "Ross Ragsdale"
 }

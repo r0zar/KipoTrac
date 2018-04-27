@@ -12,7 +12,7 @@
         <StackLayout class="item-list">
 
           <RadDataForm tkExampleTitle tkToggleNavButton [source]="adjustment" [isReadOnly]="false">
-            <TKEntityProperty tkDataFormProperty name="Quantity" displayName="Quantity net change" [valuesProvider]="items">
+            <TKEntityProperty tkDataFormProperty name="Quantity" displayName="Quantity net change">
               <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
             </TKEntityProperty>
             <TKEntityProperty tkDataFormProperty name="UnitOfMeasure" [valuesProvider]="unitsOfWeight">

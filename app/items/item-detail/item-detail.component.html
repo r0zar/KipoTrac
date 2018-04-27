@@ -6,9 +6,9 @@
         <Label text="Edit" class="action-item"></Label>
     </ActionItem>
 </ActionBar>
-<ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView, fabView)">
+<ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView, fabView, actionItem1, actionItem2)">
 	<StackLayout>
-		<StackLayout #topView height="200" style="background-image: url('~/images/items.png'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+		<StackLayout #topView height="300" style="background-image: url('~/images/items.png'); background-repeat: no-repeat; background-position: center; background-size: cover;">
 			<!-- this is the header for collapsing --->
 			<!-- Note: this can be any type of layout you want -->
       <GridLayout rows="0, *">
@@ -20,7 +20,7 @@
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
-      <RadDataForm height="500" tkExampleTitle tkToggleNavButton [source]="item" [isReadOnly]="true">
+      <RadDataForm height="600" tkExampleTitle tkToggleNavButton [source]="item" [isReadOnly]="true">
         <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Product Details" hidden="false">
             <TKEntityProperty tkPropertyGroupProperties name="Name"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryName"></TKEntityProperty>

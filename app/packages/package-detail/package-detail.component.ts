@@ -60,7 +60,7 @@ export class PackageDetailComponent implements OnInit {
       actionItem4: View,
       actionItem5: View) {
         // If the header content is still visiible
-        if (scrollView.verticalOffset < 200) {
+        if (scrollView.verticalOffset < 300) {
             const offset = scrollView.verticalOffset / 2;
             if (scrollView.ios) {
                 // iOS adjust the position with an animation to create a smother scrolling effect.

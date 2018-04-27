@@ -16,7 +16,6 @@ import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
 
 import _ = require('lodash');
-//import { Room } from "../../rooms/shared/room.model";
 
 /* ***********************************************************
 * This is the item details component in the master-detail structure.
@@ -31,6 +30,7 @@ import _ = require('lodash');
 export class FacilityDetailComponent implements OnInit {
     private _facility: Facility;
     private firstTime: boolean = false;
+    private displayName: string = '...';
 
     constructor(
         private _metrcService: MetrcService,
@@ -55,12 +55,10 @@ export class FacilityDetailComponent implements OnInit {
             .forEach((params) => {
                 const facilityLicenseNumber = params.id;
 
-                //let selected = this._facilityService.getFacilityById(facilityLicenseNumber);
-                //console.dir(selected)
-
                 this._metrcService.getFacilities()
                     .subscribe((facilities: Array<any>) => {
                         this._facility = new Facility(facilities.find(facility => facility.License.Number == facilityLicenseNumber));
+                        this.displayName = this._facility.DisplayName
                         // this doesnt work on the emulator for some reason...
                         this._facility.selected = (this._facility.LicenseNumber == FacilityService.facility) ? 'orange' : 'gray'
                     });
@@ -74,19 +72,12 @@ export class FacilityDetailComponent implements OnInit {
 
     onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View, fabView: View) {
         // If the header content is still visiible
-        if (scrollView.verticalOffset < 200) {
+        if (scrollView.verticalOffset < 300) {
             const offset = scrollView.verticalOffset / 2;
-            if (scrollView.ios) {
-                // iOS adjust the position with an animation to create a smother scrolling effect.
-                topView.animate({ translate: { x: 0, y: offset } }).then(() => { }, () => { });
-                fabView.animate({ translate: { x: 0, y: -1 * offset } }).then(() => { }, () => { });
-                fabView.animate({ translate: { x: 0, y: offset } }).then(() => { }, () => { });
-            } else {
-                // Android, animations are jerky so instead just adjust the position without animation.
-                topView.translateY = Math.floor(offset);
-                fabView.translateY = Math.floor(-1 * offset);
-                fabView.translateX = Math.floor(offset);
-            }
+            // Android, animations are jerky so instead just adjust the position without animation.
+            topView.translateY = Math.floor(offset);
+            fabView.translateY = Math.floor(-1 * offset);
+            fabView.translateX = Math.floor(offset);
         }
     }
 

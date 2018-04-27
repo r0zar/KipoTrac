@@ -33,7 +33,7 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     -->
     <GridLayout rows="0, *" class="page page-content" tkMainContent>
       <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
-      <RadListView row="1" [items]="packages" (itemTap)="onPackageItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)" selectionBehavior="LongPress" multipleSelection="true" (itemSelected)="onItemSelected($event, fabView, actionItem1, actionItem2)" (itemDeselected)="onItemDeselected($event, fabView, actionItem1, actionItem2, actionItem3)">
+      <RadListView row="1" [items]="packages" (itemTap)="onPackageItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)" selectionBehavior="LongPress" multipleSelection="true" (itemSelected)="onItemSelected($event, fabView, actionItem1, actionItem2)" (itemDeselected)="onItemDeselected($event, fabView, actionItem1, actionItem2)">
           <ng-template let-item="item">
               <StackLayout [class.odd]="odd" [class.even]="even">
                 <GridLayout columns="auto, *" rows="auto, auto">

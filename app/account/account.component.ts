@@ -5,6 +5,7 @@ import firebase = require("nativescript-plugin-firebase");
 import { alert } from "ui/dialogs";
 
 import { Account } from "./account.model";
+import { AuthService } from "../shared/auth.service";
 
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { Image } from 'tns-core-modules/ui/image';
@@ -22,6 +23,7 @@ export class AccountComponent implements OnInit {
     private name: any;
     private email: any;
     private _account: Account;
+    private _isLoading: boolean = false;
 
     constructor(
         private _routerExtensions: RouterExtensions
@@ -33,7 +35,6 @@ export class AccountComponent implements OnInit {
       firebase.getCurrentUser()
         .then(user => firebase.getValue("/users/" + user.uid))
         .then(user => this._user = user.value)
-        .then(() => console.dir(this._user))
 
       firebase.getCurrentUser()
         .then(user => {
@@ -46,6 +47,10 @@ export class AccountComponent implements OnInit {
 
     get account(): Account {
         return this._account;
+    }
+
+    get isLoading(): boolean {
+        return this._isLoading;
     }
 
     onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View) {
@@ -64,6 +69,17 @@ export class AccountComponent implements OnInit {
                 // fabView.translateX = Math.floor(offset);
             }
         }
+    }
+
+    onDoneButtonTap(): void {
+        this._isLoading = true
+        AuthService.apiKey = this._account.apiKey
+        firebase.setValue("/users/" + AuthService.token + '/account', this._account)
+        .then(() => {
+          // save the event to the activity log
+          firebase.push("/users/" + AuthService.token + '/activity', {object: 'account', status: 'edited', createdAt: Date.now()});
+          this._isLoading = false
+        })
     }
 
 

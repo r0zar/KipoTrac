@@ -61,7 +61,7 @@ export class RoomDetailComponent implements OnInit {
 
     onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View, fabView: View, actionItem1: View, actionItem2: View) {
         // If the header content is still visiible
-        if (scrollView.verticalOffset < 200) {
+        if (scrollView.verticalOffset < 300) {
             const offset = scrollView.verticalOffset / 2;
             if (scrollView.ios) {
                 // iOS adjust the position with an animation to create a smother scrolling effect.

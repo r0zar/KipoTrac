@@ -1,10 +1,16 @@
 // this import should be first in order to load some required settings (like globals and reflect-metadata)
 import { platformNativeScriptDynamic } from "nativescript-angular/platform";
-
 import { AppModule } from "./app.module";
-
 require("nativescript-plugin-firebase");
+
+import { enableProdMode } from '@angular/core';
+
+enableProdMode();
+
+
+
 import firebase = require("nativescript-plugin-firebase");
+import { AuthService } from "./shared/auth.service";
 
 // this is for the purchase plugin
 import *  as purchase from "nativescript-purchase";
@@ -15,14 +21,17 @@ purchase.init(["monthly", "yearly"])
 purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
     if (transaction.transactionState === TransactionState.Purchased) {
         console.log(`Congratulations you just bought ${transaction.productIdentifier}!`);
-        firebase.getCurrentUser().then(user => firebase.setValue("/users/" + user.uid + '/transactions', [transaction]))
+        firebase.push("/users/" + AuthService.token + '/transactions', transaction)
+        firebase.setValue("/users/" + AuthService.token + '/subscription', transaction)
     }
     else if (transaction.transactionState === TransactionState.Restored) {
-        firebase.getCurrentUser().then(user => firebase.setValue("/users/" + user.uid + '/transactions', [transaction]))
+        console.log(`Purchase of ${transaction.productIdentifier} restored.`);
+        firebase.push("/users/" + AuthService.token + '/transactions', transaction)
+        firebase.setValue("/users/" + AuthService.token + '/subscription', transaction)
     }
     else if (transaction.transactionState === TransactionState.Failed) {
         console.log(`Purchase of ${transaction.productIdentifier} failed!`);
-        firebase.getCurrentUser().then(user => firebase.setValue("/users/" + user.uid + '/transactions', [transaction]))
+        firebase.push("/users/" + AuthService.token + '/transactions', transaction)
     }
 });
 
@@ -38,6 +47,7 @@ import { registerElement } from "nativescript-angular/element-registry";
 registerElement("Fab", () => require("nativescript-floatingactionbutton").Fab);
 // barcode scanner
 registerElement("BarcodeScanner", () => require("nativescript-barcodescanner").BarcodeScannerView);
+
 
 // A traditional NativeScript application starts by initializing global objects, setting up global CSS rules, creating, and navigating to the main page.
 // Angular applications need to take care of their own initialization: modules, components, directives, routes, DI providers.

@@ -76,21 +76,17 @@ export class BatchDetailPackageComponent implements OnInit {
 
     onScanTap(): void {
       var scanner = this.barcodeScanner;
-      scanner.available()
-        .then(() => {
-          scanner.hasCameraPermission()
-            .then(granted => {
-              if (granted) {
-                this.barcode(scanner)
-              } else {
-                scanner.requestCameraPermission()
-                  .then(granted => {
-                    return granted ? this.barcode(scanner) : null
-                  })
-              }
+      scanner.available().then(() => {
+        scanner.hasCameraPermission().then(granted => {
+          if (granted) this.barcode(scanner)
+          else {
+            scanner.requestCameraPermission().then(granted => {
+              if (granted) this.barcode(scanner)
             })
-
+          }
         })
+
+      })
     }
 
     barcode(scanner: BarcodeScanner): void {

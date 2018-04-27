@@ -54,21 +54,17 @@ export class ItemDetailComponent implements OnInit {
             });
     }
 
-    onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View, fabView: View) {
+    onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View, fabView: View, actionItem1: View, actionItem2: View) {
         // If the header content is still visiible
-        if (scrollView.verticalOffset < 200) {
+        if (scrollView.verticalOffset < 300) {
             const offset = scrollView.verticalOffset / 2;
-            if (scrollView.ios) {
-                // iOS adjust the position with an animation to create a smother scrolling effect.
-                topView.animate({ translate: { x: 0, y: offset } }).then(() => { }, () => { });
-                fabView.animate({ translate: { x: 0, y: -1 * offset } }).then(() => { }, () => { });
-                fabView.animate({ translate: { x: 0, y: offset } }).then(() => { }, () => { });
-            } else {
-                // Android, animations are jerky so instead just adjust the position without animation.
-                topView.translateY = Math.floor(offset);
-                fabView.translateY = Math.floor(-1 * offset);
-                fabView.translateX = Math.floor(offset);
-            }
+            topView.translateY = Math.floor(offset);
+            fabView.translateY = Math.floor(-1 * offset);
+            fabView.translateX = Math.floor(offset);
+            actionItem1.translateY = Math.floor(-1 * offset);
+            actionItem1.translateX = Math.floor(offset);
+            actionItem2.translateY = Math.floor(-1 * offset);
+            actionItem2.translateX = Math.floor(offset);
         }
     }
 

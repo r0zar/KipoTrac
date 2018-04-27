@@ -10,7 +10,7 @@ import { alert } from "ui/dialogs";
 })
 export class PaymentComponent implements OnInit {
 
-    private activeSubscription: boolean = false;
+    public activeSubscription: boolean = false;
 
     constructor(
         private _routerExtensions: RouterExtensions

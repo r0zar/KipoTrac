@@ -8,7 +8,7 @@
 </ActionBar>
 <ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView, fabView, actionItem1, actionItem2)">
 	<StackLayout>
-		<StackLayout #topView height="200" style="background-image: url('https://d3atagt0rnqk7k.cloudfront.net/wp-content/uploads/2017/08/29100034/QUEST-RHODE-ISLAND-1-copy-1280x800.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+		<StackLayout #topView height="300" style="background-image: url('https://d3atagt0rnqk7k.cloudfront.net/wp-content/uploads/2017/08/29100034/QUEST-RHODE-ISLAND-1-copy-1280x800.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
 			<!-- this is the header for collapsing --->
 			<!-- Note: this can be any type of layout you want -->
       <GridLayout rows="0, *">
@@ -20,7 +20,7 @@
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
-      <RadDataForm height="500" tkExampleTitle tkToggleNavButton [source]="room" [isReadOnly]="true">
+      <RadDataForm height="600" tkExampleTitle tkToggleNavButton [source]="room" [isReadOnly]="true">
 
         <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
           <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>

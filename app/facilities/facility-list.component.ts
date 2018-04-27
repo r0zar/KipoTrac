@@ -88,6 +88,19 @@ export class FacilityListComponent implements OnInit {
             });
     }
 
+    onAddButtonTap(): void {
+        this._routerExtensions.navigate(["/facilities/create"],
+            {
+                animated: true,
+                transition: {
+                    name: "slideTop",
+                    duration: 200,
+                    curve: "ease"
+                }
+            });
+
+    }
+
     /* ***********************************************************
     * Use the "itemTap" event handler of the <RadListView> to navigate to the
     * item details page. Retrieve a reference for the data item (the id) and pass it

@@ -1,3 +1,5 @@
+import moment = require('moment');
+
 export class Activity {
     object: string;
     status: string;
@@ -10,7 +12,7 @@ export class Activity {
         this.object = options.object;
         this.status = options.status;
         this.createdAt = options.createdAt;
-        this.message = `${options.object} ${options.status} ${options.createdAt}`;
+        this.message = `${options.object} ${options.status} ${moment(options.createdAt).calendar()}`;
 
         if (options.object == 'facility') {
           this.objectIcon = String.fromCharCode(0xf015)

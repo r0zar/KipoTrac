@@ -21,7 +21,10 @@ import firebase = require("nativescript-plugin-firebase");
 })
 export class TermsComponent implements OnInit {
 
-    constructor(page: Page, private routerExtensions: RouterExtensions) {
+    constructor(
+      private page: Page,
+      private _routerExtensions: RouterExtensions
+    ) {
         page.actionBarHidden = false;
     }
 
@@ -29,5 +32,8 @@ export class TermsComponent implements OnInit {
         /* ***********************************************************
         * Use the "ngOnInit" handler to initialize data for this component.
         *************************************************************/
+    }
+    onBackButtonTap(): void {
+        this._routerExtensions.backToPreviousPage();
     }
 }

@@ -39,32 +39,29 @@ export class ActivityLogComponent implements OnInit {
         *************************************************************/
         this.Activities.load()
           .subscribe((activities: Array<Activity>) => {
-            this._activities = new ObservableArray(activities);
+            this._activities = new ObservableArray(activities.sort(this.compare));
           });
-        // this._activities = new ObservableArray([new Activity({object: 'facility', status: 'created', createdAt: new Date()})])
 
+    }
+
+    private compare(a,b) {
+      if (a.createdAt < b.createdAt)
+        return 1;
+      if (a.createdAt > b.createdAt)
+        return -1;
+      return 0;
     }
 
     get activities(): ObservableArray<Activity> {
       return this._activities;
     }
 
-    onActivityItemTap(args: ListViewEventData): void {
-        const tappedActivityItem = args.view.bindingContext;
-
-        this._routerExtensions.navigate(["/facilities/facility-detail", 123],
-        {
-            animated: true,
-            transition: {
-                name: "slide",
-                duration: 200,
-                curve: "ease"
-            }
-        });
-    }
-
     get isLoading(): boolean {
         return this._isLoading;
+    }
+
+    onBackButtonTap(): void {
+        this._routerExtensions.backToPreviousPage();
     }
 
 }

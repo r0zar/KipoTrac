@@ -5,7 +5,7 @@
 
 <ScrollView class="page page-content">
   <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
-  <RadListView [items]="activities" (itemTap)="onActivityItemTap($event)">
+  <RadListView [items]="activities">
       <ng-template let-item="item">
           <StackLayout>
             <GridLayout columns="40, 40, *" rows="auto, auto">

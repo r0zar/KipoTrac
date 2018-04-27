@@ -6,10 +6,7 @@ import firebase = require("nativescript-plugin-firebase");
 import { Room } from "../shared/room.model";
 import { MetrcService } from "../../shared/metrc.service";
 import { alert } from "ui/dialogs";
-
-import { ObservableArray } from "data/observable-array";
-import { Activity } from "../../activity/activity.model";
-import { ActivityService } from "../../activity/activity.service"
+import { AuthService } from "../../shared/auth.service";
 
 import _ = require('lodash');
 
@@ -20,19 +17,16 @@ import _ = require('lodash');
 @Component({
     moduleId: module.id,
     selector: "Create",
-    templateUrl: "./create.component.html",
-    providers: [ActivityService]
+    templateUrl: "./create.component.html"
 })
 export class CreateComponent implements OnInit {
     private _room: Room;
     private _isLoading: boolean = false;
     private uid: string;
-    private _activities: ObservableArray<Activity> = new ObservableArray<Activity>([]);
 
     constructor(
         private _metrcService: MetrcService,
-        private _routerExtensions: RouterExtensions,
-        private Activities: ActivityService
+        private _routerExtensions: RouterExtensions
     ) { }
 
     /* ***********************************************************
@@ -42,11 +36,6 @@ export class CreateComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
         this._room = new Room({})
-
-        this.Activities.load()
-          .subscribe((activities: Array<Activity>) => {
-            this._activities = new ObservableArray(activities);
-          });
     }
 
     get room(): Room {
@@ -62,29 +51,26 @@ export class CreateComponent implements OnInit {
     * Check out the data service as nounes/shared/noun.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
-
         this._isLoading = true
-        this._activities.push(new Activity({object: 'room', status: 'created', createdAt: new Date()}))
-        //firebase.update("/activity/" + batchModel.Id, updateModel);
         this._metrcService.createRooms(this._room)
           .finally(() => {
             this._isLoading = false
             this._routerExtensions.navigate(['/rooms'], {animated: true, transition: {name: "slideBottom", duration: 200, curve: "ease"}})
           })
           .subscribe(() => {
-            firebase.getCurrentUser()
-              .then(user => {
-                firebase.getValue("/users/" + user.uid + "/rooms/setup")
-                  .then(setup => {
-                    if (!setup.value) {
-                      firebase.setValue("/users/" + user.uid + '/rooms/setup', true)
-                      alert({
-                        title: 'Ah, good to have some room!',
-                        message: 'Nice! Now we have some space to grow those beautiful buds.\n\nBefore we can create a new batch though, I need to know a little about your strains.\n\nHead to the \'Strains\' page and we can do just that.',
-                        okButtonText: "OK"
-                      })
-                    }
+            // save the event to the activity log
+            firebase.push("/users/" + AuthService.token + '/activity', {object: 'room', status: 'created', createdAt: Date.now()});
+            // do the main guided tour
+            firebase.getValue("/users/" + AuthService.token + "/rooms/setup")
+              .then(setup => {
+                if (!setup.value) {
+                  firebase.setValue("/users/" + AuthService.token + '/rooms/setup', true)
+                  alert({
+                    title: 'Ah, good to have some room!',
+                    message: 'Nice! Now we have some space to grow those beautiful buds.\n\nBefore we can create a new batch though, I need to know a little about your strains.\n\nHead to the \'Strains\' page and we can do just that.',
+                    okButtonText: "OK"
                   })
+                }
               })
           })
     }

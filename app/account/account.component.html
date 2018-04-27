@@ -1,11 +1,14 @@
 <ActionBar class="action-bar">
     <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
     <Label class="action-bar-title" text="Account Settings"></Label>
+    <ActionItem ios.position="right" android.position="right">
+        <Label text="Save" class="action-item" verticalAlignment="center" (tap)="onDoneButtonTap()"></Label>
+    </ActionItem>
 </ActionBar>
 
 <ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView)">
 	<StackLayout>
-		<StackLayout #topView height="200" style="background-image: url('https://www.wpcharitable.com/wp-content/uploads/edd/2015/09/user-avatar-banner.png'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+		<StackLayout #topView height="200" style="background-image: url('https://t3.ftcdn.net/jpg/01/43/55/90/240_F_143559088_T4URWUzEhCkX2TIVMXnxPd62al1g8tSS.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
 			<!-- this is the header for collapsing --->
 			<!-- Note: this can be any type of layout you want -->
       <GridLayout rows="0, *">
@@ -14,7 +17,7 @@
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
-      <RadDataForm tkExampleTitle tkToggleNavButton [source]="account" [isReadOnly]="true">
+      <RadDataForm tkExampleTitle tkToggleNavButton [source]="account" [isReadOnly]="false">
       </RadDataForm>
 		</StackLayout>
 	</StackLayout>

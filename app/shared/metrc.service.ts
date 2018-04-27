@@ -6,6 +6,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import firebase = require("nativescript-plugin-firebase");
 
+import { AuthService } from "../shared/auth.service";
 import { FacilityService } from "../facilities/shared/facility.service";
 import { Facility } from "../facilities/shared/facility.model"
 import { Room } from "../rooms/shared/room.model"
@@ -24,12 +25,12 @@ const metrc = require('./shared.env.json')
 @Injectable()
 export class MetrcService {
 
-
-  private header: HttpHeaders = new HttpHeaders().set("authorization", "Basic " + btoa(metrc.sandbox));
+  private header: HttpHeaders = new HttpHeaders().set("authorization", "Basic " + btoa(metrc.sandbox+AuthService.apiKey));
   private rootUrl = "https://sandbox-api-ca.metrc.com"
   //private licenseNumber = "?licenseNumber=CML17-0000001"
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   /**
  * Handle Http operation that failed.

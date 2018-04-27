@@ -14,4 +14,13 @@ export class AuthService {
   static set token(theToken: string) {
     setString("token", theToken);
   }
+
+  static get apiKey(): string {
+    return getString("apiKey");
+  }
+
+  static set apiKey(apiKey: string) {
+    setString("apiKey", apiKey);
+  }
+
 }
