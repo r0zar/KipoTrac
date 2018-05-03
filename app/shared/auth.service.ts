@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { getString, setString } from "application-settings";
+import { getString, setString, setBoolean, getBoolean } from "application-settings";
 
 export class AuthService {
 
@@ -21,6 +21,14 @@ export class AuthService {
 
   static set apiKey(apiKey: string) {
     setString("apiKey", apiKey);
+  }
+
+  static get activeSubscription(): boolean {
+    return getBoolean("activeSubscription") || false;
+  }
+
+  static set activeSubscription(activeSubscription: boolean) {
+    setBoolean("activeSubscription", activeSubscription);
   }
 
 }

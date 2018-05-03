@@ -13,6 +13,7 @@ import *  as purchase from "nativescript-purchase";
 export class AddPaymentComponent implements OnInit {
 
     private _subscriptions: Array<Product>;
+    private _isLoading: boolean;
 
     constructor(
         private _routerExtensions: RouterExtensions
@@ -20,8 +21,10 @@ export class AddPaymentComponent implements OnInit {
 
 
     ngOnInit(): void {
+      this._isLoading = true
       purchase.getProducts().then((products: Array<Product>) => {
           this._subscriptions = products;
+          this._isLoading = false
       });
 
     }
@@ -40,6 +43,10 @@ export class AddPaymentComponent implements OnInit {
 
     get subscriptions(): Array<Product> {
         return this._subscriptions;
+    }
+
+    get isLoading(): boolean {
+        return this._isLoading;
     }
 
     onBackButtonTap(): void {

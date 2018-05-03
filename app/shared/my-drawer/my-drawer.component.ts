@@ -6,6 +6,9 @@ import _ = require('lodash');
 
 const cultivationTypes = ['M-Medium Mixed-Light Tier 2']
 
+import { AuthService } from "../auth.service";
+import { FacilityService } from "../../facilities/shared/facility.service";
+
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer component class.
 * Add new data objects that you want to display in the drawer here in the form of properties.
@@ -35,9 +38,6 @@ export class MyDrawerComponent implements OnInit {
             this.name = user.name
             this.email = user.email
           })
-
-        //_.includes(cultivationTypes, FacilityService.facility)
-
 
 
     }

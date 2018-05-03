@@ -31,6 +31,8 @@ export class FacilityDetailComponent implements OnInit {
     private _facility: Facility;
     private firstTime: boolean = false;
     private displayName: string = '...';
+    private imageHeight: number = screen.mainScreen.heightDIPs / 2;
+    private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
 
     constructor(
         private _metrcService: MetrcService,
@@ -49,7 +51,6 @@ export class FacilityDetailComponent implements OnInit {
         * Learn more about how to get navigation parameters in this documentation article:
         * http://docs.nativescript.org/angular/core-concepts/angular-navigation.html#passing-parameter
         *************************************************************/
-
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {
@@ -72,7 +73,7 @@ export class FacilityDetailComponent implements OnInit {
 
     onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View, fabView: View) {
         // If the header content is still visiible
-        if (scrollView.verticalOffset < 300) {
+        if (scrollView.verticalOffset < this.imageHeight) {
             const offset = scrollView.verticalOffset / 2;
             // Android, animations are jerky so instead just adjust the position without animation.
             topView.translateY = Math.floor(offset);

@@ -8,7 +8,7 @@
 </ActionBar>
 <ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView, fabView, actionItem1, actionItem2, actionItem3)">
 	<StackLayout>
-		<StackLayout #topView height="300" style="background-image: url('https://i.imgur.com/8E0SZ7V.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+		<StackLayout #topView [height]="imageHeight" style="background-image: url('https://i.imgur.com/8E0SZ7V.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
 			<!-- this is the header for collapsing --->
 			<!-- Note: this can be any type of layout you want -->
       <GridLayout rows="0, *">
@@ -20,7 +20,7 @@
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
-      <RadDataForm height="600" tkExampleTitle tkToggleNavButton [source]="batch" [isReadOnly]="true">
+      <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="batch" [isReadOnly]="true">
 
         <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Room Information" hidden="false">
             <TKEntityProperty tkPropertyGroupProperties name="RoomName"></TKEntityProperty>

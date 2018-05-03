@@ -20,13 +20,14 @@ export class PaymentComponent implements OnInit {
     ngOnInit(): void {
 
       firebase.getCurrentUser()
-        .then(user => firebase.getValue("/users/" + user.uid + '/transactions'))
-        .then(transactions => this.activeSubscription = transactions.value ? true : false)
+        .then(user => firebase.getValue("/users/" + user.uid + '/subscription'))
+        .then(subscription => this.activeSubscription = subscription.value.transactionState == 'purchased')
+        .catch(() => this.activeSubscription = false)
 
     }
 
     betaTester(): void {
-      alert({title: 'Early Access', message: 'Enjoy 100% free usage of KipoTrac until the offical launch in June.', okButtonText: "Dope"})
+      alert({title: 'Early Access', message: 'Enjoy our 100% guarantee that we\'ll never raise your rates for METRC compliance services in KipoTrac.', okButtonText: "Dope"})
     }
 
     onBackButtonTap(): void {

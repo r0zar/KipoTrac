@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
+import _ = require('lodash');
+
+import { AuthService } from "../auth.service";
+import { FacilityService } from "../../facilities/shared/facility.service";
 
 /* ***********************************************************
 * Keep data that is displayed as drawer items in the MyDrawer component class.
@@ -15,6 +19,7 @@ export class MyDrawerItemComponent implements OnInit {
     @Input() route: string;
     @Input() icon: string;
     @Input() isSelected: boolean;
+    active: boolean;
 
     constructor(private routerExtensions: RouterExtensions) {
 
@@ -24,6 +29,16 @@ export class MyDrawerItemComponent implements OnInit {
         /* ***********************************************************
         * Use the MyDrawerItemComponent "onInit" event handler to initialize the properties data values.
         *************************************************************/
+
+        if (this.title == "Home" || this.title == "Facilities" || this.title == "Settings") {
+          this.active = true
+        }
+        else if (this.title == "Rooms" || this.title == "Strains" || this.title == "Items" || this.title == "Plant Batches") {
+          this.active = _.isString(FacilityService.facility)
+        }
+        else if (this.title == "Mature Plants" || this.title == "Harvests" || this.title == "Packages" || this.title == "Transfers") {
+          this.active = AuthService.activeSubscription
+        }
     }
 
     /* ***********************************************************

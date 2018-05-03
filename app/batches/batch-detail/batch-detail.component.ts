@@ -10,6 +10,7 @@ import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { Image } from 'tns-core-modules/ui/image';
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
+import { screen } from 'platform';
 
 
 /* ***********************************************************
@@ -25,6 +26,8 @@ import { Page } from "ui/page";
 export class BatchDetailComponent implements OnInit {
     private _batch: Batch;
     private _fabMenuOpen: boolean = false;
+    private imageHeight: number = screen.mainScreen.heightDIPs / 2;
+    private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
 
     constructor(
         private _metrcService: MetrcService,
@@ -58,7 +61,7 @@ export class BatchDetailComponent implements OnInit {
 
     onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View, fabView: View, actionItem1: View, actionItem2: View, actionItem3: View) {
         // If the header content is still visiible
-        if (scrollView.verticalOffset < 300) {
+        if (scrollView.verticalOffset < this.imageHeight) {
             const offset = scrollView.verticalOffset / 2;
             if (scrollView.ios) {
                 // iOS adjust the position with an animation to create a smother scrolling effect.

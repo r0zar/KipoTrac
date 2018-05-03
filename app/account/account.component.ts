@@ -79,6 +79,7 @@ export class AccountComponent implements OnInit {
           // save the event to the activity log
           firebase.push("/users/" + AuthService.token + '/activity', {object: 'account', status: 'edited', createdAt: Date.now()});
           this._isLoading = false
+          this._routerExtensions.backToPreviousPage();
         })
     }
 

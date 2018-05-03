@@ -11,6 +11,7 @@ enableProdMode();
 
 import firebase = require("nativescript-plugin-firebase");
 import { AuthService } from "./shared/auth.service";
+const moment = require('moment');
 
 // this is for the purchase plugin
 import *  as purchase from "nativescript-purchase";
@@ -19,6 +20,7 @@ import { Transaction, TransactionState } from "nativescript-purchase/transaction
 purchase.init(["monthly", "yearly"])
 
 purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
+    transaction.transactionDate = moment()
     if (transaction.transactionState === TransactionState.Purchased) {
         console.log(`Congratulations you just bought ${transaction.productIdentifier}!`);
         firebase.push("/users/" + AuthService.token + '/transactions', transaction)

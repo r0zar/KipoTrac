@@ -5,13 +5,13 @@
 </ActionBar>
 <ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView)">
 	<StackLayout>
-		<StackLayout #topView height="300" style="background-image: url('https://terratracker.com/wp/wp-content/uploads/2016/12/terratracker-delivery-truck.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+		<StackLayout #topView [height]="imageHeight" style="background-image: url('https://terratracker.com/wp/wp-content/uploads/2016/12/terratracker-delivery-truck.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
 			<!-- this is the header for collapsing --->
 			<!-- Note: this can be any type of layout you want -->
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
-      <RadDataForm height="600" tkExampleTitle tkToggleNavButton [source]="transfer" [isReadOnly]="true">
+      <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="transfer" [isReadOnly]="true">
       </RadDataForm>
 		</StackLayout>
 	</StackLayout>
