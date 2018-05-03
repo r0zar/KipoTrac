@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Inject } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
-import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
-import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
+import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
+import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 import { MetrcService } from "../shared/metrc.service";
 import firebase = require("nativescript-plugin-firebase");
 import { alert } from "ui/dialogs";

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
-import { DataFormEventData } from "nativescript-pro-ui/dataform";
+import { DataFormEventData } from "nativescript-ui-dataform";
 
 import { Strain } from "../shared/strain.model";
 import { MetrcService } from "../../shared/metrc.service";
@@ -12,6 +12,8 @@ import { Page } from "ui/page";
 import { confirm } from "ui/dialogs";
 import { screen } from 'platform';
 
+import { ViewChild, ElementRef, AfterViewInit } from "@angular/core";
+import { RadialNeedle } from "nativescript-ui-gauge";
 
 /* ***********************************************************
 * This is the strain details component in the master-detail structure.
@@ -23,7 +25,10 @@ import { screen } from 'platform';
     moduleId: module.id,
     templateUrl: "./strain-detail.component.html"
 })
-export class StrainDetailComponent implements OnInit {
+export class StrainDetailComponent implements OnInit, AfterViewInit {
+    private _needle: RadialNeedle;
+    public values = [60, 80, 120, 160];
+
     private _strain: Strain;
     private name: string;
     private _fabMenuOpen: boolean = false;
@@ -56,8 +61,19 @@ export class StrainDetailComponent implements OnInit {
                   this._strain = new Strain(strain)
                   this.name = this._strain.Name
                   this._isLoading = false;
+                  this._needle.value = this._strain.IndicaPercentage;
                 });
             });
+    }
+
+    ngAfterViewInit() {
+        this._needle = this.needleElement.nativeElement as RadialNeedle;
+    }
+
+    @ViewChild("needle") needleElement: ElementRef;
+
+    public onValueChange(value: number) {
+        this._needle.value = value;
     }
 
     onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View, fabView: View, actionItem1: View, actionItem2: View) {

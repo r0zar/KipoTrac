@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, Input, NgZone } from "@angular/core";
 import { ObservableArray } from "data/observable-array";
 import { Observable } from "rxjs/Observable";
 import { RouterExtensions } from "nativescript-angular/router";
-import { ListViewEventData } from "nativescript-pro-ui/listview";
+import { ListViewEventData } from "nativescript-ui-listview";
 import firebase = require("nativescript-plugin-firebase");
 
 import { Activity } from "./activity.model";

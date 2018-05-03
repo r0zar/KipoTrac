@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
-import { DataFormEventData } from "nativescript-pro-ui/dataform";
+import { DataFormEventData } from "nativescript-ui-dataform";
 
 import { Harvest } from "../shared/harvest.model";
 import { MetrcService } from "../../shared/metrc.service";

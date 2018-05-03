@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { ObservableArray } from "data/observable-array";
 import { RouterExtensions } from "nativescript-angular/router";
-import { ListViewEventData } from "nativescript-pro-ui/listview";
+import { ListViewEventData } from "nativescript-ui-listview";
 import firebase = require("nativescript-plugin-firebase");
-import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
-import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
+import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
+import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 
 import { Room } from "./shared/room.model";
 import { MetrcService } from "../shared/metrc.service";

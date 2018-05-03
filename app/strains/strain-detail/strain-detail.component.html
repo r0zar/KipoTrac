@@ -8,10 +8,36 @@
 </ActionBar>
 <ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView, fabView, actionItem1, actionItem2)">
 	<StackLayout>
-		<StackLayout #topView [height]="imageHeight" style="background-image: url('~/images/strains.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
-			<!-- this is the header for collapsing --->
-			<!-- Note: this can be any type of layout you want -->
+		<!-- <StackLayout #topView [height]="imageHeight" style="background-image: url('~/images/strains.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;"> -->
+		<StackLayout #topView [height]="imageHeight">
       <GridLayout rows="0, *">
+        <RadRadialGauge row="1" id="gaugeView" title="Indica : Sativa" margin="10">
+            <TitleStyle tkRadialGaugeTitleStyle textColor="black" ios:verticalOffset="20" android:verticalOffset="50"></TitleStyle>
+
+            <RadialScale tkRadialGaugeScales minimum="0" maximum="100" radius="0.98">
+                <ScaleStyle tkRadialScaleStyle lineThickness="0" labelsCount="13" majorTicksCount="13" minorTicksCount="1" ticksOffset="0.1"
+                    majorTicksStrokeWidth="2" majorTicksStrokeColor="rgb(132, 132, 132)"></ScaleStyle>
+                <RadialBarIndicator tkRadialScaleIndicators minimum="0" maximum="24">
+                    <BarIndicatorStyle tkRadialBarIndicatorStyle fillColor="rgb(132, 132, 132)" barWidth="0.02"></BarIndicatorStyle>
+                </RadialBarIndicator>
+
+                <RadialBarIndicator tkRadialScaleIndicators minimum="26" maximum="49">
+                    <BarIndicatorStyle tkRadialBarIndicatorStyle fillColor="rgb(54, 54, 54)" barWidth="0.02"></BarIndicatorStyle>
+                </RadialBarIndicator>
+
+                <RadialBarIndicator tkRadialScaleIndicators minimum="51" maximum="74">
+                    <BarIndicatorStyle tkRadialBarIndicatorStyle fillColor="rgb(198, 85, 90)" barWidth="0.02"></BarIndicatorStyle>
+                </RadialBarIndicator>
+
+                <RadialBarIndicator tkRadialScaleIndicators minimum="76" maximum="100">
+                    <BarIndicatorStyle tkRadialBarIndicatorStyle fillColor="rgb(198, 85, 54)" barWidth="0.02"></BarIndicatorStyle>
+                </RadialBarIndicator>
+
+                <RadialNeedle #needle tkRadialScaleIndicators isAnimated="true" animationDuration="500">
+                    <NeedleStyle tkRadialNeedleStyle length="0.8" android:topWidth="8" android:bottomWidth="8" ios:topWidth="2" ios:bottomWidth="2"></NeedleStyle>
+                </RadialNeedle>
+            </RadialScale>
+        </RadRadialGauge>
         <FAB #actionItem2 row="1" (tap)="actionItem2Tap()" icon="~/images/remove-symbol.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
         <FAB #actionItem1 row="1" (tap)="actionItem1Tap()" icon="~/images/pencil.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
         <FAB #fabView row="1" (tap)="fabTap(actionItem1, actionItem2)" icon="res://icon" rippleColor="#db7d34" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #ffffff; horizontal-align: right; vertical-align: bottom; "></FAB>
@@ -19,16 +45,23 @@
       </GridLayout>
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">
-			<!--Add your page content here-->
       <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="strain" [isReadOnly]="true">
-        <TKEntityProperty tkDataFormProperty name="ThcLevel">
+
+        <TKEntityProperty tkDataFormProperty name="Genetics" index="0"></TKEntityProperty>
+
+        <TKEntityProperty tkDataFormProperty name="ThcLevel" displayName="THC Level" index="1">
             <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
         </TKEntityProperty>
-        <TKEntityProperty tkDataFormProperty name="CbdLevel">
+        <TKEntityProperty tkDataFormProperty name="CbdLevel" displayName="CBD Level" index="2">
             <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
         </TKEntityProperty>
 
+        <TKEntityProperty tkDataFormProperty name="TestingStatus" index="3"></TKEntityProperty>
+
         <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
+            <TKEntityProperty tkPropertyGroupProperties name="Name"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="IndicaPercentage"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="SativaPercentage"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
         </TKPropertyGroup>
       </RadDataForm>

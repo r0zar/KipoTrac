@@ -1,7 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
-import { NativeScriptUIListViewModule } from "nativescript-pro-ui/listview/angular";
-import { NativeScriptUIDataFormModule } from "nativescript-pro-ui/dataform/angular";
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { NativeScriptUIDataFormModule } from "nativescript-ui-dataform/angular";
+import { NativeScriptUIGaugeModule } from "nativescript-ui-gauge/angular";
 
 import { SharedModule } from "../shared/shared.module";
 import { EditComponent } from "./edit/edit.component";
@@ -16,6 +17,7 @@ import { StrainsRoutingModule } from "./strains-routing.module";
         NativeScriptCommonModule,
         NativeScriptUIListViewModule,
         NativeScriptUIDataFormModule,
+        NativeScriptUIGaugeModule,
         SharedModule
     ],
     declarations: [

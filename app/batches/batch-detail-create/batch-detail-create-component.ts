@@ -3,7 +3,7 @@ import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { alert } from "ui/dialogs";;
 import { EventData } from "data/observable";
-import { DataFormEventData } from "nativescript-pro-ui/dataform";
+import { DataFormEventData } from "nativescript-ui-dataform";
 import firebase = require("nativescript-plugin-firebase");
 import { Batch } from "../shared/batch.model";
 import { MetrcService } from "../../shared/metrc.service";
@@ -90,7 +90,7 @@ export class BatchDetailCreateComponent implements OnInit {
     * The create done button uses the data service to save the updated values of the data batch details.
     * Check out the data service as batches/shared/batch.service.ts
     *************************************************************/
-    onDoneButtonTap(): void {        
+    onDoneButtonTap(): void {
         this._isCreating = true
         this._metrcService.createPlantings(this._batch)
             .finally(() => this._isCreating = false)

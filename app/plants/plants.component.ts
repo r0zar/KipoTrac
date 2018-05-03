@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, Inject } from "@angular/core";
 import { ObservableArray } from "data/observable-array";
 import { RouterExtensions } from "nativescript-angular/router";
-import { ListViewEventData } from "nativescript-pro-ui/listview";
-import { DataFormEventData } from "nativescript-pro-ui/dataform";
-import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
-import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
+import { ListViewEventData } from "nativescript-ui-listview";
+import { DataFormEventData } from "nativescript-ui-dataform";
+import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
+import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 import { SelectedIndexChangedEventData, TabView, TabViewItem } from "tns-core-modules/ui/tab-view";
 import { isAndroid } from "platform";
 import { View } from 'tns-core-modules/ui/core/view';

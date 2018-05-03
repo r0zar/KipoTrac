@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { alert } from "ui/dialogs";
 import { EventData } from "data/observable";
-import { DataFormEventData } from "nativescript-pro-ui/dataform";
+import { DataFormEventData } from "nativescript-ui-dataform";
 
 import { Batch, BatchDestroy } from "../shared/batch.model";
 import { MetrcService } from "../../shared/metrc.service";
