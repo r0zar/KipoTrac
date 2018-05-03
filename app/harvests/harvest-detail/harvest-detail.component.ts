@@ -24,6 +24,7 @@ import { screen } from 'platform';
 })
 export class HarvestDetailComponent implements OnInit {
     private _harvest: Harvest;
+    private name: string;
     private _fabMenuOpen: boolean = false;
     private _isLoading: boolean = false;
     private isFinished: boolean = false;
@@ -54,6 +55,7 @@ export class HarvestDetailComponent implements OnInit {
                 this._metrcService.getHarvest(params.id)
                     .subscribe((harvest: Harvest) => {
                         this._harvest = new Harvest(harvest);
+                        this.name = this._harvest.Name
                         this.isFinished = this._harvest.FinishedDate ? true : false
                     });
             });

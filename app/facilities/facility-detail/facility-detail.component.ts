@@ -30,7 +30,8 @@ import _ = require('lodash');
 export class FacilityDetailComponent implements OnInit {
     private _facility: Facility;
     private firstTime: boolean = false;
-    private displayName: string = '...';
+    private displayName: string;
+    private iconColor: string;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
     private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
 
@@ -61,7 +62,7 @@ export class FacilityDetailComponent implements OnInit {
                         this._facility = new Facility(facilities.find(facility => facility.License.Number == facilityLicenseNumber));
                         this.displayName = this._facility.DisplayName
                         // this doesnt work on the emulator for some reason...
-                        this._facility.selected = (this._facility.LicenseNumber == FacilityService.facility) ? 'orange' : 'gray'
+                        this.iconColor = (this._facility.LicenseNumber == FacilityService.facility) ? 'orange' : 'gray'
                     });
             });
 
@@ -85,7 +86,7 @@ export class FacilityDetailComponent implements OnInit {
     fabTap(): void {
       FacilityService.facility = this._facility.LicenseNumber
       FacilityService.licenseType = this._facility.LicenseType
-      this._facility.selected = 'orange'
+      this.iconColor = 'orange'
       let cultivator = _.includes(FacilityService.licenseType, 'M-Medium Mixed-Light')
       if (this.firstTime && cultivator) {
         alert({title: 'Nice Job!', message: 'Now that you\'ve selected a facility, we need to set up the rooms for it.\n\nClick them menu again, and select \'Rooms\'.', okButtonText: "Got it"})

@@ -13,7 +13,7 @@ import { Data } from "./data.service";
     imports: [
         NativeScriptCommonModule,
         NativeScriptUISideDrawerModule,
-        HttpClientModule
+        HttpClientModule,
     ],
     declarations: [
         MyDrawerComponent,

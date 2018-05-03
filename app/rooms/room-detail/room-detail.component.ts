@@ -25,6 +25,7 @@ import { confirm } from "ui/dialogs";;
 })
 export class RoomDetailComponent implements OnInit {
     private _room: Room;
+    private name: string;
     private _fabMenuOpen: boolean = false;
     private _isLoading: boolean = false;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
@@ -56,6 +57,7 @@ export class RoomDetailComponent implements OnInit {
                 this._metrcService.getRooms()
                     .subscribe((rooms: Array<any>) => {
                         this._room = new Room(rooms.find(room => room.Id == roomId));
+                        this.name = this._room.Name
                         this._isLoading = false;
                     });
             });

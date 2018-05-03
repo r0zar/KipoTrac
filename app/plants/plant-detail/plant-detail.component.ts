@@ -23,6 +23,7 @@ import { screen } from 'platform';
 })
 export class PlantDetailComponent implements OnInit {
     private _plant: Plant;
+    private name: string;
     private _fabMenuOpen: boolean = false;
     private isLabeled: boolean = true;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
@@ -50,6 +51,7 @@ export class PlantDetailComponent implements OnInit {
                 this._metrcService.getPlantById(params.id)
                     .subscribe((plant: Plant) => {
                       this._plant = new Plant(plant)
+                      this.name = this._plant.PlantBatchName
                       this.isLabeled = plant.Label != null
                     });
             });
@@ -217,10 +219,6 @@ export class PlantDetailComponent implements OnInit {
 
     get plant(): Plant {
         return this._plant;
-    }
-
-    get name(): string {
-      return this._plant.PlantBatchName;
     }
 
     /* ***********************************************************

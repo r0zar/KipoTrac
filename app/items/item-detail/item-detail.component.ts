@@ -24,6 +24,7 @@ import { screen } from 'platform';
 })
 export class ItemDetailComponent implements OnInit {
     private _item: Item;
+    private name: string;
     private _fabMenuOpen: boolean = false;
     private _isLoading: boolean = false;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
@@ -52,6 +53,7 @@ export class ItemDetailComponent implements OnInit {
               this._metrcService.getItem(params.id)
                 .subscribe((item: Item) => {
                   this._item = new Item(item)
+                  this.name = this._item.Name
                   this._isLoading = false;
                 });
             });

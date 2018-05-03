@@ -90,10 +90,7 @@ export class BatchDetailCreateComponent implements OnInit {
     * The create done button uses the data service to save the updated values of the data batch details.
     * Check out the data service as batches/shared/batch.service.ts
     *************************************************************/
-    onDoneButtonTap(): void {
-        // this is for creating unique ids in the sandbox
-        _.extend(this._batch, {Name: `${this._batch.Name} ${this.uid}`})
-        
+    onDoneButtonTap(): void {        
         this._isCreating = true
         this._metrcService.createPlantings(this._batch)
             .finally(() => this._isCreating = false)

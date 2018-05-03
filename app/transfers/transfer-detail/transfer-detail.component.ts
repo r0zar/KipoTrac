@@ -24,6 +24,7 @@ import { Page } from "ui/page";
 })
 export class TransferDetailComponent implements OnInit {
     private _transfer: Transfer;
+    private name: string;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
     private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
 
@@ -52,6 +53,7 @@ export class TransferDetailComponent implements OnInit {
                 this._metrcService.getTransfers()
                     .subscribe((transfers: Array<any>) => {
                         this._transfer = new Transfer(transfers.find(t => t.Id == transferId));
+                        this.name = this._transfer.ShipperFacilityName
                     });
             });
     }

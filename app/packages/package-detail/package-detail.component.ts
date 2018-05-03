@@ -24,6 +24,7 @@ import { Page } from "ui/page";
 })
 export class PackageDetailComponent implements OnInit {
     private _package: Package;
+    private name: string;
     private _fabMenuOpen: boolean = false;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
     private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
@@ -48,7 +49,10 @@ export class PackageDetailComponent implements OnInit {
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {
                 this._metrcService.getPackage(params.id)
-                    .subscribe((p: Package) => this._package = new Package(p));
+                    .subscribe((p: Package) => {
+                      this._package = new Package(p)
+                      this.name = this._package.Label
+                    });
             });
     }
 

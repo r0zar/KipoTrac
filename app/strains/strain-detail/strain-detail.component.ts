@@ -25,6 +25,7 @@ import { screen } from 'platform';
 })
 export class StrainDetailComponent implements OnInit {
     private _strain: Strain;
+    private name: string;
     private _fabMenuOpen: boolean = false;
     private _isLoading: boolean = false;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
@@ -53,6 +54,7 @@ export class StrainDetailComponent implements OnInit {
               this._metrcService.getStrain(params.id)
                 .subscribe((strain: Strain) => {
                   this._strain = new Strain(strain)
+                  this.name = this._strain.Name
                   this._isLoading = false;
                 });
             });

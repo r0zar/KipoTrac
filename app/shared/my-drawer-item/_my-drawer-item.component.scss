@@ -10,7 +10,8 @@ $sidedrawer-list-icon-size: 20;
         color: black;
         vertical-align: center;
     }
-    .fa {
+    .fa,
+    .fas {
         width: $sidedrawer-list-icon-size;
         margin-right: $sidedrawer-list-icon-offset;
     }

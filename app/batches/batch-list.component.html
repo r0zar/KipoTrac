@@ -41,14 +41,14 @@ it shouldn't have any other siblings other than the <ActionBar> component.
             <ng-template let-item="item">
                 <StackLayout [class.odd]="odd" [class.even]="even">
                   <GridLayout columns="auto, *" rows="auto, auto">
-                    <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf06c;"></Label>
+                    <Label col="0" class="m-t-20 m-b-20 m-l-20 fas fa-small" text="&#xf4d8;"></Label>
                     <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.Name'></Label>
                   </GridLayout>
                 </StackLayout>
             </ng-template>
         </RadListView>
         <GridLayout row="1" *ngIf="!batches.length" class="page page-content" tkMainContent>
-            <Label class="page-icon fa" text="&#xf06c;"></Label>
+            <Label class="page-icon fas" text="&#xf4d8;"></Label>
             <Label class="page-placeholder" text="Add a new batch to get started."></Label>
         </GridLayout>
         <!-- <FAB #actionItem1 row="1" (tap)="actionItem1Tap()" icon="" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>

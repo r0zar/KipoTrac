@@ -25,6 +25,7 @@ import { screen } from 'platform';
 })
 export class BatchDetailComponent implements OnInit {
     private _batch: Batch;
+    private name: string;
     private _fabMenuOpen: boolean = false;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
     private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
@@ -55,6 +56,7 @@ export class BatchDetailComponent implements OnInit {
                 this._metrcService.getBatches()
                     .subscribe((batches: Array<any>) => {
                         this._batch = new Batch(batches.find(batch => batch.Id == batchId));
+                        this.name = this._batch.Name
                     });
             });
     }
