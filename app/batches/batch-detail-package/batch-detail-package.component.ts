@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, ElementRef } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { alert } from "ui/dialogs";;
@@ -8,6 +8,8 @@ import { DataFormEventData } from "nativescript-ui-dataform";
 import { Batch, BatchPackage } from "../shared/batch.model";
 import { MetrcService } from "../../shared/metrc.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
+import { View } from 'tns-core-modules/ui/core/view';
+import { Page } from "ui/page";
 
 import _ = require('lodash');
 
@@ -25,6 +27,10 @@ export class BatchDetailPackageComponent implements OnInit {
     private _rooms: any;
     private _itemCategories: any;
     private _isCreating: boolean = false;
+    private _fabMenuOpen: boolean = false;
+    @ViewChild("fabView") fabView: ElementRef;
+    @ViewChild("actionItem1") actionItem1: ElementRef;
+    @ViewChild("actionItem2") actionItem2: ElementRef;
 
     constructor(
         private barcodeScanner: BarcodeScanner,
@@ -56,6 +62,19 @@ export class BatchDetailPackageComponent implements OnInit {
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => this._batchPackage = new BatchPackage({Id: params.id, Item: 'Immature Plant', ActualDate: new Date()}));
 
+    }
+
+    fabTap(actionItem2: View): void {
+      this._fabMenuOpen = !this._fabMenuOpen
+      if (this._fabMenuOpen) {
+        actionItem2.animate({ translate: { x: -50, y: -60 } }).then(() => { }, () => { });
+      } else {
+        actionItem2.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
+      }
+    }
+
+    actionItem2Tap(): void {
+      this.onScanTap()
     }
 
     get batchPackage(): BatchPackage {

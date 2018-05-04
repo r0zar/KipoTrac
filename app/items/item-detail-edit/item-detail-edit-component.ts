@@ -6,6 +6,7 @@ import { EventData } from "data/observable";
 
 import { Item } from "../shared/item.model";
 import { MetrcService } from "../../shared/metrc.service";
+import { screen } from 'platform';
 
 import _ = require('lodash');
 
@@ -24,7 +25,14 @@ export class ItemDetailEditComponent implements OnInit {
     private _isUpdating: boolean = false;
     private _strains: any;
     private _unitsOfMeasure: any;
+    private _validUnitsOfMeasure: any;
     private _itemCategories: any;
+    private _chemicalUnits: any;
+    private _volumeUnits: any;
+    private thcHidden: boolean = true;
+    private weightHidden: boolean = true;
+    private volumeHidden: boolean = true;
+    private screenHeight: number = screen.mainScreen.heightDIPs;
 
     constructor(
         private _metrcService: MetrcService,
@@ -39,23 +47,6 @@ export class ItemDetailEditComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
 
-        this._metrcService.getStrains()
-            .subscribe((strains: Array<any>) => {
-                //this._strains = _.map(strains, strain => {return {key: strain.Id, label: strain.Name}})
-                this._strains = _.map(strains, 'Name')
-            });
-
-        this._metrcService.getUnitsOfMeasure()
-            .subscribe((units: Array<any>) => {
-                //this._strains = _.map(strains, strain => {return {key: strain.Id, label: strain.Name}})
-                this._unitsOfMeasure = _.map(units, 'Name')
-            });
-
-        this._metrcService.getItemCategories()
-            .subscribe((categories: Array<any>) => {
-                //this._strains = _.map(strains, strain => {return {key: strain.Id, label: strain.Name}})
-                this._itemCategories = _.map(categories, 'Name')
-            });
 
 
         /* ***********************************************************
@@ -66,11 +57,46 @@ export class ItemDetailEditComponent implements OnInit {
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {
               this._metrcService.getItem(params.id)
-                  .subscribe((item: Item) => this._item = new Item(item));
-            });
+                  .subscribe((item: Item) => {
+                    this._item = new Item(item)
+
+                    this._metrcService.getStrains()
+                    .subscribe((strains: Array<any>) => {
+                        this._strains = strains
+                    })
+
+                    this._metrcService.getItemCategories()
+                    .subscribe((categories: Array<any>) => {
+                        this._itemCategories = categories
+                        this.dfPropertyCommitted({})
+                    })
+
+                    this._metrcService.getUnitsOfMeasure()
+                    .subscribe((units: Array<any>) => {
+                        this._unitsOfMeasure = units
+                        this._chemicalUnits = _.filter(units, {QuantityType: 'WeightBased'})
+                        this._volumeUnits = _.filter(units, {QuantityType: 'VolumeBased'})
+                        this.dfPropertyCommitted({})
+                    })
+                  })
+            })
     }
 
-    onPickerLoaded(args) {
+    dfPropertyCommitted(args) {
+        // find what quantity type the choice is...
+        let QuantityType = _.find(this._itemCategories, {Name: this._item.ItemCategory}).QuantityType
+        // adjust units of measure list to only show valid options
+        this._validUnitsOfMeasure = _.filter(this._unitsOfMeasure, {QuantityType})
+        // show the valid units fields
+        if (QuantityType == 'WeightBased' || QuantityType == 'VolumeBased') {
+          this.thcHidden = true
+          this.weightHidden = true
+          this.volumeHidden = true
+        } else {
+          this.thcHidden = false
+          this.weightHidden = false
+          this.volumeHidden = false
+        }
     }
 
     get isUpdating(): boolean {
@@ -82,15 +108,23 @@ export class ItemDetailEditComponent implements OnInit {
     }
 
     get strains(): any {
-        return this._strains;
+        return _.map(this._strains, 'Name');
     }
 
     get itemCategories(): any {
-        return this._itemCategories;
+        return _.map(this._itemCategories, 'Name')
     }
 
     get unitsOfMeasure(): any {
-        return this._unitsOfMeasure;
+        return _.map(this._validUnitsOfMeasure, 'Name');
+    }
+
+    get chemicalUnitsOfMeasure(): any {
+        return _.map(this._chemicalUnits, 'Name');
+    }
+
+    get volumeUnitsOfMeasure(): any {
+        return _.map(this._volumeUnits, 'Name');
     }
 
     /* ***********************************************************

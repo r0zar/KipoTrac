@@ -28,13 +28,14 @@
         <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Strain Information" hidden="false">
             <TKEntityProperty tkPropertyGroupProperties name="StrainName"></TKEntityProperty>
         </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Batch Source Information" hidden="false">
+        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Origin Information" hidden="false">
             <TKEntityProperty tkPropertyGroupProperties name="SourcePackageLabel"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="SourcePlantLabel"></TKEntityProperty>
         </TKPropertyGroup>
         <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Plant Batch Details" hidden="false" index=0>
-            <TKEntityProperty tkPropertyGroupProperties name="Name"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="Type"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="Type" [valuesProvider]="batchTypes">
+              <TKPropertyEditor tkEntityPropertyEditor type="SegmentedEditor"></TKPropertyEditor>
+            </TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Count"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="LiveCount"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="PackagedCount"></TKEntityProperty>
@@ -50,6 +51,7 @@
 
         <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
             <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="Name"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="ActualDate"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Strain"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="RoomId"></TKEntityProperty>

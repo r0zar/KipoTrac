@@ -5,16 +5,12 @@ import { ListViewEventData } from "nativescript-ui-listview";
 import firebase = require("nativescript-plugin-firebase");
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
-
 import { Package } from "./shared/package.model";
 import { MetrcService } from "../shared/metrc.service";
 import { Data } from "../shared/data.service";
-
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
-
-
 import _ = require('lodash');
 
 @Component({

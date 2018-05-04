@@ -25,6 +25,7 @@ import { screen } from 'platform';
 })
 export class BatchDetailComponent implements OnInit {
     private _batch: Batch;
+    private _batchTypes: any;
     private name: string;
     private _fabMenuOpen: boolean = false;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
@@ -57,6 +58,11 @@ export class BatchDetailComponent implements OnInit {
                     .subscribe((batches: Array<any>) => {
                         this._batch = new Batch(batches.find(batch => batch.Id == batchId));
                         this.name = this._batch.Name
+                    });
+
+                this._metrcService.getBatchTypes()
+                    .subscribe((batchTypes: Array<any>) => {
+                        this._batchTypes = batchTypes
                     });
             });
     }
@@ -153,6 +159,10 @@ export class BatchDetailComponent implements OnInit {
 
     get batch(): Batch {
         return this._batch;
+    }
+
+    get batchTypes(): any {
+        return this._batchTypes;
     }
 
     /* ***********************************************************

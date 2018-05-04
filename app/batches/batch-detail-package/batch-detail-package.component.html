@@ -7,10 +7,9 @@
     </ActionItem>
 </ActionBar>
 
-<GridLayout class="page page-content">
-    <ScrollView>
+<GridLayout rows="0, *" class="page page-content">
+    <ScrollView row="1">
         <StackLayout class="item-list">
-
           <RadDataForm tkExampleTitle tkToggleNavButton [source]="batchPackage" [isReadOnly]="false">
             <TKEntityProperty tkDataFormProperty name="Room" [valuesProvider]="rooms">
               <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
@@ -24,16 +23,15 @@
             <TKEntityProperty tkDataFormProperty name="ActualDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
-
             <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
               <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
             </TKPropertyGroup>
           </RadDataForm>
-
-          <Button class="btn btn-primary btn-active fa" id="button" text="&#xf02a; Scan Tag" (tap)="onScanTap()"></Button>
-
         </StackLayout>
     </ScrollView>
     <ActivityIndicator [busy]="isCreating"></ActivityIndicator>
+    <FAB #actionItem2 row="1" (tap)="actionItem2Tap()" icon="~/images/product-barcode.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
+    <!-- <FAB #actionItem1 row="1" (tap)="actionItem1Tap()" icon="~/images/scanner.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB> -->
+    <FAB #fabView row="1" (tap)="fabTap(actionItem2)" icon="res://icon" rippleColor="#db7d34" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #ffffff; horizontal-align: right; vertical-align: bottom; "></FAB>
 
 </GridLayout>

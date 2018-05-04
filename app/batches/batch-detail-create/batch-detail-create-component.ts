@@ -47,6 +47,7 @@ export class BatchDetailCreateComponent implements OnInit {
         this._metrcService.getStrains()
             .subscribe((strains: Array<any>) => {
                 this._strains = _.map(strains, 'Name')
+                this._batch.Strain = this._strains[0]
             });
 
         this._metrcService.getBatchTypes()
