@@ -7,6 +7,7 @@ import { DataFormEventData } from "nativescript-ui-dataform";
 
 import { Plant, Destroy } from "../shared/plant.model";
 import { MetrcService } from "../../shared/metrc.service";
+import { screen } from 'platform';
 
 import _ = require('lodash');
 
@@ -23,6 +24,7 @@ export class DestroyComponent implements OnInit {
     private _destroy: Destroy;
     private _rooms: any;
     private _isLoading: boolean = false;
+    private screenHeight: number = screen.mainScreen.heightDIPs;
 
     constructor(
         private http: HttpClient,

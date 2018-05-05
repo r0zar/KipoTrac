@@ -11,7 +11,7 @@
     <ScrollView>
         <StackLayout class="item-list">
 
-          <RadDataForm tkExampleTitle tkToggleNavButton [source]="destroy" [isReadOnly]="false">
+          <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="destroy" [isReadOnly]="false">
             <TKEntityProperty tkDataFormProperty name="ActualDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>

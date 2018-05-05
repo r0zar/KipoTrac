@@ -40,10 +40,10 @@ it shouldn't have any other siblings other than the <ActionBar> component.
                 <RadListView row="1" [items]="vegetativePlants" (itemTap)="onPlantsItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated1($event)">
                   <ng-template let-item="item">
                       <StackLayout [class.odd]="odd" [class.even]="even">
-                        <GridLayout columns="auto, *, 70" rows="auto, auto">
+                        <GridLayout columns="auto, *, auto" rows="auto, auto">
                           <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf06c;"></Label>
                           <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.PlantBatchName'></Label>
-                          <Label col="2" class="m-t-20 m-b-20 m-l-10 m-r-10" [text]='item.Id'></Label>
+                          <Label col="2" class="m-t-20 m-b-20 m-l-10 m-r-15 right" [text]='item.Id'></Label>
                         </GridLayout>
                       </StackLayout>
                   </ng-template>
@@ -59,9 +59,10 @@ it shouldn't have any other siblings other than the <ActionBar> component.
                 <RadListView row="1" [items]="floweringPlants" (itemTap)="onPlantsItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated2($event)">
                   <ng-template let-item="item">
                       <StackLayout [class.odd]="odd" [class.even]="even">
-                        <GridLayout columns="auto, *" rows="auto, auto">
+                        <GridLayout columns="auto, *, auto" rows="auto, auto">
                           <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf18c;"></Label>
-                          <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.Label'></Label>
+                          <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.PlantBatchName'></Label>
+                          <Label col="2" class="m-t-20 m-b-20 m-l-10 m-r-15 right" [text]='item.Id'></Label>
                         </GridLayout>
                       </StackLayout>
                   </ng-template>
