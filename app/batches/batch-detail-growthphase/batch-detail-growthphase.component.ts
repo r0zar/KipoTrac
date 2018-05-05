@@ -42,6 +42,7 @@ export class BatchDetailGrowthPhaseComponent implements OnInit {
         this._metrcService.getRooms()
             .subscribe((rooms: Array<any>) => {
                 this._rooms = _.map(rooms, 'Name')
+                this._batchGrowthPhase.NewRoom = this._rooms[0]
             });
 
         this._metrcService.getItemCategories()

@@ -80,7 +80,7 @@ export class GrowthPhaseChange {
       this.Id = Number(options.Id);
       this.Label = options.Label || '';
       this.NewTag = options.Label || '';
-      this.GrowthPhase = options.GrowthPhase || '';
+      this.GrowthPhase = options.GrowthPhase || 'Flowering';
       this.NewRoom = options.RoomName || '';
       this.GrowthDate = options.GrowthDate || new Date();
     }

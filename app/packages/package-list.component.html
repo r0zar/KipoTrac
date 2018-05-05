@@ -36,9 +36,9 @@ it shouldn't have any other siblings other than the <ActionBar> component.
       <RadListView row="1" [items]="packages" (itemTap)="onPackageItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)" selectionBehavior="LongPress" multipleSelection="true" (itemSelected)="onItemSelected($event, fabView, actionItem1, actionItem2)" (itemDeselected)="onItemDeselected($event, fabView, actionItem1, actionItem2)">
           <ng-template let-item="item">
               <StackLayout [class.odd]="odd" [class.even]="even">
-                <GridLayout columns="auto, *" rows="auto, auto">
-                  <Label col="0" class="m-t-20 m-b-20 m-l-20"></Label>
-                  <Label col="1" class="m-t-20 m-b-20 m-l-25" [text]='item.Label'></Label>
+                <GridLayout columns="*, auto" rows="auto, auto">
+                  <Label col="0" class="m-t-20 m-b-20 m-l-20" [text]='item.ProductName'></Label>
+                  <Label col="1" class="m-t-20 m-b-20 m-l-25 m-r-15 right" [text]='item.amount'></Label>
                 </GridLayout>
               </StackLayout>
           </ng-template>

@@ -11,11 +11,15 @@
     <RadListView [items]="subscriptions" (itemTap)="onSubscriptionItemTap($event)">
         <ng-template let-item="item">
             <StackLayout [class.odd]="odd" [class.even]="even">
-              <GridLayout columns="auto, *" rows="auto, auto">
-                <Label col="0" class="m-t-20 m-b-20 m-l-20 fa-s fa-small" text="&#xf3ed;"></Label>
-                <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.localizedTitle'></Label>
-                <Label row="1" colSpan="2" class="m-t-20 m-b-20 m-l-20" [text]='item.localizedDescription'></Label>
+              <GridLayout columns="auto, *" rows="auto">
+                <Label col="0" row="0" class="m-t-20 m-l-20 fas fa-small" text="&#xf3ed;"></Label>
+                <Label col="1" row="0" class="m-t-20 m-l-10" [text]='item.localizedTitle'></Label>
               </GridLayout>
+              <GridLayout columns="auto, *" rows="auto">
+                <Label col="0" row="1" class="m-t-20 m-l-20" [text]='item.priceFormatted'></Label>
+                <Label col="1" row="1" class="m-t-20 m-l-5" [text]='item.productIdentifier'></Label>
+              </GridLayout>
+              <Label class="m-t-10 m-b-20 m-l-20" [text]='item.localizedDescription' textWrap="true"></Label>
             </StackLayout>
         </ng-template>
     </RadListView>

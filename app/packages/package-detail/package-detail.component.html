@@ -25,35 +25,17 @@
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
       <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="package" [isReadOnly]="true">
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Room Information" hidden="false" >
-            <TKEntityProperty tkPropertyGroupProperties name="RoomId"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="RoomName"></TKEntityProperty>
-        </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Product Information" hidden="false">
-            <TKEntityProperty tkPropertyGroupProperties name="ProductId"></TKEntityProperty>
+        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Package Details" hidden="false" index=0>
             <TKEntityProperty tkPropertyGroupProperties name="ProductName"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryName"></TKEntityProperty>
-        </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Package Details" hidden="false">
-            <TKEntityProperty tkPropertyGroupProperties name="Label"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="PackageType"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="Quantity"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="UnitOfMeasureName"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="UnitOfMeasureAbbreviation"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="ArchivedDate">
-              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
-            </TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="FinishedDate">
-              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
-            </TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="RemediationDate">
-              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
-            </TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryName" displayName="Product Category"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="Quantity" [displayName]="displayName"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="Label" index=3></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="RoomName" displayName="Location"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="LastModified">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
         </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Lab Testing" hidden="false">
+        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Lab Testing" hidden="false" index=2>
             <TKEntityProperty tkPropertyGroupProperties name="InitialLabTestingState"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="LabTestingState"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="LabTestingStateName"></TKEntityProperty>
@@ -61,7 +43,7 @@
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
         </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Source Information" hidden="false">
+        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Source Information" hidden="false" index=1>
             <TKEntityProperty tkPropertyGroupProperties name="ReceivedFromManifestNumber"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="PackagedDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
@@ -77,9 +59,24 @@
 
         <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
             <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="PackageType"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="UnitOfMeasureName"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="UnitOfMeasureAbbreviation"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="IsTestingSample"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="IsProcessValidationTestingSample"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="ProductId"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="RoomId"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="ArchivedDate">
+              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="FinishedDate">
+              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="RemediationDate">
+              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+            </TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="ActualDate"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="amount"></TKEntityProperty>
         </TKPropertyGroup>
       </RadDataForm>
 		</StackLayout>

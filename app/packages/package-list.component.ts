@@ -58,6 +58,9 @@ export class PackageListComponent implements OnInit {
         this._metrcService.getPackages('active')
           .subscribe((packages: Array<Package>) => {
               this._packages = new ObservableArray(packages);
+              this._packages.forEach(p => {
+                p.amount = `${p.Quantity} (${p.UnitOfMeasureAbbreviation})`
+              })
               this._isLoading = false;
           });
 

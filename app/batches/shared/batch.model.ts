@@ -61,7 +61,7 @@ export class BatchPackage {
   constructor(options: any){
       this.Id = Number(options.Id);
       this.Room = options.Room || '';
-      this.Item = options.Item || '';
+      this.Item = options.Item || 'Immature Plants';
       this.Tag = options.Tag || '';
       this.Count = Number(options.Count);
       this.ActualDate = options.ActualDate || new Date();
@@ -80,7 +80,7 @@ export class BatchGrowthPhase {
   constructor(options: any){
       this.Id = Number(options.Id);
       this.NewRoom = options.NewRoom || '';
-      this.GrowthPhase = options.GrowthPhase || '';
+      this.GrowthPhase = options.GrowthPhase || 'Vegetative';
       this.StartingTag = options.StartingTag || '';
       this.Count = Number(options.Count);
       this.GrowthDate = options.GrowthDate || new Date();

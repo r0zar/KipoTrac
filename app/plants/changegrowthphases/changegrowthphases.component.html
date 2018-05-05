@@ -1,7 +1,7 @@
 <ActionBar class="action-bar">
     <NavigationButton visibility="collapsed"></NavigationButton>
     <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
-    <Label class="action-bar-title" text="Change Growth Phase" horizontalAlignment="center"></Label>
+    <Label class="action-bar-title" text="Change to Flowering Phase" horizontalAlignment="center"></Label>
     <ActionItem ios.position="right" android.position="right">
         <Label text="Done" class="action-item" verticalAlignment="center" (tap)="onDoneButtonTap()"></Label>
     </ActionItem>
@@ -12,17 +12,18 @@
         <StackLayout class="item-list">
 
           <RadDataForm height="600" tkExampleTitle tkToggleNavButton [source]="growthPhaseChange" [isReadOnly]="false">
-            <!-- <TKEntityProperty tkDataFormProperty name="NewTag" [valuesProvider]="tags">
+            <TKEntityProperty tkDataFormProperty name="NewTag"></TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="NewRoom" displayName="Growth Room" [valuesProvider]="rooms">
                 <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
-            </TKEntityProperty> -->
-            <TKEntityProperty tkDataFormProperty name="GrowthPhase" valuesProvider="Vegetative, Flowering">
-                <TKPropertyEditor tkEntityPropertyEditor type="SegmentedEditor"></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="GrowthDate" displayName="Date of Phase Change">
+                <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
 
             <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
               <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
               <TKEntityProperty tkPropertyGroupProperties name="Label"></TKEntityProperty>
-              <TKEntityProperty tkPropertyGroupProperties name="NewTag"></TKEntityProperty>
+              <TKEntityProperty tkPropertyGroupProperties name="GrowthPhase"></TKEntityProperty>
             </TKPropertyGroup>
           </RadDataForm>
 

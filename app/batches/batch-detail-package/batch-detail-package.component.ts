@@ -52,15 +52,9 @@ export class BatchDetailPackageComponent implements OnInit {
                 this._rooms = _.map(rooms, 'Name')
             });
 
-        this._metrcService.getItemCategories()
-            .subscribe((itemCategories: Array<any>) => {
-                this._itemCategories = _.map(itemCategories, 'Name')
-            });
-
-
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
-            .forEach((params) => this._batchPackage = new BatchPackage({Id: params.id, Item: 'Immature Plant', ActualDate: new Date()}));
+            .forEach((params) => this._batchPackage = new BatchPackage({Id: params.id}));
 
     }
 
@@ -83,10 +77,6 @@ export class BatchDetailPackageComponent implements OnInit {
 
     get rooms(): any {
         return this._rooms;
-    }
-
-    get itemCategories(): any {
-        return this._itemCategories;
     }
 
     get isCreating(): boolean {

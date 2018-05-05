@@ -5,6 +5,7 @@ import { Observable } from "rxjs/Observable";
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import firebase = require("nativescript-plugin-firebase");
+import { TNSFancyAlert, TNSFancyAlertButton } from 'nativescript-fancyalert';
 
 import { AuthService } from "../shared/auth.service";
 import { FacilityService } from "../facilities/shared/facility.service";
@@ -40,9 +41,10 @@ export class MetrcService {
  */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.dir(error); // log to console instead
+      console.dir(JSON.stringify(error)); // log to console instead
       // Let the app keep running by returning an empty result.
-      alert({title: error.statusText, message: _.map(error.error, 'message').join('  '), okButtonText: "OK"})
+      TNSFancyAlert.showError(error.statusText, _.map(error.error, 'message').join('\n') || error.error.Message, 'Okay').then( () => {});
+      //alert({title: error.statusText, message: _.map(error.error, 'message').join('  '), okButtonText: "OK"})
       return of(result as T);
     };
   }
@@ -66,7 +68,7 @@ export class MetrcService {
   getRoom(id: number): Observable<Room> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getRoom'}]})
       return this.http.get<Room>(`${this.rootUrl}/rooms/v1/${id}`, {headers: this.header})
-        .pipe(tap(room => console.dir(room)), catchError(this.handleError<Room>(`getRoom id=${id}`)));
+        .pipe(catchError(this.handleError<Room>(`getRoom id=${id}`)));
   }
 
   createRooms(Rooms): Observable<any> {
@@ -98,7 +100,7 @@ export class MetrcService {
   getStrain(id: number): Observable<Strain> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getStrain'}]})
       return this.http.get<Strain>(`${this.rootUrl}/strains/v1/${id}`, {headers: this.header})
-        .pipe(tap(strain => console.dir(strain)), catchError(this.handleError<Strain>(`getStrain id=${id}`)));
+        .pipe(catchError(this.handleError<Strain>(`getStrain id=${id}`)));
   }
 
   createStrains(Strain): Observable<any> {
@@ -130,7 +132,7 @@ export class MetrcService {
   getBatch(id: number): Observable<Batch> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getBatch'}]})
       return this.http.get<Batch>(`${this.rootUrl}/plantbatches/v1/${id}`, {headers: this.header})
-        .pipe(tap(batch => console.dir(batch)), catchError(this.handleError<Batch>(`getBatch id=${id}`)));
+        .pipe(catchError(this.handleError<Batch>(`getBatch id=${id}`)));
   }
 
   getBatchTypes(): Observable<any[]> {
@@ -168,7 +170,7 @@ export class MetrcService {
   getPlantById(id: number): Observable<Plant> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getPlantById'}]})
       return this.http.get<Plant>(`${this.rootUrl}/plants/v1/${id}`, {headers: this.header})
-        .pipe(tap(plant => console.dir(plant)), catchError(this.handleError<Plant>(`getPlantById id=${id}`)));
+        .pipe(catchError(this.handleError<Plant>(`getPlantById id=${id}`)));
   }
 
   getVegetativePlants(): Observable<Plant[]> {
@@ -230,7 +232,7 @@ export class MetrcService {
   getHarvest(id: number): Observable<Harvest> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getHarvest'}]})
       return this.http.get<Harvest>(`${this.rootUrl}/harvests/v1/${id}`, {headers: this.header})
-        .pipe(tap(harvest => console.dir(harvest)), catchError(this.handleError<Harvest>(`getHarvest id=${id}`)));
+        .pipe(catchError(this.handleError<Harvest>(`getHarvest id=${id}`)));
   }
 
   createPackageFromHarvest(Harvest): Observable<any> {
@@ -262,7 +264,7 @@ export class MetrcService {
   getItem(id: number): Observable<Item> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getItem'}]})
       return this.http.get<Item>(`${this.rootUrl}/items/v1/${id}`, {headers: this.header})
-        .pipe(tap(item => console.dir(item)), catchError(this.handleError<Item>(`getItem id=${id}`)));
+        .pipe(catchError(this.handleError<Item>(`getItem id=${id}`)));
   }
 
   getItems(): Observable<Item[]> {
@@ -306,7 +308,7 @@ export class MetrcService {
   getPackage(id: number): Observable<Package> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getPackage'}]})
       return this.http.get<Package>(`${this.rootUrl}/packages/v1/${id}`, {headers: this.header})
-        .pipe(tap(p => console.dir(p)), catchError(this.handleError<Package>(`getPackage id=${id}`)));
+        .pipe(catchError(this.handleError<Package>(`getPackage id=${id}`)));
   }
 
   createPackageFromPackages(Package): Observable<any> {

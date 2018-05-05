@@ -32,8 +32,7 @@ export class Package {
     FinishedDate: string;
     LastModified: string;
     ActualDate: string;
-    imageUrl: string;
-    imageStoragePath: string;
+    amount: string;
 
     constructor(options: any) {
         this.Id = Number(options.Id);
@@ -69,8 +68,7 @@ export class Package {
         this.FinishedDate = options.FinishedDate;
         this.LastModified = options.LastModified;
         this.ActualDate = options.ActualDate;
-        this.imageUrl = options.imageUrl;
-        this.imageStoragePath = options.imageStoragePath;
+        this.amount = '';
     }
 }
 
@@ -85,8 +83,8 @@ export class Adjustment {
   constructor(options: any){
     this.Label = options.Label;
     this.Quantity = Number(options.Quantity);
-    this.UnitOfMeasure = options.UnitOfMeasure || 'Grams';
-    this.AdjustmentReason = options.AdjustmentReason || '';
+    this.UnitOfMeasure = options.UnitOfMeasure || '';
+    this.AdjustmentReason = options.AdjustmentReason || 'Waste (Unusable Product)';
     this.AdjustmentDate = options.AdjustmentDate || new Date();
     this.ReasonNote = options.ReasonNote || '';
   }

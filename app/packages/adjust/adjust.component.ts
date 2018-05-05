@@ -22,7 +22,7 @@ import _ = require('lodash');
 export class AdjustComponent implements OnInit {
     private _adjustment: Adjustment;
     private _rooms: any;
-    private _unitsOfWeight: any;
+    private _unitsOfMeasure: any;
     private _itemCategories: any;
     private _isLoading: boolean = false;
 
@@ -52,7 +52,8 @@ export class AdjustComponent implements OnInit {
 
         this._metrcService.getUnitsOfMeasure()
             .subscribe((units: Array<any>) => {
-                this._unitsOfWeight = units
+                this._unitsOfMeasure = units
+                this._adjustment.UnitOfMeasure = this._unitsOfMeasure[0]
             });
 
 
@@ -74,8 +75,10 @@ export class AdjustComponent implements OnInit {
         return this._itemCategories;
     }
 
-    get unitsOfWeight(): any {
-        return _.map(_.filter(this._unitsOfWeight, {QuantityType: 'WeightBased'}), 'Name');
+    get unitsOfMeasure(): any {
+        return _.map(this._unitsOfMeasure, 'Name');
+        // better
+        // return _.map(_.filter(this._unitsOfMeasure, {QuantityType: 'lookuppackageBasedtype'}), 'Name');
     }
 
     get isLoading(): boolean {
@@ -88,6 +91,7 @@ export class AdjustComponent implements OnInit {
     *************************************************************/
     onDoneButtonTap(): void {
         this._isLoading = true
+        this._adjustment.Quantity = this._adjustment.Quantity * -1
         this._metrcService.adjustPackage(this._adjustment)
             .finally(() => this._isLoading = false)
             .subscribe(() => this._routerExtensions.backToPreviousPage());

@@ -26,6 +26,7 @@ export class PackageDetailComponent implements OnInit {
     private _package: Package;
     private name: string;
     private _fabMenuOpen: boolean = false;
+    private displayName: string;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
     private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
 
@@ -51,7 +52,8 @@ export class PackageDetailComponent implements OnInit {
                 this._metrcService.getPackage(params.id)
                     .subscribe((p: Package) => {
                       this._package = new Package(p)
-                      this.name = this._package.Label
+                      this.name = `${this._package.ProductName}`
+                      this.displayName = `Quantity (${this._package.UnitOfMeasureAbbreviation})`
                     });
             });
     }

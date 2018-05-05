@@ -31,7 +31,7 @@ export class Item {
         this.StrainId = Number(options.StrainId);
         this.Strain = options.Strain || options.StrainName || '';
         this.StrainName = options.StrainName || '';
-        this.UnitThcContent =  Number(options.UnitThcContent);
+        this.UnitThcContent = Number(options.UnitThcContent);
         this.UnitThcContentUnitOfMeasureName = options.UnitThcContentUnitOfMeasureName || 'Milligrams';
         this.UnitVolume = Number(options.UnitVolume);
         this.UnitVolumeUnitOfMeasureName = options.UnitVolumeUnitOfMeasureName || 'Milliliters';

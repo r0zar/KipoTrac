@@ -12,10 +12,10 @@
         <StackLayout class="item-list">
 
           <RadDataForm tkExampleTitle tkToggleNavButton [source]="adjustment" [isReadOnly]="false">
-            <TKEntityProperty tkDataFormProperty name="Quantity" displayName="Quantity net change">
+            <TKEntityProperty tkDataFormProperty name="Quantity" displayName="Amount of Product Lost">
               <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
             </TKEntityProperty>
-            <TKEntityProperty tkDataFormProperty name="UnitOfMeasure" [valuesProvider]="unitsOfWeight">
+            <TKEntityProperty tkDataFormProperty name="UnitOfMeasure" [valuesProvider]="unitsOfMeasure">
               <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
             <TKEntityProperty tkDataFormProperty name="AdjustmentReason" valuesProvider="Package Display Sample, Enforcement Testing, Free Medicinal Cannabis Goods, Incorrect Quantity, Mandated Destruction, Non-Metrc User Transfer, On-Site Testing, Over Pulled , Oversold, Plants Unpacked, Scale Variance, Spoilage, Theft, Under Pulled , Undersold, Voluntary Surrender, Waste (Unusable Product), Weight Change Due to Moisture">

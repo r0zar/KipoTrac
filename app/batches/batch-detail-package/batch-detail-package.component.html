@@ -1,7 +1,7 @@
 <ActionBar class="action-bar">
     <NavigationButton visibility="collapsed"></NavigationButton>
     <NavigationButton android.systemIcon="ic_menu_back" (tap)="onBackButtonTap()"></NavigationButton>
-    <Label class="action-bar-title" text="Create New Package" horizontalAlignment="center"></Label>
+    <Label class="action-bar-title" text="Package Clones for Sale" horizontalAlignment="center"></Label>
     <ActionItem ios.position="right" android.position="right">
         <Label text="Done" class="action-item" verticalAlignment="center" (tap)="onDoneButtonTap()"></Label>
     </ActionItem>
@@ -11,20 +11,22 @@
     <ScrollView row="1">
         <StackLayout class="item-list">
           <RadDataForm tkExampleTitle tkToggleNavButton [source]="batchPackage" [isReadOnly]="false">
-            <TKEntityProperty tkDataFormProperty name="Room" [valuesProvider]="rooms">
+
+            <TKEntityProperty tkDataFormProperty name="Tag" displayName="Tag Identifier" index=0>
+                <TKPropertyEditor tkEntityPropertyEditor></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="Room" displayName="Package Storage Location" [valuesProvider]="rooms" index=2>
               <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
-            <TKEntityProperty tkDataFormProperty name="Item" [valuesProvider]="itemCategories">
-              <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
-            </TKEntityProperty>
-            <TKEntityProperty tkDataFormProperty name="Count">
+            <TKEntityProperty tkDataFormProperty name="Count" displayName="Number of Clones" index=1>
               <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
             </TKEntityProperty>
-            <TKEntityProperty tkDataFormProperty name="ActualDate">
+            <TKEntityProperty tkDataFormProperty name="ActualDate" displayName="Packaging Date" index=3>
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
             <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
               <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
+              <TKEntityProperty tkPropertyGroupProperties name="Item"></TKEntityProperty>
             </TKPropertyGroup>
           </RadDataForm>
         </StackLayout>

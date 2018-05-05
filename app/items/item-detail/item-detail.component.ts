@@ -25,6 +25,12 @@ import { screen } from 'platform';
 export class ItemDetailComponent implements OnInit {
     private _item: Item;
     private name: string;
+    private thcDisplay: string;
+    private volumeDisplay: string;
+    private weightDisplay: string;
+    private isUnitThcContent: boolean = false;
+    private isUnitVolume: boolean = false;
+    private isUnitWeight: boolean = false;
     private _fabMenuOpen: boolean = false;
     private _isLoading: boolean = false;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
@@ -54,6 +60,12 @@ export class ItemDetailComponent implements OnInit {
                 .subscribe((item: Item) => {
                   this._item = new Item(item)
                   this.name = this._item.Name
+                  this.thcDisplay = `THC (${this._item.UnitThcContentUnitOfMeasureName})`
+                  this.volumeDisplay = `Volume (${this._item.UnitVolumeUnitOfMeasureName})`
+                  this.weightDisplay = `Weight (${this._item.UnitWeightUnitOfMeasureName})`
+                  this.isUnitThcContent = this._item.UnitThcContent > 0
+                  this.isUnitVolume = this._item.UnitVolume > 0
+                  this.isUnitWeight = this._item.UnitWeight > 0
                   this._isLoading = false;
                 });
             });

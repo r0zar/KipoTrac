@@ -26,7 +26,7 @@
 
 
 
-            <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="THC Potency" [hidden]="thcHidden">
+            <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="THC Potency" [hidden]="!thcRequired">
               <TKEntityProperty tkPropertyGroupProperties name="UnitThcContent" displayName="THC Content">
                   <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
               </TKEntityProperty>
@@ -35,7 +35,7 @@
             </TKEntityProperty>
             </TKPropertyGroup>
 
-            <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Product Volume" [hidden]="volumeHidden">
+            <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Product Volume" [hidden]="!volumeRequired">
               <TKEntityProperty tkPropertyGroupProperties name="UnitVolume" displayName="Volume">
                   <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
               </TKEntityProperty>
@@ -44,7 +44,7 @@
             </TKEntityProperty>
             </TKPropertyGroup>
 
-            <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Product Weight" [hidden]="weightHidden">
+            <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Product Weight" [hidden]="!weightRequired">
               <TKEntityProperty tkPropertyGroupProperties name="UnitWeight" displayName="Weight">
                   <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
               </TKEntityProperty>

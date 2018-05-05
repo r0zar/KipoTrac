@@ -29,9 +29,9 @@ export class ItemDetailEditComponent implements OnInit {
     private _itemCategories: any;
     private _chemicalUnits: any;
     private _volumeUnits: any;
-    private thcHidden: boolean = true;
-    private weightHidden: boolean = true;
-    private volumeHidden: boolean = true;
+    private thcRequired: boolean = false;
+    private weightRequired: boolean = false;
+    private volumeRequired: boolean = false;
     private screenHeight: number = screen.mainScreen.heightDIPs;
 
     constructor(
@@ -84,19 +84,14 @@ export class ItemDetailEditComponent implements OnInit {
 
     dfPropertyCommitted(args) {
         // find what quantity type the choice is...
-        let QuantityType = _.find(this._itemCategories, {Name: this._item.ItemCategory}).QuantityType
+        let itemCategory = _.find(this._itemCategories, {Name: this._item.ItemCategory})
+        let QuantityType = itemCategory.QuantityType
         // adjust units of measure list to only show valid options
         this._validUnitsOfMeasure = _.filter(this._unitsOfMeasure, {QuantityType})
         // show the valid units fields
-        if (QuantityType == 'WeightBased' || QuantityType == 'VolumeBased') {
-          this.thcHidden = true
-          this.weightHidden = true
-          this.volumeHidden = true
-        } else {
-          this.thcHidden = false
-          this.weightHidden = false
-          this.volumeHidden = false
-        }
+        this.thcRequired = itemCategory.RequiresUnitThcContent
+        this.weightRequired = itemCategory.RequiresUnitWeight
+        this.volumeRequired = itemCategory.RequiresUnitVolume
     }
 
     get isUpdating(): boolean {

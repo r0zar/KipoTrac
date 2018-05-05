@@ -4,13 +4,13 @@
 </ActionBar>
 
 <StackLayout>
-  <Label text="Active Subscriptions" class="font-weight-bold m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
+  <Label text="Active Reporting (California)" class="font-weight-bold m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
 
-  <Label *ngIf="!activeSubscription" text="&#xf09d;  Partial METRC Compliance (Free)" class="fa m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
-  <Label *ngIf="activeSubscription" text="&#xf09d;  Fully METRC Compliant (California)" class="fa m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
+  <Label *ngIf="!activeSubscription" text="&#xf071;  Limited METRC Compliance Reporting" class="fas m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
+  <Label *ngIf="activeSubscription" text="&#xf505;  Full METRC Compliance Reporting" class="fas m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
 
   <Label *ngIf="activeSubscription" text="Manage your subscription" class="text-primary m-t-10 m-b-10 m-l-20 m-r-20" [nsRouterLink]="['/payment/add']"></Label>
-  <Label *ngIf="!activeSubscription" text="Upgrade to Full METRC Compliance (Paid)" class="text-primary m-t-10 m-b-10 m-l-20 m-r-20" [nsRouterLink]="['/payment/add']"></Label>
+  <Label *ngIf="!activeSubscription" text="Upgrade to Full METRC Compliance Reporting (Paid)" class="text-primary m-t-10 m-b-10 m-l-20 m-r-20" [nsRouterLink]="['/payment/add']"></Label>
   <StackLayout class="hr-light"></StackLayout>
   <Label text="Promotions Applied" class="font-weight-bold m-t-10 m-b-10 m-l-20 m-r-20"></Label>
 

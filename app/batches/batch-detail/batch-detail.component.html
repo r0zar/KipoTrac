@@ -22,20 +22,13 @@
 			<!--Add your page content here-->
       <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="batch" [isReadOnly]="true">
 
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Room Information" hidden="false">
-            <TKEntityProperty tkPropertyGroupProperties name="RoomName"></TKEntityProperty>
-        </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Strain Information" hidden="false">
-            <TKEntityProperty tkPropertyGroupProperties name="StrainName"></TKEntityProperty>
-        </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Origin Information" hidden="false">
+        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Origin Information" hidden="false" index=1>
             <TKEntityProperty tkPropertyGroupProperties name="SourcePackageLabel"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="SourcePlantLabel"></TKEntityProperty>
         </TKPropertyGroup>
         <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Plant Batch Details" hidden="false" index=0>
-            <TKEntityProperty tkPropertyGroupProperties name="Type" [valuesProvider]="batchTypes">
-              <TKPropertyEditor tkEntityPropertyEditor type="SegmentedEditor"></TKPropertyEditor>
-            </TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="StrainName"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="Type"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Count"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="LiveCount"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="PackagedCount"></TKEntityProperty>
@@ -44,7 +37,7 @@
             <TKEntityProperty tkPropertyGroupProperties name="PlantedDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="LastModified">
+            <TKEntityProperty tkPropertyGroupProperties name="LastModified" index=2>
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
         </TKPropertyGroup>
@@ -55,6 +48,7 @@
             <TKEntityProperty tkPropertyGroupProperties name="ActualDate"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Strain"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="RoomId"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="RoomName"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="StrainId"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="SourcePackageId"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="SourcePlantId"></TKEntityProperty>

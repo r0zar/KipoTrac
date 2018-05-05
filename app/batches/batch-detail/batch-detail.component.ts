@@ -59,11 +59,6 @@ export class BatchDetailComponent implements OnInit {
                         this._batch = new Batch(batches.find(batch => batch.Id == batchId));
                         this.name = this._batch.Name
                     });
-
-                this._metrcService.getBatchTypes()
-                    .subscribe((batchTypes: Array<any>) => {
-                        this._batchTypes = batchTypes
-                    });
             });
     }
 
@@ -159,10 +154,6 @@ export class BatchDetailComponent implements OnInit {
 
     get batch(): Batch {
         return this._batch;
-    }
-
-    get batchTypes(): any {
-        return this._batchTypes;
     }
 
     /* ***********************************************************
