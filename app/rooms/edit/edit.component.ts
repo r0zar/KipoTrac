@@ -3,10 +3,9 @@ import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { alert } from "ui/dialogs";
 import { EventData } from "data/observable";
 import { DataFormEventData } from "nativescript-ui-dataform";
-import firebase = require("nativescript-plugin-firebase");
-
 import { Room } from "../shared/room.model";
 import { MetrcService } from "../../shared/metrc.service";
+import firebase = require("nativescript-plugin-firebase");
 import { AuthService } from "../../shared/auth.service";
 
 import _ = require('lodash');
@@ -64,7 +63,7 @@ export class EditComponent implements OnInit {
             .finally(() => this._isLoading = false)
             .subscribe(() => {
               // save the event to the activity log
-              firebase.push("/users/" + AuthService.token + '/activity', {object: 'room', status: 'edited', createdAt: Date.now()});
+              firebase.push("/users/" + AuthService.token + '/activity', {object: 'room', status: 'updated', createdAt: Date.now()});
               this._routerExtensions.backToPreviousPage()
             });
     }

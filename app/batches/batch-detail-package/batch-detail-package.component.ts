@@ -4,10 +4,11 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { alert } from "ui/dialogs";;
 import { EventData } from "data/observable";
 import { DataFormEventData } from "nativescript-ui-dataform";
-
 import { Batch, BatchPackage } from "../shared/batch.model";
 import { MetrcService } from "../../shared/metrc.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
+import firebase = require("nativescript-plugin-firebase");
+import { AuthService } from "../../shared/auth.service";
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
 
@@ -132,7 +133,11 @@ export class BatchDetailPackageComponent implements OnInit {
         this._isCreating = true
         this._metrcService.createBatchPackage(this._batchPackage)
             .finally(() => this._isCreating = false)
-            .subscribe((batch: Batch) => this._routerExtensions.backToPreviousPage());
+            .subscribe((batch: Batch) => {
+              // save the event to the activity log
+              firebase.push("/users/" + AuthService.token + '/activity', {object: 'package', status: 'created', createdAt: Date.now()});
+              this._routerExtensions.backToPreviousPage()
+            });
     }
 
     /* ***********************************************************

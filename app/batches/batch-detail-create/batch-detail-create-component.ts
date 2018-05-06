@@ -5,6 +5,7 @@ import { alert } from "ui/dialogs";;
 import { EventData } from "data/observable";
 import { DataFormEventData } from "nativescript-ui-dataform";
 import firebase = require("nativescript-plugin-firebase");
+import { AuthService } from "../../shared/auth.service";
 import { Batch } from "../shared/batch.model";
 import { MetrcService } from "../../shared/metrc.service";
 
@@ -95,7 +96,10 @@ export class BatchDetailCreateComponent implements OnInit {
         this._isCreating = true
         this._metrcService.createPlantings(this._batch)
             .finally(() => this._isCreating = false)
-            .subscribe((batch: Batch) => this._routerExtensions.navigate(['/batches'],
+            .subscribe((batch: Batch) => {
+              // save the event to the activity log
+              firebase.push("/users/" + AuthService.token + '/activity', {object: 'batch', status: 'created', createdAt: Date.now()});
+              this._routerExtensions.navigate(['/batches'],
                 {
                     animated: true,
                     transition: {
@@ -104,7 +108,7 @@ export class BatchDetailCreateComponent implements OnInit {
                         curve: "ease"
                     }
                 })
-              );
+              });
     }
 
     /* ***********************************************************

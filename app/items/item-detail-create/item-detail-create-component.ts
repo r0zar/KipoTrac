@@ -8,6 +8,8 @@ import { DatePicker } from "ui/date-picker";
 import { Item } from "../shared/item.model";
 import { MetrcService } from "../../shared/metrc.service";
 import { screen } from 'platform';
+import firebase = require("nativescript-plugin-firebase");
+import { AuthService } from "../../shared/auth.service";
 import _ = require('lodash');
 
 /* ***********************************************************
@@ -135,7 +137,11 @@ export class ItemDetailCreateComponent implements OnInit {
     *************************************************************/
     onDoneButtonTap(): void {
         this._metrcService.createItem(this._item)
-            .subscribe((item: Item) => this._routerExtensions.backToPreviousPage());
+            .subscribe((item: Item) => {
+              // save the event to the activity log
+              firebase.push("/users/" + AuthService.token + '/activity', {object: 'item', status: 'created', createdAt: Date.now()});
+              this._routerExtensions.backToPreviousPage()
+            });
     }
 
     /* ***********************************************************

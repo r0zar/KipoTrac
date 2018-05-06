@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { DataFormEventData } from "nativescript-ui-dataform";
-
 import { Room } from "../shared/room.model";
 import { MetrcService } from "../../shared/metrc.service";
-
+import firebase = require("nativescript-plugin-firebase");
+import { AuthService } from "../../shared/auth.service";
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { Image } from 'tns-core-modules/ui/image';
 import { screen } from 'platform';
@@ -126,6 +126,8 @@ export class RoomDetailComponent implements OnInit {
           this._isLoading = true;
           this._metrcService.deleteRoom(this._room)
             .subscribe(() => {
+              // save the event to the activity log
+              firebase.push("/users/" + AuthService.token + '/activity', {object: 'room', status: 'deleted', createdAt: Date.now()});
               this._isLoading = false
               this._routerExtensions.navigate(["/rooms"],
                   {

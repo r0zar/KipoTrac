@@ -4,7 +4,6 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { NativeScriptUIDataFormModule } from "nativescript-ui-dataform/angular";
 
 import { SharedModule } from "../shared/shared.module";
-import { BatchDetailEditComponent } from "./batch-detail-edit/batch-detail-edit-component";
 import { BatchDetailCreateComponent } from "./batch-detail-create/batch-detail-create-component";
 import { BatchDetailPackageComponent } from "./batch-detail-package/batch-detail-package.component";
 import { BatchDetailGrowthPhaseComponent } from "./batch-detail-growthphase/batch-detail-growthphase.component";
@@ -27,7 +26,6 @@ import { BarcodeScanner } from 'nativescript-barcodescanner';
     declarations: [
         BatchListComponent,
         BatchDetailComponent,
-        BatchDetailEditComponent,
         BatchDetailCreateComponent,
         BatchDetailPackageComponent,
         BatchDetailGrowthPhaseComponent,

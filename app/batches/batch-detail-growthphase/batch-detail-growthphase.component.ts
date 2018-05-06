@@ -4,10 +4,10 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { alert } from "ui/dialogs";;
 import { EventData } from "data/observable";
 import { DataFormEventData } from "nativescript-ui-dataform";
-
 import { Batch, BatchGrowthPhase } from "../shared/batch.model";
 import { MetrcService } from "../../shared/metrc.service";
-
+import firebase = require("nativescript-plugin-firebase");
+import { AuthService } from "../../shared/auth.service";
 import _ = require('lodash');
 
 /* ***********************************************************
@@ -81,7 +81,11 @@ export class BatchDetailGrowthPhaseComponent implements OnInit {
         this._isCreating = true
         this._metrcService.changeGrowthPhase(this._batchGrowthPhase)
             .finally(() => this._isCreating = false)
-            .subscribe((batch: Batch) => this._routerExtensions.backToPreviousPage());
+            .subscribe((batch: Batch) => {
+              // save the event to the activity log
+              firebase.push("/users/" + AuthService.token + '/activity', {object: 'batch', status: 'vegetating', createdAt: Date.now()});
+              this._routerExtensions.backToPreviousPage()
+            });
     }
 
     /* ***********************************************************
