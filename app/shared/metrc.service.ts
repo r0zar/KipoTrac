@@ -49,6 +49,11 @@ export class MetrcService {
     };
   }
 
+  private successAlert(operation = 'operation', response): void {
+    console.dir(response)
+    TNSFancyAlert.showSuccess(response.Name, operation, 'Okay').then( () => {});
+  }
+
   // facilities
 
   getFacilities(): Observable<Facility[]> {
@@ -74,19 +79,19 @@ export class MetrcService {
   createRooms(Rooms): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createRooms'}]})
       return this.http.post(`${this.rootUrl}/rooms/v1/create?licenseNumber=${FacilityService.facility}`, [Rooms], {headers: this.header})
-        .pipe(catchError(this.handleError('createRooms', [])));
+        .pipe(tap(rooms => this.successAlert('New room has been created.', Rooms)), catchError(this.handleError('createRooms', [])));
   }
 
   updateRooms(Rooms): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'updateRooms'}]})
       return this.http.post(`${this.rootUrl}/rooms/v1/update?licenseNumber=${FacilityService.facility}`, [Rooms], {headers: this.header})
-        .pipe(catchError(this.handleError('updateRooms', [])));
+        .pipe(tap(rooms => this.successAlert('Room has been updated.', Rooms)), catchError(this.handleError('updateRooms', [])));
   }
 
   deleteRoom(Room): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'deleteRoom'}]})
       return this.http.delete(`${this.rootUrl}/rooms/v1/${Room.Id}?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('deleteRoom', [])));
+        .pipe(tap(rooms => this.successAlert('Room has been deleted.', Room)), catchError(this.handleError('deleteRoom', [])));
   }
 
   // strains
@@ -106,19 +111,19 @@ export class MetrcService {
   createStrains(Strain): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createStrains'}]})
       return this.http.post(`${this.rootUrl}/strains/v1/create?licenseNumber=${FacilityService.facility}`, [Strain], {headers: this.header})
-        .pipe(catchError(this.handleError('createStrains', [])));
+        .pipe(tap(strain => this.successAlert('New strain has been created.', Strain)), catchError(this.handleError('createStrains', [])));
   }
 
   updateStrains(Strain): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'updateStrains'}]})
       return this.http.post(`${this.rootUrl}/strains/v1/update?licenseNumber=${FacilityService.facility}`, [Strain], {headers: this.header})
-        .pipe(catchError(this.handleError('updateStrains', [])));
+        .pipe(tap(strain => this.successAlert('Strain has been updated.', Strain)), catchError(this.handleError('updateStrains', [])));
   }
 
   deleteStrain(Strain): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'deleteStrain'}]})
       return this.http.delete(`${this.rootUrl}/strains/v1/${Strain.Id}?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('deleteStrain', [])));
+        .pipe(tap(strain => this.successAlert('Strain has been deleted.', Strain)), catchError(this.handleError('deleteStrain', [])));
   }
 
   // plant batches
@@ -144,25 +149,25 @@ export class MetrcService {
   createPlantings(Batch): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createPlantings'}]})
       return this.http.post(`${this.rootUrl}/plantbatches/v1/createplantings?licenseNumber=${FacilityService.facility}`, [Batch], {headers: this.header})
-        .pipe(catchError(this.handleError('createPlantings', [])));
+        .pipe(tap(batch => this.successAlert('New batch of plantings created.', Batch)), catchError(this.handleError('createPlantings', [])));
   }
 
   createBatchPackage(Batch): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createBatchPackage'}]})
       return this.http.post(`${this.rootUrl}/plantbatches/v1/createPackages?licenseNumber=${FacilityService.facility}`, [Batch], {headers: this.header})
-        .pipe(catchError(this.handleError('createBatchPackage', [])));
+        .pipe(tap(batch => this.successAlert('New package of plantings created.', Batch)), catchError(this.handleError('createBatchPackage', [])));
   }
 
   changeGrowthPhase(Batch): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'changeGrowthPhase'}]})
       return this.http.post(`${this.rootUrl}/plantbatches/v1/changegrowthphase?licenseNumber=${FacilityService.facility}`, [Batch], {headers: this.header})
-        .pipe(catchError(this.handleError('changeGrowthPhase', [])));
+        .pipe(tap(batch => this.successAlert('Growth phase has been updated.', Batch)), catchError(this.handleError('changeGrowthPhase', [])));
   }
 
   destroyPlantBatches(Batch): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'destroyPlantBatches'}]})
       return this.http.post(`${this.rootUrl}/plantbatches/v1/destroy?licenseNumber=${FacilityService.facility}`, [Batch], {headers: this.header})
-        .pipe(catchError(this.handleError('changeGrowthPhase', [])));
+        .pipe(tap(batch => this.successAlert('Plant batch has been destroyed.', Batch)), catchError(this.handleError('changeGrowthPhase', [])));
   }
 
   // plants
@@ -188,37 +193,37 @@ export class MetrcService {
   movePlants(Plant): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'movePlants'}]})
       return this.http.post(`${this.rootUrl}/plants/v1/moveplants?licenseNumber=${FacilityService.facility}`, [Plant], {headers: this.header})
-        .pipe(catchError(this.handleError('movePlants', [])));
+        .pipe(tap(plant => this.successAlert('The plant\'s location has been updated.', Plant)), catchError(this.handleError('movePlants', [])));
   }
 
   changeGrowthPhases(Plant): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'changeGrowthPhases'}]})
       return this.http.post(`${this.rootUrl}/plants/v1/changegrowthphases?licenseNumber=${FacilityService.facility}`, [Plant], {headers: this.header})
-        .pipe(catchError(this.handleError('changeGrowthPhases', [])));
+        .pipe(tap(plant => this.successAlert('Plant growth phase has been updated.', Plant)), catchError(this.handleError('changeGrowthPhases', [])));
   }
 
   destroyPlants(Plant): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'destroyPlants'}]})
       return this.http.post(`${this.rootUrl}/plants/v1/destroyplants?licenseNumber=${FacilityService.facility}`, [Plant], {headers: this.header})
-        .pipe(catchError(this.handleError('destroyPlants', [])));
+        .pipe(tap(plant => this.successAlert('Plant has been marked as destroyed.', Plant)), catchError(this.handleError('destroyPlants', [])));
   }
 
   createClones(Plant): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createClones'}]})
       return this.http.post(`${this.rootUrl}/plants/v1/create/plantings?licenseNumber=${FacilityService.facility}`, [Plant], {headers: this.header})
-        .pipe(catchError(this.handleError('createClones', [])));
+        .pipe(tap(plant => this.successAlert('Clones have been succesfully created.', Plant)), catchError(this.handleError('createClones', [])));
   }
 
   manicurePlants(Plant): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'manicurePlants'}]})
       return this.http.post(`${this.rootUrl}/plants/v1/manicureplants?licenseNumber=${FacilityService.facility}`, [Plant], {headers: this.header})
-        .pipe(catchError(this.handleError('manicurePlants', [])));
+        .pipe(tap(plant => this.successAlert('Plant manicuring has been recorded.', Plant)), catchError(this.handleError('manicurePlants', [])));
   }
 
   harvestPlants(Plant): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'harvestPlants'}]})
       return this.http.post(`${this.rootUrl}/plants/v1/harvestplants?licenseNumber=${FacilityService.facility}`, [Plant], {headers: this.header})
-        .pipe(catchError(this.handleError('harvestPlants', [])));
+        .pipe(tap(plant => this.successAlert('Plant harvesting has been recorded.', Plant)), catchError(this.handleError('harvestPlants', [])));
   }
 
   // harvests
@@ -238,25 +243,25 @@ export class MetrcService {
   createPackageFromHarvest(Harvest): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createPackageFromHarvest'}]})
       return this.http.post(`${this.rootUrl}/harvests/v1/createpackages?licenseNumber=${FacilityService.facility}`, [Harvest], {headers: this.header})
-        .pipe(catchError(this.handleError('createPackageFromHarvest', [])));
+        .pipe(tap(harvest => this.successAlert('Package has been created from harvest material.', Harvest)), catchError(this.handleError('createPackageFromHarvest', [])));
   }
 
   removeWaste(Waste): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'removeWaste'}]})
       return this.http.post(`${this.rootUrl}/harvests/v1/removewaste?licenseNumber=${FacilityService.facility}`, [Waste], {headers: this.header})
-        .pipe(catchError(this.handleError('removeWaste', [])));
+        .pipe(tap(harvest => this.successAlert('Harvest waste has been recorded.', Harvest)), catchError(this.handleError('removeWaste', [])));
   }
 
   finishHarvest(Harvest): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'finishHarvest'}]})
       return this.http.post(`${this.rootUrl}/harvests/v1/finish?licenseNumber=${FacilityService.facility}`, [Harvest], {headers: this.header})
-        .pipe(catchError(this.handleError('finishHarvest', [])));
+        .pipe(tap(harvest => this.successAlert('Harvest has been marked as finished.', Harvest)), catchError(this.handleError('finishHarvest', [])));
   }
 
   unfinishHarvest(Harvest): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'unfinishHarvest'}]})
       return this.http.post(`${this.rootUrl}/harvests/v1/unfinish?licenseNumber=${FacilityService.facility}`, [Harvest], {headers: this.header})
-        .pipe(catchError(this.handleError('unfinishHarvest', [])));
+        .pipe(tap(harvest => this.successAlert('Harvest has been marked as unfinished.', Harvest)), catchError(this.handleError('unfinishHarvest', [])));
   }
 
   // items
@@ -282,19 +287,19 @@ export class MetrcService {
   createItem(Item): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createItem'}]})
       return this.http.post(`${this.rootUrl}/items/v1/create?licenseNumber=${FacilityService.facility}`, [Item], {headers: this.header})
-        .pipe(catchError(this.handleError('createItem', [])));
+        .pipe(tap(item => this.successAlert('New item has been succesfully created.', Item)), catchError(this.handleError('createItem', [])));
   }
 
   updateItem(Item): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'updateItem'}]})
       return this.http.post(`${this.rootUrl}/items/v1/update?licenseNumber=${FacilityService.facility}`, [Item], {headers: this.header})
-        .pipe(catchError(this.handleError('updateItem', [])));
+        .pipe(tap(item => this.successAlert('Item updates have been recorded.', Item)), catchError(this.handleError('updateItem', [])));
   }
 
   deleteItem(Item): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'deleteItem'}]})
       return this.http.delete(`${this.rootUrl}/items/v1/${Item.Id}?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('deleteItem', [])));
+        .pipe(tap(item => this.successAlert('Item has been deleted.', Item)), catchError(this.handleError('deleteItem', [])));
   }
 
   // packages
@@ -314,49 +319,49 @@ export class MetrcService {
   createPackageFromPackages(Package): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createPackageFromPackages'}]})
       return this.http.post(`${this.rootUrl}/packages/v1/create?licenseNumber=${FacilityService.facility}`, [Package], {headers: this.header})
-        .pipe(catchError(this.handleError('createPackageFromPackages', [])));
+        .pipe(tap(packages => this.successAlert('A new package has been created from other package\'s content.', Package)), catchError(this.handleError('createPackageFromPackages', [])));
   }
 
   createLabTestPackage(Package): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createLabTestPackage'}]})
       return this.http.post(`${this.rootUrl}/packages/v1/create/testing?licenseNumber=${FacilityService.facility}`, [Package], {headers: this.header})
-        .pipe(catchError(this.handleError('createLabTestPackage', [])));
+        .pipe(tap(packages => this.successAlert('Lab testing sample package successfully created.', Package)), catchError(this.handleError('createLabTestPackage', [])));
   }
 
   createPackageFromPlantings(Package): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'createPackageFromPlantings'}]})
       return this.http.post(`${this.rootUrl}/packages/v1/create/plantings?licenseNumber=${FacilityService.facility}`, [Package], {headers: this.header})
-        .pipe(catchError(this.handleError('createPackageFromPlantings', [])));
+        .pipe(tap(packages => this.successAlert('A new planting package has been created.', Package)), catchError(this.handleError('createPackageFromPlantings', [])));
   }
 
   changePackageItem(Package): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'changePackageItem'}]})
       return this.http.post(`${this.rootUrl}/packages/v1/change/item?licenseNumber=${FacilityService.facility}`, [Package], {headers: this.header})
-        .pipe(catchError(this.handleError('changePackageItem', [])));
+        .pipe(tap(packages => this.successAlert('Package item updated.', Package)), catchError(this.handleError('changePackageItem', [])));
   }
 
   adjustPackage(Package): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'adjustPackage'}]})
       return this.http.post(`${this.rootUrl}/packages/v1/adjust?licenseNumber=${FacilityService.facility}`, [Package], {headers: this.header})
-        .pipe(catchError(this.handleError('adjustPackage', [])));
+        .pipe(tap(packages => this.successAlert('Package adjustment recorded.', Package)), catchError(this.handleError('adjustPackage', [])));
   }
 
   finishPackage(Package): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'finishPackage'}]})
       return this.http.post(`${this.rootUrl}/packages/v1/finish?licenseNumber=${FacilityService.facility}`, [Package], {headers: this.header})
-        .pipe(catchError(this.handleError('finishPackage', [])));
+        .pipe(tap(packages => this.successAlert('Package has been marked as finished.', Package)), catchError(this.handleError('finishPackage', [])));
   }
 
   unfinishPackage(Package): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'unfinishPackage'}]})
       return this.http.post(`${this.rootUrl}/packages/v1/unfinish?licenseNumber=${FacilityService.facility}`, [Package], {headers: this.header})
-        .pipe(catchError(this.handleError('finishunfinishPackagePackage', [])));
+        .pipe(tap(packages => this.successAlert('Package has been marked as unfinished.', Package)), catchError(this.handleError('finishunfinishPackagePackage', [])));
   }
 
   remediatePackage(Package): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'remediatePackage'}]})
       return this.http.post(`${this.rootUrl}/packages/v1/remediate?licenseNumber=${FacilityService.facility}`, [Package], {headers: this.header})
-        .pipe(catchError(this.handleError('remediatePackage', [])));
+        .pipe(tap(packages => this.successAlert('Package has been remediated.', Package)), catchError(this.handleError('remediatePackage', [])));
   }
 
   // transfers
@@ -404,7 +409,7 @@ export class MetrcService {
   recordLabTest(Test): Observable<any> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'recordLabTest'}]})
       return this.http.post(`${this.rootUrl}/labtests/v1/record?licenseNumber=${FacilityService.facility}`, [Test], {headers: this.header})
-        .pipe(catchError(this.handleError('recordLabTest', [])));
+        .pipe(tap(packages => this.successAlert('Lab test succesfully recorded.', Package)), catchError(this.handleError('recordLabTest', [])));
   }
 
   // units of Measure
