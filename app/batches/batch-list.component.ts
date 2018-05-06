@@ -48,8 +48,6 @@ export class BatchListComponent implements OnInit {
         // main rooms lookup logic
         this._metrcService.getBatches()
             .subscribe((batches: Array<Batch>) => {
-
-
                 this._batches = new ObservableArray(batches);
                 this._isLoading = false;
             })
@@ -98,7 +96,6 @@ export class BatchListComponent implements OnInit {
       // main rooms lookup logic
       this._metrcService.getBatches()
           .subscribe((batches: Array<Batch>) => {
-
               this._batches = new ObservableArray(batches);
               this._isLoading = false;
               args.object.notifyPullToRefreshFinished();

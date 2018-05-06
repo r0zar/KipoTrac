@@ -61,7 +61,7 @@ export class BatchPackage {
   constructor(options: any){
       this.Id = Number(options.Id);
       this.Room = options.Room || '';
-      this.Item = options.Item || 'Immature Plants';
+      this.Item = options.Item || '';
       this.Tag = options.Tag || '';
       this.Count = Number(options.Count);
       this.ActualDate = options.ActualDate || new Date();

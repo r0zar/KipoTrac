@@ -25,6 +25,7 @@ import _ = require('lodash');
 export class BatchDetailPackageComponent implements OnInit {
     private _batchPackage: BatchPackage;
     private _rooms: any;
+    private _items: any;
     private _itemCategories: any;
     private _isCreating: boolean = false;
     private _fabMenuOpen: boolean = false;
@@ -50,6 +51,11 @@ export class BatchDetailPackageComponent implements OnInit {
         this._metrcService.getRooms()
             .subscribe((rooms: Array<any>) => {
                 this._rooms = _.map(rooms, 'Name')
+            });
+
+        this._metrcService.getItems()
+            .subscribe((items: Array<any>) => {
+                this._items = _.map(items, 'Name')
             });
 
         this._pageRoute.activatedRoute
@@ -81,6 +87,10 @@ export class BatchDetailPackageComponent implements OnInit {
 
     get isCreating(): boolean {
         return this._isCreating;
+    }
+
+    get items(): any {
+        return this._items;
     }
 
     onScanTap(): void {

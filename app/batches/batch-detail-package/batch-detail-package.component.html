@@ -12,21 +12,23 @@
         <StackLayout class="item-list">
           <RadDataForm tkExampleTitle tkToggleNavButton [source]="batchPackage" [isReadOnly]="false">
 
-            <TKEntityProperty tkDataFormProperty name="Tag" displayName="Tag Identifier" index=0>
-                <TKPropertyEditor tkEntityPropertyEditor></TKPropertyEditor>
-            </TKEntityProperty>
-            <TKEntityProperty tkDataFormProperty name="Room" displayName="Package Storage Location" [valuesProvider]="rooms" index=2>
+            <TKEntityProperty tkDataFormProperty name="Item" [valuesProvider]="items" index=0>
               <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
-            <TKEntityProperty tkDataFormProperty name="Count" displayName="Number of Clones" index=1>
+            <TKEntityProperty tkDataFormProperty name="Tag" displayName="Tag Identifier" index=1>
+                <TKPropertyEditor tkEntityPropertyEditor></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="Room" displayName="Package Storage Location" [valuesProvider]="rooms" index=3>
+              <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="Count" displayName="Number of Clones" index=2>
               <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
             </TKEntityProperty>
-            <TKEntityProperty tkDataFormProperty name="ActualDate" displayName="Packaging Date" index=3>
+            <TKEntityProperty tkDataFormProperty name="ActualDate" displayName="Packaging Date" index=4>
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
             <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
               <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
-              <TKEntityProperty tkPropertyGroupProperties name="Item"></TKEntityProperty>
             </TKPropertyGroup>
           </RadDataForm>
         </StackLayout>
