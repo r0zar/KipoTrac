@@ -4,10 +4,10 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { alert } from "ui/dialogs";
 import { EventData } from "data/observable";
 import { DataFormEventData } from "nativescript-ui-dataform";
-import firebase = require("nativescript-plugin-firebase");
+import { DatePicker } from "ui/date-picker";
 import { Item } from "../shared/item.model";
 import { MetrcService } from "../../shared/metrc.service";
-
+import { screen } from 'platform';
 import _ = require('lodash');
 
 /* ***********************************************************
@@ -17,16 +17,23 @@ import _ = require('lodash');
 @Component({
     moduleId: module.id,
     selector: "ItemDetailCreate",
-    templateUrl: "./item-detail-create.component.html"
+    templateUrl: "../shared/configure-item-detail.component.html"
 })
 export class ItemDetailCreateComponent implements OnInit {
     private _item: Item;
     private _strains: any;
     private _unitsOfMeasure: any;
-    private categories: any;
+    private _validUnitsOfMeasure: any;
     private _itemCategories: any;
+    private _chemicalUnits: any;
+    private _volumeUnits: any;
+    private thcRequired: boolean = false;
+    private weightRequired: boolean = false;
+    private volumeRequired: boolean = false;
+    private categories: any;
     private units: any;
     private uid: string;
+    private screenHeight: number = screen.mainScreen.heightDIPs;
 
     constructor(
         private http: HttpClient,
@@ -51,21 +58,35 @@ export class ItemDetailCreateComponent implements OnInit {
 
         this._metrcService.getStrains()
           .subscribe((strains: Array<any>) => {
-              this._strains = _.map(strains, 'Name')
-          });
-
-        this._metrcService.getUnitsOfMeasure()
-          .subscribe((units: Array<any>) => {
-              this.units = units
-              this._unitsOfMeasure = _.map(units, 'Name')
-          });
+              this._strains = strains
+          })
 
         this._metrcService.getItemCategories()
           .subscribe((categories: Array<any>) => {
-              this.categories = categories
-              this._itemCategories = _.map(categories, 'Name')
-          });
+              this._itemCategories = categories
+              this.dfPropertyCommitted({})
+          })
 
+        this._metrcService.getUnitsOfMeasure()
+          .subscribe((units: Array<any>) => {
+              this._unitsOfMeasure = units
+              this._chemicalUnits = _.filter(units, {QuantityType: 'WeightBased'})
+              this._volumeUnits = _.filter(units, {QuantityType: 'VolumeBased'})
+              this.dfPropertyCommitted({})
+          })
+
+    }
+
+    dfPropertyCommitted(args) {
+        // find what quantity type the choice is...
+        let itemCategory = _.find(this._itemCategories, {Name: this._item.ItemCategory})
+        let QuantityType = itemCategory.QuantityType
+        // adjust units of measure list to only show valid options
+        this._validUnitsOfMeasure = _.filter(this._unitsOfMeasure, {QuantityType})
+        // show the valid units fields
+        this.thcRequired = itemCategory.RequiresUnitThcContent
+        this.weightRequired = itemCategory.RequiresUnitWeight
+        this.volumeRequired = itemCategory.RequiresUnitVolume
     }
 
     get item(): Item {
@@ -73,20 +94,23 @@ export class ItemDetailCreateComponent implements OnInit {
     }
 
     get strains(): any {
-        return this._strains;
+        return _.map(this._strains, 'Name');
     }
 
     get itemCategories(): any {
-        return this._itemCategories;
+        return _.map(this._itemCategories, 'Name')
     }
 
     get unitsOfMeasure(): any {
-        return this._unitsOfMeasure;
+        return _.map(this._validUnitsOfMeasure, 'Name');
     }
 
-    dfPropertyCommitted(): void {
-      // let quantityType = _.find(this.categories, {Name: this._item.ItemCategory}).QuantityType
-      // this._unitsOfMeasure = _.filter(this.units, {QuantityType: quantityType})
+    get chemicalUnitsOfMeasure(): any {
+        return _.map(this._chemicalUnits, 'Name');
+    }
+
+    get volumeUnitsOfMeasure(): any {
+        return _.map(this._volumeUnits, 'Name');
     }
 
     onTap(): void {

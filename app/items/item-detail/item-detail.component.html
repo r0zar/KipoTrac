@@ -22,7 +22,7 @@
 			<!--Add your page content here-->
       <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="item" isReadOnly="true">
         <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Product Details">
-            <TKEntityProperty tkPropertyGroupProperties name="StrainName" displayName="Strain"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="Strain" displayName="Strain"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryName" displayName="Product Category"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="UnitOfMeasureName" displayName="Units of Measure"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="UnitThcContent" [displayName]="thcDisplay" [hidden]="!isUnitThcContent">
@@ -47,7 +47,7 @@
             <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryType"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="QuantityType"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="UnitOfMeasure"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="Strain"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="StrainName"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="StrainId"></TKEntityProperty>
         </TKPropertyGroup>
       </RadDataForm>

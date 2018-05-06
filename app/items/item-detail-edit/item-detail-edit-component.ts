@@ -3,11 +3,9 @@ import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { alert } from "ui/dialogs";
 import { DatePicker } from "ui/date-picker";
 import { EventData } from "data/observable";
-
 import { Item } from "../shared/item.model";
 import { MetrcService } from "../../shared/metrc.service";
 import { screen } from 'platform';
-
 import _ = require('lodash');
 
 
@@ -18,7 +16,7 @@ import _ = require('lodash');
 @Component({
     moduleId: module.id,
     selector: "ItemDetailEdit",
-    templateUrl: "./item-detail-edit.component.html"
+    templateUrl: "../shared/configure-item-detail.component.html"
 })
 export class ItemDetailEditComponent implements OnInit {
     private _item: Item;
