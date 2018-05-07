@@ -1,3 +1,4 @@
+import _ = require('lodash');
 import { Component, OnInit, ViewChild, Input, ElementRef } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -11,8 +12,6 @@ import firebase = require("nativescript-plugin-firebase");
 import { AuthService } from "../../shared/auth.service";
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
-
-import _ = require('lodash');
 
 /* ***********************************************************
 * This is the batch detail create component.
@@ -54,14 +53,19 @@ export class BatchDetailPackageComponent implements OnInit {
                 this._rooms = _.map(rooms, 'Name')
             });
 
-        this._metrcService.getItems()
-            .subscribe((items: Array<any>) => {
-                this._items = _.map(items, 'Name')
-            });
-
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
-            .forEach((params) => this._batchPackage = new BatchPackage({Id: params.id}));
+            .forEach((params) => {
+              this._metrcService.getBatch(params.id)
+                .subscribe((batch: any) => {
+                  this._metrcService.getItems()
+                      .subscribe((items: Array<any>) => {
+                          this._items = _.map(_.filter(items, {StrainName: batch.StrainName, ProductCategoryName: 'Immature Plant'}), 'Name')
+                          this._batchPackage.Item = this._items[0]
+                      });
+                })
+              this._batchPackage = new BatchPackage({Id: params.id})
+            });
 
     }
 
