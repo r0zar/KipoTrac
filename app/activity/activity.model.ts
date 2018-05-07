@@ -21,7 +21,7 @@ export class Activity {
         } else if (options.object == 'room') {
           this.objectIcon = String.fromCharCode(0xf0c8)
         } else if (options.object == 'item') {
-          this.objectIcon = String.fromCharCode(0xf02c)
+          this.objectIcon = String.fromCharCode(0xf02b)
         } else if (options.object == 'batch') {
           this.objectIcon = String.fromCharCode(0xf4d8)
         } else if (options.object == 'package') {
