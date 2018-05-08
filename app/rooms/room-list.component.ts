@@ -43,11 +43,10 @@ export class RoomListComponent implements OnInit {
 
         // main rooms lookup logic
         this._metrcService.getRooms()
-            .subscribe((rooms: Array<Room>) => {
-
-                this._rooms = new ObservableArray(rooms);
-                this._isLoading = false;
-            })
+          .subscribe((rooms: Array<Room>) => {
+            this._rooms = new ObservableArray(rooms);
+            this._isLoading = false;
+          })
         /* ***********************************************************
         * The data is retrieved remotely from FireBase.
         * The actual data retrieval code is wrapped in a data service.
@@ -75,12 +74,11 @@ export class RoomListComponent implements OnInit {
     public onPullToRefreshInitiated(args: ListViewEventData) {
       // main rooms lookup logic
       this._metrcService.getRooms()
-          .subscribe((rooms: Array<Room>) => {
-
-              this._rooms = new ObservableArray(rooms);
-              this._isLoading = false;
-              args.object.notifyPullToRefreshFinished();
-          })
+        .subscribe((rooms: Array<Room>) => {
+          this._rooms = new ObservableArray(rooms);
+          this._isLoading = false;
+          args.object.notifyPullToRefreshFinished();
+        })
 
     }
 

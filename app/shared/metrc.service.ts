@@ -44,7 +44,6 @@ export class MetrcService {
       console.dir(JSON.stringify(error)); // log to console instead
       // Let the app keep running by returning an empty result.
       TNSFancyAlert.showError(error.statusText, _.map(error.error, 'message').join('\n') || error.error.Message, 'Okay').then( () => {});
-      //alert({title: error.statusText, message: _.map(error.error, 'message').join('  '), okButtonText: "OK"})
       return of(result as T);
     };
   }
