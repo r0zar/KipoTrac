@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
 import _ = require('lodash');
+import moment = require('moment');
+import firebase = require("nativescript-plugin-firebase");
 
 import { AuthService } from "../auth.service";
 import { FacilityService } from "../../facilities/shared/facility.service";
@@ -30,14 +32,30 @@ export class MyDrawerItemComponent implements OnInit {
         * Use the MyDrawerItemComponent "onInit" event handler to initialize the properties data values.
         *************************************************************/
 
+
         if (this.title == "Home" || this.title == "Facilities" || this.title == "Settings") {
           this.active = true
         }
         else if (this.title == "Rooms" || this.title == "Strains" || this.title == "Items" || this.title == "Plant Batches") {
-          this.active = _.isString(FacilityService.facility)
+          firebase.getValue("/users/" + AuthService.token + "/license/number")
+            .then(number => {
+              FacilityService.facility = number.value
+              this.active = _.isString(FacilityService.facility)
+            })
+            .catch(error => console.dir(error))
         }
         else if (this.title == "Mature Plants" || this.title == "Harvests" || this.title == "Packages" || this.title == "Transfers") {
-          this.active = AuthService.activeSubscription
+          firebase.getValue("/users/" + AuthService.token + "/subscription")
+            .then(subscription => {
+              if (subscription.value) {
+                if (subscription.value.productIdentifier == 'monthly' && moment(subscription.value.transactionDate).add(1, 'M').isAfter() && subscription.value.transactionState == 'purchased') {
+                  this.active = AuthService.activeSubscription = true
+                }
+              } else {
+                this.active = AuthService.activeSubscription = false
+              }
+            })
+            .catch(() => this.active = AuthService.activeSubscription = false)
         }
     }
 

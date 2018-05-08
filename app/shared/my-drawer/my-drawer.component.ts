@@ -39,6 +39,8 @@ export class MyDrawerComponent implements OnInit {
             this.email = user.email
           })
 
+        AuthService.apiKey = 'FusVbe4Yv6W1DGNuxKNhByXU6RO6jSUPcbRCoRDD98VNXc4D'
+
 
     }
 
