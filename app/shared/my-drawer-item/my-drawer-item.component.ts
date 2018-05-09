@@ -5,10 +5,11 @@ import moment = require('moment');
 import firebase = require("nativescript-plugin-firebase");
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from "rxjs/Observable";
-
+import { TNSFancyAlert, TNSFancyAlertButton } from 'nativescript-fancyalert';
 import { AuthService } from "../auth.service";
 import { FacilityService } from "../../facilities/shared/facility.service";
 import { MetrcService } from "../metrc.service";
+import { Data } from "../data.service";
 
 /* ***********************************************************
 * Keep data that is displayed as drawer items in the MyDrawer component class.
@@ -17,75 +18,76 @@ import { MetrcService } from "../metrc.service";
     selector: "MyDrawerItem",
     moduleId: module.id,
     templateUrl: "./my-drawer-item.component.html",
-    styleUrls: ["./my-drawer-item.component.scss"]
+    styleUrls: ["./my-drawer-item.component.scss"],
 })
 export class MyDrawerItemComponent implements OnInit {
     @Input() title: string;
     @Input() route: string;
     @Input() icon: string;
     @Input() isSelected: boolean;
-    active: boolean;
+    // HACK subscription force on
+    activeSubscription: boolean = false;
+    active: boolean = false;
+    enabled: boolean = true;
+    message: string;
 
     constructor(
+      private data: Data,
       private _metrcService: MetrcService,
       private routerExtensions: RouterExtensions
     ) {}
 
     ngOnInit(): void {
-        /* ***********************************************************
-        * Use the MyDrawerItemComponent "onInit" event handler to initialize the properties data values.
-        *************************************************************/
+        // TODO this pattern will be needed to pull in the values if we move the ajax calls out of this component
+        // this.data.currentMessage.subscribe(message => {
+        //   this.message = message
+        // })
 
+        // enable the baseline menu options
+        this.showIfBaseOption()
+        // see if the user selected a facility / finished the tour
+        this.showIfTourCompleted()
+        // enable if the selected license allows access
+        this.showIfLicensed()
+        // ask firebase if user has an active subscription then...
+        this.enableIfSubscribed()
 
-        if (this.title == "Home" || this.title == "Facilities" || this.title == "Settings") {
-          this.active = true
-        }
-        else if (this.title == "Rooms" || this.title == "Strains" || this.title == "Items" || this.title == "Plant Batches") {
-          firebase.getValue("/users/" + AuthService.token + "/license/number")
-            .then(number => {
-              FacilityService.facility = number.value
-              this.active = _.isString(FacilityService.facility)
-              if (this.active && this.title == "Rooms") {
-                this._metrcService.getRooms()
-                  .subscribe(resp => {}, err => this.active = false)
-              } else if (this.active && this.title == "Strains") {
-                this._metrcService.getStrains()
-                  .subscribe(resp => {}, err => this.active = false)
-              } else if (this.active && this.title == "Items") {
-                this._metrcService.getItems()
-                  .subscribe(resp => {}, err => this.active = false)
-              } else if (this.active && this.title == "Plant Batches") {
-                this._metrcService.getBatches()
-                  .subscribe(resp => {}, err => this.active = false)
-              }
-            })
-        }
-        else if (this.title == "Mature Plants" || this.title == "Harvests" || this.title == "Packages" || this.title == "Transfers") {
-          firebase.getValue("/users/" + AuthService.token + "/subscription")
-            .then(subscription => {
-              if (subscription.value) {
-                if (subscription.value.productIdentifier == 'monthly' && moment(subscription.value.transactionDate).add(1, 'M').isAfter() && subscription.value.transactionState == 'purchased') {
-                  this.active = AuthService.activeSubscription = true
-                  if (this.active && this.title == "Mature Plants") {
-                    this._metrcService.getVegetativePlants()
-                      .subscribe(resp => {}, err => this.active = false)
-                  } else if (this.active && this.title == "Harvests") {
-                    this._metrcService.getHarvests('active')
-                      .subscribe(resp => {}, err => this.active = false)
-                  } else if (this.active && this.title == "Packages") {
-                    this._metrcService.getPackages('active')
-                      .subscribe(resp => {}, err => this.active = false)
-                  } else if (this.active && this.title == "Transfers") {
-                    this._metrcService.getTransfers()
-                      .subscribe(resp => {}, err => this.active = false)
-                  }
-                }
-              } else {
-                this.active = AuthService.activeSubscription = false
-              }
-            })
-            .catch(() => this.active = AuthService.activeSubscription = false)
-        }
+    }
+
+    showIfBaseOption() {
+      if (this.title == "Home" || this.title == "Facilities" || this.title == "Packages" || this.title == "Transfers" || this.title == "Settings") {
+        this.active = true
+      }
+    }
+
+    showIfTourCompleted() {
+      if (this.title == "Strains" || this.title == "Items") {
+        // if this returns an object that means a user has selected a facility
+        firebase.getValue("/users/" + AuthService.token + "/license")
+          .then(license => this.active = _.isObject(license.value))
+      }
+    }
+
+    showIfLicensed() {
+      if (this.title == "Rooms") {
+        this._metrcService.getRooms()
+          .subscribe(() => this.active = true, err => this.active = false)
+      } else if (this.title == "Plant Batches") {
+        this._metrcService.getBatches()
+          .subscribe(() => this.active = true, err => this.active = false)
+      } else if (this.title == "Mature Plants") {
+        this._metrcService.getVegetativePlants()
+          .subscribe(() => this.active = true, err => this.active = false)
+      } else if (this.title == "Harvests") {
+        this._metrcService.getHarvests('active')
+          .subscribe(() => this.active = true, err => this.active = false)
+      }
+    }
+
+    enableIfSubscribed() {
+      if (this.title == "Mature Plants" || this.title == "Harvests" || this.title == "Packages" || this.title == "Transfers") {
+        this.enabled = this.activeSubscription
+      }
     }
 
     /* ***********************************************************
@@ -94,10 +96,15 @@ export class MyDrawerItemComponent implements OnInit {
     * based on the tapped navigationItem's route.
     *************************************************************/
     onNavItemTap(navItemRoute: string): void {
-        this.routerExtensions.navigate([navItemRoute], {
-            transition: {
-                name: "fade"
-            }
-        });
+        if (this.enabled) {
+          this.routerExtensions.navigate([navItemRoute], {
+              transition: {
+                  name: "fade"
+              }
+          });
+        } else {
+          TNSFancyAlert.showInfo(`Paid Feature: ${navItemRoute}`, 'For full access, navigate to Compliance Reporting page on the Settings page and setup your KipoTrac subription.', 'Okay')
+            .then(() => {});
+        }
     }
 }

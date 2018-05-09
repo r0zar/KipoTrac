@@ -49,7 +49,6 @@ export class MetrcService {
   }
 
   private successAlert(operation = 'operation', response): void {
-    console.dir(response)
     TNSFancyAlert.showSuccess(response.Name, operation, 'Okay').then( () => {});
   }
 
@@ -66,7 +65,6 @@ export class MetrcService {
   getRooms(): Observable<Room[]> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getRooms'}]})
       return this.http.get<Room[]>(`${this.rootUrl}/rooms/v1/active?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('getRooms', [])));
   }
 
   getRoom(id: number): Observable<Room> {
@@ -98,7 +96,6 @@ export class MetrcService {
   getStrains(): Observable<Strain[]> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getStrains'}]})
       return this.http.get<Strain[]>(`${this.rootUrl}/strains/v1/active?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('getStrains', [])));
   }
 
   getStrain(id: number): Observable<Strain> {
@@ -130,7 +127,6 @@ export class MetrcService {
   getBatches(): Observable<Batch[]> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getBatches'}]})
       return this.http.get<Batch[]>(`${this.rootUrl}/plantbatches/v1/active?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('getBatches', [])));
   }
 
   getBatch(id: number): Observable<Batch> {
@@ -180,13 +176,11 @@ export class MetrcService {
   getVegetativePlants(): Observable<Plant[]> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getVegetativePlants'}]})
       return this.http.get<Plant[]>(`${this.rootUrl}/plants/v1/vegetative?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('getVegetativePlants', [])));
   }
 
   getFloweringPlants(): Observable<Plant[]> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getFloweringPlants'}]})
       return this.http.get<Plant[]>(`${this.rootUrl}/plants/v1/flowering?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('getFloweringPlants', [])));
   }
 
   movePlants(Plant): Observable<any> {
@@ -230,7 +224,6 @@ export class MetrcService {
   getHarvests(type: string): Observable<Harvest[]> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getHarvests'}]})
       return this.http.get<Harvest[]>(`${this.rootUrl}/harvests/v1/${type}?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('getHarvests', [])));
   }
 
   getHarvest(id: number): Observable<Harvest> {
@@ -274,7 +267,6 @@ export class MetrcService {
   getItems(): Observable<Item[]> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getItems'}]})
       return this.http.get<Item[]>(`${this.rootUrl}/items/v1/active?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('getItems', [])));
   }
 
   getItemCategories(): Observable<any[]> {
@@ -306,7 +298,6 @@ export class MetrcService {
   getPackages(type: string): Observable<Package[]> {
       firebase.analytics.logEvent({key: "metrc_service", parameters: [{key: "method", value: 'getPackages'}]})
       return this.http.get<Package[]>(`${this.rootUrl}/packages/v1/${type}?licenseNumber=${FacilityService.facility}`, {headers: this.header})
-        .pipe(catchError(this.handleError('getPackages', [])));
   }
 
   getPackage(id: number): Observable<Package> {

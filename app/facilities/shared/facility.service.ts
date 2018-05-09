@@ -27,4 +27,36 @@ export class FacilityService {
       setString("licenseType", type);
     }
 
+    static get hasRooms(): string {
+      return getString("hasRooms");
+    }
+
+    static set hasRooms(hasRooms: string) {
+      setString("hasRooms", hasRooms);
+    }
+
+    static get hasBatches(): string {
+      return getString("hasBatches");
+    }
+
+    static set hasBatches(hasBatches: string) {
+      setString("hasBatches", hasBatches);
+    }
+
+    static get hasPlants(): string {
+      return getString("hasPlants");
+    }
+
+    static set hasPlants(hasPlants: string) {
+      setString("hasPlants", hasPlants);
+    }
+
+    static get hasHarvests(): string {
+      return getString("hasHarvests");
+    }
+
+    static set hasHarvests(hasHarvests: string) {
+      setString("hasHarvests", hasHarvests);
+    }
+
 }
