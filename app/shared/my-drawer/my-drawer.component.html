@@ -15,31 +15,27 @@ Feel free to customize layouts and components to change how your app drawer look
             </MyDrawerItem>
             <MyDrawerItem title="Facilities" route="/facilities" icon="&#xf275;" [isSelected]="isPageSelected('Facilities')">
             </MyDrawerItem>
-            <MyDrawerItem title="Rooms" route="/rooms" icon="&#xf0c8;" [isSelected]="isPageSelected('Rooms')">
+            <MyDrawerItem *ngIf='facilitySelected' title="Rooms" route="/rooms" icon="&#xf0c8;" [isSelected]="isPageSelected('Rooms')">
             </MyDrawerItem>
-            <MyDrawerItem title="Strains" route="/strains" icon="&#xf471;" [isSelected]="isPageSelected('Strains')">
+            <MyDrawerItem *ngIf='facilitySelected' title="Strains" route="/strains" icon="&#xf471;" [isSelected]="isPageSelected('Strains')">
             </MyDrawerItem>
-            <MyDrawerItem title="Items" route="/items" icon="&#xf02c;" [isSelected]="isPageSelected('Items')">
+            <MyDrawerItem *ngIf='facilitySelected' title="Items" route="/items" icon="&#xf02c;" [isSelected]="isPageSelected('Items')">
             </MyDrawerItem>
-            <MyDrawerItem title="Plant Batches" route="/batches" icon="&#xf4d8;" [isSelected]="isPageSelected('Plant Batches')">
+            <MyDrawerItem *ngIf='facilitySelected' title="Plant Batches" route="/batches" icon="&#xf4d8;" [isSelected]="isPageSelected('Plant Batches')">
             </MyDrawerItem>
-            <MyDrawerItem title="Mature Plants" route="/plants" icon="&#xf18c;" [isSelected]="isPageSelected('Mature Plants')">
+            <MyDrawerItem *ngIf='facilitySelected' title="Mature Plants" route="/plants" icon="&#xf18c;" [isSelected]="isPageSelected('Mature Plants')">
             </MyDrawerItem>
-            <MyDrawerItem title="Harvests" route="/harvests" icon="&#xf0c4;" [isSelected]="isPageSelected('Harvests')">
+            <MyDrawerItem *ngIf='facilitySelected' title="Harvests" route="/harvests" icon="&#xf0c4;" [isSelected]="isPageSelected('Harvests')">
             </MyDrawerItem>
-            <MyDrawerItem title="Packages" route="/packages" icon="&#xf466;" [isSelected]="isPageSelected('Packages')">
+            <MyDrawerItem *ngIf='facilitySelected' title="Packages" route="/packages" icon="&#xf466;" [isSelected]="isPageSelected('Packages')">
             </MyDrawerItem>
-            <MyDrawerItem title="Transfers" route="/transfers" icon="&#xf0d1;" [isSelected]="isPageSelected('Transfers')">
+            <MyDrawerItem *ngIf='facilitySelected' title="Transfers" route="/transfers" icon="&#xf0d1;" [isSelected]="isPageSelected('Transfers')">
             </MyDrawerItem>
-            <!-- <MyDrawerItem title="Cars (Demo Page)" route="/cars" icon="&#xf1b9;" [isSelected]="isPageSelected('Cars')">
-            </MyDrawerItem> -->
 
             <StackLayout class="hr-light"></StackLayout>
 
             <!-- <MyDrawerItem title="Payment" route="/payment" icon="&#xf09d;" [isSelected]="isPageSelected('Payment')">
-            </MyDrawerItem>
-            <MyDrawerItem title="Buy Kipo Credits" route="/credits" icon="&#xf15a;" [isSelected]="isPageSelected('Credits')">
-            </MyDrawerItem> -->
+            </MyDrawerItem>-->
             <MyDrawerItem title="Settings" route="/settings" icon="&#xf013;" [isSelected]="isPageSelected('Settings')">
             </MyDrawerItem>
         </StackLayout>

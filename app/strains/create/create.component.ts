@@ -1,3 +1,4 @@
+import _ = require('lodash');
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -6,9 +7,9 @@ import { DataFormEventData } from "nativescript-ui-dataform";
 import firebase = require("nativescript-plugin-firebase");
 import { Strain } from "../shared/strain.model";
 import { MetrcService } from "../../shared/metrc.service";
+import { AuthService } from "../../shared/auth.service";
 import { alert } from "ui/dialogs";
 
-import _ = require('lodash');
 
 /* ***********************************************************
 * This is the noun verb component.
@@ -55,26 +56,12 @@ export class CreateComponent implements OnInit {
 
         this._isLoading = true
         this._metrcService.createStrains(this._strain)
-            .finally(() => {
-              this._isLoading = false
-              this._routerExtensions.navigate(['/strains'], {animated: true, transition: {name: "slideBottom", duration: 200, curve: "ease"}})
-            })
-            .subscribe(() => {
-              firebase.getCurrentUser()
-                .then(user => {
-                  firebase.getValue("/users/" + user.uid + "/strains/setup")
-                    .then(setup => {
-                      if (!setup.value) {
-                        firebase.setValue("/users/" + user.uid + '/strains/setup', true)
-                        alert({
-                          title: 'Wow, where can I get some of that!?',
-                          message: 'Oh yeah- you... Cool.\n\nCongratulations, you\'re all set to plant your first batch of clones or seeds in KipoTrac.\n\nCheck your menu and happy growing!',
-                          okButtonText: "Let\'s grow"
-                        })
-                      }
-                    })
-                })
-            })
+          .subscribe(() => {
+            // save the event to the activity log
+            firebase.push("/users/" + AuthService.token + '/activity', {object: 'strain', status: 'created', createdAt: Date.now()});
+            this._isLoading = false
+            this._routerExtensions.navigate(['/strains'], {animated: true, transition: {name: "slideBottom", duration: 200, curve: "ease"}})
+          })
       }
 
 

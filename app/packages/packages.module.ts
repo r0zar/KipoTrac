@@ -13,8 +13,6 @@ import { CreateComponent } from "./create/create.component";
 import { CreatePlantingsComponent } from "./createplantings/createplantings.component";
 import { CreateTestingComponent } from "./createtesting/createtesting.component";
 import { RemediateComponent } from "./remediate/remediate.component";
-
-import { Data } from "../shared/data.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
 
 @NgModule({
@@ -38,7 +36,6 @@ import { BarcodeScanner } from 'nativescript-barcodescanner';
     entryComponents: [
     ],
     providers: [
-        Data,
         BarcodeScanner
     ],
     schemas: [

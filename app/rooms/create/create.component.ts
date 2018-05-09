@@ -53,25 +53,11 @@ export class CreateComponent implements OnInit {
     onDoneButtonTap(): void {
         this._isLoading = true
         this._metrcService.createRooms(this._room)
-          .finally(() => {
-            this._isLoading = false
-            this._routerExtensions.navigate(['/rooms'], {animated: true, transition: {name: "slideBottom", duration: 200, curve: "ease"}})
-          })
           .subscribe(() => {
             // save the event to the activity log
             firebase.push("/users/" + AuthService.token + '/activity', {object: 'room', status: 'created', createdAt: Date.now()});
-            // do the main guided tour
-            firebase.getValue("/users/" + AuthService.token + "/rooms/setup")
-              .then(setup => {
-                if (!setup.value) {
-                  firebase.setValue("/users/" + AuthService.token + '/rooms/setup', true)
-                  alert({
-                    title: 'Ah, good to have some room!',
-                    message: 'Nice! Now we have some space to grow those beautiful buds.\n\nBefore we can create a new batch though, I need to know a little about your strains.\n\nHead to the \'Strains\' page and we can do just that.',
-                    okButtonText: "OK"
-                  })
-                }
-              })
+            this._isLoading = false
+            this._routerExtensions.navigate(['/rooms'], {animated: true, transition: {name: "slideBottom", duration: 200, curve: "ease"}})
           })
     }
 

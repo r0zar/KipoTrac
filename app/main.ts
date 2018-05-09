@@ -9,7 +9,6 @@ enableProdMode();
 
 import firebase = require("nativescript-plugin-firebase");
 import { AuthService } from "./shared/auth.service";
-import { FacilityService } from "./facilities/shared/facility.service";
 const moment = require('moment');
 
 // this is for the purchase plugin
@@ -41,31 +40,6 @@ purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
         purchase.consumePurchase(transaction.transactionReceipt)
     }
 });
-
-// intialize firebase and
-firebase.init(
-  {
-    persist: false,
-    onAuthStateChanged: (data: any) => {
-      if (data.loggedIn) {
-        // initialization actions
-        AuthService.token = data.user.uid;
-        firebase.getValue("/users/" + AuthService.token + "/account/apiKey")
-          .then(key => {
-            AuthService.apiKey = key.value
-          })
-          .catch(error => console.dir(error))
-      }
-      else {
-        AuthService.token = '';
-        AuthService.apiKey = '';
-        FacilityService.facility = '';
-        AuthService.activeSubscription = false;
-      }
-    }
-  })
-  .then(() => console.log(">>>>> Firebase initialized"))
-  .catch(err => console.log(">>>>> Firebase init error: " + err));
 
 // add custom elements to UI from 3rd party plugins
 import { registerElement } from "nativescript-angular/element-registry";

@@ -2,6 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptFormsModule } from "nativescript-angular/forms"
 import { AuthProviders, AppRoutingModule } from "./app.routing";
+import { Data } from "./shared/data.service";
 
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
@@ -10,7 +11,8 @@ import "./rxjs.imports";
 
 @NgModule({
   providers: [
-    AuthProviders
+    AuthProviders,
+    Data
   ],
   bootstrap: [
     AppComponent

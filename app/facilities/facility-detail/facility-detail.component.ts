@@ -5,6 +5,7 @@ import { DataFormEventData } from "nativescript-ui-dataform";
 import { Facility } from "../shared/facility.model";
 import { FacilityService } from "../shared/facility.service";
 import { MetrcService } from "../../shared/metrc.service";
+import { Data } from "../../shared/data.service";
 
 import firebase = require("nativescript-plugin-firebase");
 import { alert } from "ui/dialogs";
@@ -36,6 +37,7 @@ export class FacilityDetailComponent implements OnInit {
     private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
 
     constructor(
+        private data: Data,
         private _metrcService: MetrcService,
         private _facilityService: FacilityService,
         private _pageRoute: PageRoute,
@@ -85,12 +87,8 @@ export class FacilityDetailComponent implements OnInit {
 
     fabTap(): void {
       FacilityService.facility = this._facility.LicenseNumber
-      FacilityService.licenseType = this._facility.LicenseType
+      this.data.setFacilitySelected(true)
       this.iconColor = 'orange'
-      let cultivator = _.includes(FacilityService.licenseType, 'M-Medium Mixed-Light')
-      if (this.firstTime && cultivator) {
-        alert({title: 'Nice Job!', message: 'Now that you\'ve selected a facility, we need to set up the rooms for it.\n\nClick them menu again, and select \'Rooms\'.', okButtonText: "Got it"})
-      }
     }
 
     get facility(): Facility {

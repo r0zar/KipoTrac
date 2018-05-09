@@ -37,7 +37,6 @@ import { Plant } from "./shared/plant.model";
         MoveComponent
     ],
     providers: [
-        //BarcodeScanner
     ],
     schemas: [
         NO_ERRORS_SCHEMA

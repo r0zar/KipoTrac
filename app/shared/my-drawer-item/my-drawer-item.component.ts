@@ -25,11 +25,10 @@ export class MyDrawerItemComponent implements OnInit {
     @Input() route: string;
     @Input() icon: string;
     @Input() isSelected: boolean;
-    // HACK subscription force on
+    // HACK subscription force
     activeSubscription: boolean = false;
     active: boolean = false;
     enabled: boolean = true;
-    message: string;
 
     constructor(
       private data: Data,
@@ -38,15 +37,19 @@ export class MyDrawerItemComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        // TODO this pattern will be needed to pull in the values if we move the ajax calls out of this component
-        // this.data.currentMessage.subscribe(message => {
-        //   this.message = message
-        // })
+
+        // TODO move all this shiz out of here. now that ive discovered the power
+        // of subscribing to observables, i can use that to solve all my needs
+        // by puttings subscriptions directly in the toplevel drawer menu
+        // and not have to rely on the wacky logical HACK that you see below
+
+        // this receives a event to check if subscription is valid
+        this.data.currentMessage.subscribe(message => {
+          this.activeSubscription = moment(message.expiryTimeMillis).isAfter()
+        })
 
         // enable the baseline menu options
         this.showIfBaseOption()
-        // see if the user selected a facility / finished the tour
-        this.showIfTourCompleted()
         // enable if the selected license allows access
         this.showIfLicensed()
         // ask firebase if user has an active subscription then...
@@ -55,18 +58,11 @@ export class MyDrawerItemComponent implements OnInit {
     }
 
     showIfBaseOption() {
-      if (this.title == "Home" || this.title == "Facilities" || this.title == "Packages" || this.title == "Transfers" || this.title == "Settings") {
+      if (this.title == "Home" || this.title == "Facilities" || this.title == "Strains" || this.title == "Items" || this.title == "Packages" || this.title == "Transfers" || this.title == "Settings") {
         this.active = true
       }
     }
 
-    showIfTourCompleted() {
-      if (this.title == "Strains" || this.title == "Items") {
-        // if this returns an object that means a user has selected a facility
-        firebase.getValue("/users/" + AuthService.token + "/license")
-          .then(license => this.active = _.isObject(license.value))
-      }
-    }
 
     showIfLicensed() {
       if (this.title == "Rooms") {

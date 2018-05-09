@@ -8,13 +8,20 @@ export class Data {
 
     public storage: any;
 
-    // private messageSource = new BehaviorSubject<string>("default message");
-    // currentMessage = this.messageSource.asObservable();
+    private messageSource = new BehaviorSubject<any>({});
+    currentMessage = this.messageSource.asObservable();
+
+    private selectedFacility = new BehaviorSubject<any>(false);
+    isFacilitySelected = this.selectedFacility.asObservable();
 
     public constructor() {}
 
-    // changeMessage(message: string) {
-    //   this.messageSource.next(message)
-    // }
+    changeMessage(message: any) {
+      this.messageSource.next(message)
+    }
+
+    setFacilitySelected(message: any) {
+      this.selectedFacility.next(message)
+    }
 
 }
