@@ -88,6 +88,10 @@ export class FacilityDetailComponent implements OnInit {
     fabTap(): void {
       FacilityService.facility = this._facility.LicenseNumber
       this.data.setFacilitySelected(true)
+      this._metrcService.getRooms().subscribe(() => this.data.activateRooms(true), () => this.data.activateRooms(false))
+      this._metrcService.getBatches().subscribe(() => this.data.activateBatches(true), () => this.data.activateBatches(false))
+      this._metrcService.getVegetativePlants().subscribe(() => this.data.activatePlants(true), () => this.data.activatePlants(false))
+      this._metrcService.getHarvests('active').subscribe(() => this.data.activateHarvests(true), () => this.data.activateHarvests(false))
       this.iconColor = 'orange'
     }
 

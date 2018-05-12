@@ -6,7 +6,6 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import firebase = require("nativescript-plugin-firebase");
 import { TNSFancyAlert, TNSFancyAlertButton } from 'nativescript-fancyalert';
-
 import { AuthService } from "../shared/auth.service";
 import { FacilityService } from "../facilities/shared/facility.service";
 import { Facility } from "../facilities/shared/facility.model"

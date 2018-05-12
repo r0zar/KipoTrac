@@ -2,7 +2,6 @@ import _ = require('lodash');
 import { Component, Input, OnInit } from "@angular/core";
 import { Data } from "../data.service";
 import firebase = require("nativescript-plugin-firebase");
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { AuthService } from "../auth.service";
 import { FacilityService } from "../../facilities/shared/facility.service";
 
@@ -20,6 +19,11 @@ export class MyDrawerComponent implements OnInit {
     name: string;
     email: string;
     facilitySelected: boolean;
+    subscribed: boolean;
+    roomsActivated: boolean;
+    batchesActivated: boolean;
+    plantsActivated: boolean;
+    harvestsActivated: boolean;
     /* ***********************************************************
     * The "selectedPage" is a component input property.
     * It is used to pass the current page title from the containing page component.
@@ -27,38 +31,40 @@ export class MyDrawerComponent implements OnInit {
     *************************************************************/
     @Input() selectedPage: string;
 
-    constructor(private data: Data, private http: HttpClient) {}
+    constructor(private data: Data) {}
 
     ngOnInit(): void {
         /* ***********************************************************
         * Use the MyDrawerComponent "onInit" event handler to initialize the properties data values.
         *************************************************************/
 
-        this.data.isFacilitySelected
-          .subscribe(message => {
-            this.facilitySelected = message
-          })
+        // HACK hardcode the API key
+        AuthService.apiKey = 'FusVbe4Yv6W1DGNuxKNhByXU6RO6jSUPcbRCoRDD98VNXc4D'
 
+        // this receives an async message to check if subscription is valid
+        this.data.isFacilitySelected.subscribe(selected => this.facilitySelected = selected)
+
+        // this recieves an async message and adjusts the menu to allow users to click on certain menu options
+        this.data.isSubscribed.subscribe(subscription => this.subscribed = subscription)
+
+        // this recieves an async message and adjusts the menu to allow users to click on certain menu options
+        this.data.isRoomsActivated.subscribe(activated => this.roomsActivated = activated)
+
+        // this recieves an async message and adjusts the menu to allow users to click on certain menu options
+        this.data.isBatchesActivated.subscribe(activated => this.batchesActivated = activated)
+
+        // this recieves an async message and adjusts the menu to allow users to click on certain menu options
+        this.data.isPlantsActivated.subscribe(activated => this.plantsActivated = activated)
+
+        // this recieves an async message and adjusts the menu to allow users to click on certain menu options
+        this.data.isHarvestsActivated.subscribe(activated => this.harvestsActivated = activated)
+
+        // gets current user into to show in the view
         firebase.getCurrentUser()
           .then(user => {
             this.name = user.name
             this.email = user.email
-
-            // get users active subscription and validate it against android/itunes APIs
-            // TODO add support for itunes to this and the cloud function
-            // TODO move this shiz into the main initialization space
-
-            firebase.getValue("/users/" + user.uid + "/subscription")
-              .then(subscription => {
-                this.http.get<any>(`https://us-central1-kiposoft-6ae15.cloudfunctions.net/subscription?subscriptionId=${subscription.value.productIdentifier}&token=${subscription.value.transactionReceipt}`)
-                  .subscribe(resp => this.data.changeMessage(resp), error => console.dir(error))
-              })
-              .catch(error => console.dir(error))
-
           })
-
-        AuthService.apiKey = 'FusVbe4Yv6W1DGNuxKNhByXU6RO6jSUPcbRCoRDD98VNXc4D'
-
 
     }
 
