@@ -24,7 +24,7 @@ export class PaymentComponent implements OnInit {
     }
 
     betaTester(): void {
-      alert({title: 'Early Access', message: 'Enjoy our 100% guarantee that we\'ll never raise your prices for METRC compliance services in KipoTrac.', okButtonText: "Dope"})
+      alert({title: 'Early Access', message: 'We can\'t express how much it means to us that you are using our product, KipoTrac. We work hard to make sure it\'s the best track and trace program on the market and we really hope you love it and it actually makes your life more enjoyable. We have a few rewards and surprises planned for you coming up as our way of saying thanks.', okButtonText: "Dope"})
     }
 
     onBackButtonTap(): void {
