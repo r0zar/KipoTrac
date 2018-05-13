@@ -39,3 +39,30 @@ export class Item {
         this.UnitWeightUnitOfMeasureName = options.UnitWeightUnitOfMeasureName || 'Milligrams';
     }
 }
+
+export class ItemDetail {
+    Name: string;
+    ItemCategory: string;
+    UnitOfMeasure: string;
+    Strain: string;
+    UnitThcContent: number;
+    UnitThcContentUnitOfMeasureName: string;
+    UnitVolume: number;
+    UnitVolumeUnitOfMeasureName: string;
+    UnitWeight: number;
+    UnitWeightUnitOfMeasureName: string;
+
+  constructor(options: any) {
+      this.Name = options.Name || '';
+      this.ItemCategory = options.ProductCategoryName || '';
+      this.UnitOfMeasure = options.UnitOfMeasureName || '';
+      this.Strain = options.StrainName || '';
+      this.UnitThcContent = Number(options.UnitThcContent || 0);
+      this.UnitThcContentUnitOfMeasureName = options.UnitThcContentUnitOfMeasureName || 'Milligrams';
+      this.UnitVolume = Number(options.UnitVolume || 0);
+      this.UnitVolumeUnitOfMeasureName = options.UnitVolumeUnitOfMeasureName || 'Milliliters';
+      this.UnitWeight = Number(options.UnitWeight || 0);
+      this.UnitWeightUnitOfMeasureName = options.UnitWeightUnitOfMeasureName || 'Milligrams';
+
+  }
+}
