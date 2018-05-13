@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import firebase = require("nativescript-plugin-firebase");
 import { alert } from "ui/dialogs";
+import { Data } from "../shared/data.service";
 
 @Component({
     selector: "Payment",
@@ -13,21 +14,17 @@ export class PaymentComponent implements OnInit {
     public activeSubscription: boolean = false;
 
     constructor(
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private data: Data
     ) { }
 
-
     ngOnInit(): void {
-
-      firebase.getCurrentUser()
-        .then(user => firebase.getValue("/users/" + user.uid + '/subscription'))
-        .then(subscription => this.activeSubscription = subscription.value.transactionState == 'purchased')
-        .catch(() => this.activeSubscription = false)
-
+      // I couldnt think of a better way to update this after the user buy a subscription
+      this.data.isSubscribed.subscribe(subscription => this.activeSubscription = subscription)
     }
 
     betaTester(): void {
-      alert({title: 'Early Access', message: 'Enjoy our 100% guarantee that we\'ll never raise your rates for METRC compliance services in KipoTrac.', okButtonText: "Dope"})
+      alert({title: 'Early Access', message: 'Enjoy our 100% guarantee that we\'ll never raise your prices for METRC compliance services in KipoTrac.', okButtonText: "Dope"})
     }
 
     onBackButtonTap(): void {

@@ -1,10 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, enableProdMode } from "@angular/core";
 import { AuthService } from "./shared/auth.service";
 import { MetrcService } from "./shared/metrc.service";
 import { FacilityService } from "./facilities/shared/facility.service";
 import firebase = require("nativescript-plugin-firebase");
 import { Data } from "./shared/data.service";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import *  as purchase from "nativescript-purchase";
+import { Transaction, TransactionState } from "nativescript-purchase/transaction";
+import {  } from '@angular/core';
+// add custom elements to UI from 3rd party plugins
+import { registerElement } from "nativescript-angular/element-registry";
+registerElement("Fab", () => require("nativescript-floatingactionbutton").Fab);
+registerElement("BarcodeScanner", () => require("nativescript-barcodescanner").BarcodeScannerView);
+enableProdMode();
 
 @Component({
   selector: "ns-app",
@@ -18,6 +26,32 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    // this is for the purchase plugin
+    purchase.init(["monthly", "yearly"])
+    purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
+        if (transaction.transactionState === TransactionState.Purchased) {
+            console.log(`Congratulations you just bought ${transaction.productIdentifier}!`);
+            firebase.push("/users/" + AuthService.token + '/transactions', transaction)
+            firebase.setValue("/users/" + AuthService.token + '/subscription', transaction)
+            // HACK this will need to be changed if we add any in-app purchases other than subscriptions
+            this.dataService.subscribed = true
+        }
+        else if (transaction.transactionState === TransactionState.Restored) {
+            console.log(`Purchase of ${transaction.productIdentifier} restored.`);
+            firebase.push("/users/" + AuthService.token + '/transactions', transaction)
+            firebase.setValue("/users/" + AuthService.token + '/subscription', transaction)
+        }
+        else if (transaction.transactionState === TransactionState.Failed) {
+            console.log(`Purchase of ${transaction.productIdentifier} failed!`);
+            firebase.push("/users/" + AuthService.token + '/transactions', transaction)
+        }
+    });
+    purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
+        if (transaction.transactionState === TransactionState.Purchased && transaction.productIdentifier.indexOf(".consume") >= 0) {
+            purchase.consumePurchase(transaction.transactionReceipt)
+        }
+    });
 
     // intialize firebase connection
     firebase.init({
@@ -33,6 +67,7 @@ export class AppComponent implements OnInit {
 
           // initializate users API key
           AuthService.token = data.user.uid;
+          this.dataService.user = data.user;
           firebase.getValue("/users/" + AuthService.token + "/account/apiKey")
             .then(key => {
               AuthService.apiKey = key.value
@@ -55,7 +90,7 @@ export class AppComponent implements OnInit {
                 .subscribe(resp => this.dataService.setSubscription(resp), error => console.dir(error))
             })
             .catch(error => console.dir(error))
-            
+
           this._metrcService.getRooms().subscribe(() => this.dataService.activateRooms(true), () => this.dataService.activateRooms(false))
           this._metrcService.getBatches().subscribe(() => this.dataService.activateBatches(true), () => this.dataService.activateBatches(false))
           this._metrcService.getVegetativePlants().subscribe(() => this.dataService.activatePlants(true), () => this.dataService.activatePlants(false))

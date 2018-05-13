@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { ListViewEventData } from "nativescript-ui-listview";
-
 import { Product } from "nativescript-purchase/product";
 import *  as purchase from "nativescript-purchase";
 

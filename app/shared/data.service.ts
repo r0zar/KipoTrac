@@ -11,6 +11,8 @@ export class Data {
 
     public storage: any;
 
+    public user: object = {};
+
     private subscription = new BehaviorSubject<any>({});
     isSubscribed = this.subscription.asObservable();
     public subscribed = false;
