@@ -24,7 +24,6 @@ import _ = require('lodash');
 export class ItemDetailCreateComponent implements OnInit {
     private _item: ItemDetail;
     private _strains: any = [];
-    private _unitsOfMeasure: any = [];
     private _validUnitsOfMeasure: any = [];
     private _itemCategories: any = [];
     private _chemicalUnits: any = [];
@@ -38,6 +37,7 @@ export class ItemDetailCreateComponent implements OnInit {
     private itemCategory: any;
     private toggle: boolean = false;
     private screenHeight: number = screen.mainScreen.heightDIPs;
+    private _isUpdating: boolean = false;
 
     constructor(
         private http: HttpClient,
@@ -70,7 +70,6 @@ export class ItemDetailCreateComponent implements OnInit {
               this._metrcService.getUnitsOfMeasure()
                 .subscribe((units: Array<any>) => {
                     this.units = units
-                    this._unitsOfMeasure = _.map(units, 'Name');
                     this._validUnitsOfMeasure = this.findValidUnits()
                     this._chemicalUnits = _.map(_.filter(units, {QuantityType: 'WeightBased'}), 'Name')
                     this._volumeUnits = _.map(_.filter(units, {QuantityType: 'VolumeBased'}), 'Name')
@@ -142,10 +141,26 @@ export class ItemDetailCreateComponent implements OnInit {
     * Check out the data service as items/shared/item.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
+        // delete this._item.Id
+        // if (!this._item.UnitThcContent) {
+        //     this._item.UnitThcContent = null
+        //     this._item.UnitThcContentUnitOfMeasureName = null
+        // }
+        // if (!this._item.UnitVolume) {
+        //     this._item.UnitVolume = null
+        //     this._item.UnitVolumeUnitOfMeasureName = null
+        // }
+        // if (!this._item.UnitWeight) {
+        //     this._item.UnitWeight = null
+        //     this._item.UnitWeightUnitOfMeasureName = null
+        // }
+        console.log(this._item)
+        this._isUpdating = true
         this._metrcService.createItem(this._item)
             .subscribe((item: ItemDetail) => {
               // save the event to the activity log
               firebase.push("/users/" + AuthService.token + '/activity', {object: 'item', status: 'created', createdAt: Date.now()});
+              this._isUpdating = false
               this._routerExtensions.backToPreviousPage()
             });
     }

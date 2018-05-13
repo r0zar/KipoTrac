@@ -21,9 +21,9 @@
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
       <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="item" isReadOnly="true">
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Product Details">
-            <TKEntityProperty tkPropertyGroupProperties name="Strain" displayName="Strain"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryName" displayName="Product Category"></TKEntityProperty>
+        <TKPropertyGroup tkDataFormGroups collapsible="true" name="Item Details">
+            <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryName" [displayName]="_item.ProductCategoryType"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="Strain" displayName="Strain" [hidden]="!Strain"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="UnitOfMeasureName" displayName="Units of Measure"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="UnitThcContent" [displayName]="thcDisplay" [hidden]="!isUnitThcContent">
               <TKPropertyEditor tkEntityPropertyEditor type="Label"></TKPropertyEditor>

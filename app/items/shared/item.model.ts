@@ -29,7 +29,7 @@ export class Item {
         this.UnitOfMeasure = options.UnitOfMeasure || options.UnitOfMeasureName || '';
         this.UnitOfMeasureName = options.UnitOfMeasureName || '';
         this.StrainId = Number(options.StrainId);
-        this.Strain = options.Strain || options.StrainName || '';
+        this.Strain = options.Strain || options.StrainName;
         this.StrainName = options.StrainName || '';
         this.UnitThcContent = Number(options.UnitThcContent);
         this.UnitThcContentUnitOfMeasureName = options.UnitThcContentUnitOfMeasureName || 'Milligrams';
@@ -41,28 +41,29 @@ export class Item {
 }
 
 export class ItemDetail {
+    Id: number;
     Name: string;
     ItemCategory: string;
     UnitOfMeasure: string;
     Strain: string;
     UnitThcContent: number;
-    UnitThcContentUnitOfMeasureName: string;
+    UnitThcContentUnitOfMeasure: string;
     UnitVolume: number;
-    UnitVolumeUnitOfMeasureName: string;
+    UnitVolumeUnitOfMeasure: string;
     UnitWeight: number;
-    UnitWeightUnitOfMeasureName: string;
+    UnitWeightUnitOfMeasure: string;
 
   constructor(options: any) {
+      this.Id = Number(options.Id);
       this.Name = options.Name || '';
       this.ItemCategory = options.ProductCategoryName || '';
       this.UnitOfMeasure = options.UnitOfMeasureName || '';
       this.Strain = options.StrainName || '';
-      this.UnitThcContent = Number(options.UnitThcContent || 0);
-      this.UnitThcContentUnitOfMeasureName = options.UnitThcContentUnitOfMeasureName || 'Milligrams';
-      this.UnitVolume = Number(options.UnitVolume || 0);
-      this.UnitVolumeUnitOfMeasureName = options.UnitVolumeUnitOfMeasureName || 'Milliliters';
-      this.UnitWeight = Number(options.UnitWeight || 0);
-      this.UnitWeightUnitOfMeasureName = options.UnitWeightUnitOfMeasureName || 'Milligrams';
-
+      this.UnitThcContent = Number(options.UnitThcContent);
+      this.UnitThcContentUnitOfMeasure = options.UnitThcContentUnitOfMeasureName || 'Milligrams';
+      this.UnitVolume = Number(options.UnitVolume);
+      this.UnitVolumeUnitOfMeasure = options.UnitVolumeUnitOfMeasureName || 'Milliliters';
+      this.UnitWeight = Number(options.UnitWeight);
+      this.UnitWeightUnitOfMeasure = options.UnitWeightUnitOfMeasureName || 'Milligrams';
   }
 }
