@@ -34,8 +34,8 @@ export class AppComponent implements OnInit {
             console.log(`Congratulations you just bought ${transaction.productIdentifier}!`);
             firebase.push("/users/" + AuthService.token + '/transactions', transaction)
             firebase.setValue("/users/" + AuthService.token + '/subscription', transaction)
-            // HACK this will need to be changed if we add any in-app purchases other than subscriptions
-            this.dataService.setSubscription(true)
+            // HACK this will need to be modified with conditional logic if we add any in-app purchases other than subscriptions
+            this.dataService.forceSubscription(true)
         }
         else if (transaction.transactionState === TransactionState.Restored) {
             console.log(`Purchase of ${transaction.productIdentifier} restored.`);

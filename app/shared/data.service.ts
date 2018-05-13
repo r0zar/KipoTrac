@@ -32,8 +32,13 @@ export class Data {
     private harvestsActivated = new BehaviorSubject<any>(false);
     isHarvestsActivated = this.harvestsActivated.asObservable();
 
-    setSubscription(message: any) {
-      this.subscribed = moment(Number(message.expiryTimeMillis)).isAfter()
+    forceSubscription(activated: boolean) {
+      this.subscribed = activated
+      this.subscription.next(activated)
+    }
+
+    setSubscription(subscription: any) {
+      this.subscribed = moment(Number(subscription.expiryTimeMillis)).isAfter()
       this.subscription.next(this.subscribed)
     }
 

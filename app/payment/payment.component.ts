@@ -19,8 +19,15 @@ export class PaymentComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-      // I couldnt think of a better way to update this after the user buy a subscription
-      this.data.isSubscribed.subscribe(subscription => this.activeSubscription = subscription)
+      // HACK I couldnt think of a better way to update this after the user buy a subscription
+      // which leads the question of, is there a way to 're-initialize' components
+      // upon navigating to them a second or third time, it would help in situations
+      // like creating a item, and seeing on the listview, or editing an item and seeing it
+      // on the subsequent item detail view... $20 feature bounty if someone can figure that out
+      this.data.isSubscribed.subscribe(subscription => {
+        console.log('im updated!', subscription)
+        this.activeSubscription = subscription
+      })
     }
 
     betaTester(): void {
