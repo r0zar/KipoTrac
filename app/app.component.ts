@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     // this is for the purchase plugin
-    purchase.init(["monthly", "yearly"])
+    purchase.init(["monthly"])
     purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
         if (transaction.transactionState === TransactionState.Purchased) {
             console.log(`Congratulations you just bought ${transaction.productIdentifier}!`);
@@ -105,8 +105,8 @@ export class AppComponent implements OnInit {
         }
       }
     })
-    .then(() => console.log(">>>>> Firebase initialized"))
-    .catch(err => console.log(">>>>> Firebase init error: " + err));
+    .then(() => console.log("Firebase initialized"))
+    .catch(err => console.log("Firebase initialization error: " + err));
 
   }
 }
