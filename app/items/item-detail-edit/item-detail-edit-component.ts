@@ -92,7 +92,7 @@ export class ItemDetailEditComponent implements OnInit {
 
     findValidUnits() {
       // find what quantity type the choice is...
-      this.itemCategory = _.find(this.categories, {Name: this._item.ItemCategory})
+      this.itemCategory = _.find(this.categories, {Name: this._item.ItemCategory as any})
       // show the valid units fields
       this.thcRequired = this.itemCategory.RequiresUnitThcContent
       this.weightRequired = this.itemCategory.RequiresUnitWeight

@@ -1,22 +1,16 @@
+import { find } from "lodash";
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
-import { DataFormEventData } from "nativescript-ui-dataform";
-
 import { Facility } from "../shared/facility.model";
 import { FacilityService } from "../shared/facility.service";
 import { MetrcService } from "../../shared/metrc.service";
 import { Data } from "../../shared/data.service";
-
 import firebase = require("nativescript-plugin-firebase");
 import { alert } from "ui/dialogs";
-
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
-import { Image } from 'tns-core-modules/ui/image';
 import { screen } from 'platform';
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
-
-import _ = require('lodash');
 
 /* ***********************************************************
 * This is the item details component in the master-detail structure.
@@ -26,13 +20,13 @@ import _ = require('lodash');
 @Component({
     selector: "FacilityDetail",
     moduleId: module.id,
-    templateUrl: "./facility-detail.component.html"
+    templateUrl: "./facility-detail.component.html",
+    styleUrls: ["../facility-list.component.scss"]
 })
 export class FacilityDetailComponent implements OnInit {
     private _facility: Facility;
-    private firstTime: boolean = false;
     private displayName: string;
-    private iconColor: string;
+    private selectedFacility: boolean = false;
     private imageHeight: number = screen.mainScreen.heightDIPs / 2;
     private screenHeight: number = screen.mainScreen.heightDIPs * 1.2 - this.imageHeight;
 
@@ -50,35 +44,29 @@ export class FacilityDetailComponent implements OnInit {
     * private property that holds it inside the component.
     *************************************************************/
     ngOnInit(): void {
-        /* ***********************************************************
-        * Learn more about how to get navigation parameters in this documentation article:
-        * http://docs.nativescript.org/angular/core-concepts/angular-navigation.html#passing-parameter
-        *************************************************************/
+        // BUG BOUNTY - $20
+        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethodNative(Native Method)
+        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.dispatchCallJSMethodNative(Runtime.java:1088)
+        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethodImpl(Runtime.java:970)
+        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:957)
+        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:941)
+        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:933)
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {
-                const facilityLicenseNumber = params.id;
-
                 this._metrcService.getFacilities()
                     .subscribe((facilities: Array<any>) => {
-                        this._facility = new Facility(facilities.find(facility => facility.License.Number == facilityLicenseNumber));
+                        this._facility = new Facility(find(facilities, facility => facility.License.Number == params.id));
                         this.displayName = this._facility.DisplayName
-                        // this doesnt work on the emulator for some reason...
-                        this.iconColor = (this._facility.LicenseNumber == FacilityService.facility) ? 'orange' : 'gray'
+                        this.selectedFacility = this._facility.LicenseNumber == FacilityService.facility
                     });
             });
-
-        if (!FacilityService.facility) {
-          alert({title: 'Woh- Nice place!', message: 'This is your facility.\n\nClick the star on the right to select it.\n\nAll the work we\'ll do from here onward will be for this facility.', okButtonText: "Got it"})
-          this.firstTime = true;
-        }
     }
 
     onScroll(event: ScrollEventData, scrollView: ScrollView, topView: View, fabView: View) {
         // If the header content is still visiible
         if (scrollView.verticalOffset < this.imageHeight) {
             const offset = scrollView.verticalOffset / 2;
-            // Android, animations are jerky so instead just adjust the position without animation.
             topView.translateY = Math.floor(offset);
             fabView.translateY = Math.floor(-1 * offset);
             fabView.translateX = Math.floor(offset);
@@ -88,22 +76,16 @@ export class FacilityDetailComponent implements OnInit {
     fabTap(): void {
       FacilityService.facility = this._facility.LicenseNumber
       this.data.setFacilitySelected(true)
+      this.selectedFacility = true
       this._metrcService.getRooms().subscribe(() => this.data.activateRooms(true), () => this.data.activateRooms(false))
       this._metrcService.getBatches().subscribe(() => this.data.activateBatches(true), () => this.data.activateBatches(false))
       this._metrcService.getVegetativePlants().subscribe(() => this.data.activatePlants(true), () => this.data.activatePlants(false))
       this._metrcService.getHarvests('active').subscribe(() => this.data.activateHarvests(true), () => this.data.activateHarvests(false))
-      this.iconColor = 'orange'
     }
 
     get facility(): Facility {
         return this._facility;
     }
-
-    get rooms(): any {
-        //return this._rooms;
-        return [{Id: 1, Name: "Vegetative Room A"}]
-    }
-
 
     /* ***********************************************************
     * The back button is essential for a master-detail feature.
@@ -118,28 +100,5 @@ export class FacilityDetailComponent implements OnInit {
                     curve: "ease"
                 }
             })
-    }
-
-    /* ***********************************************************
-    * The master-detail template comes with an example of an item edit page.
-    * Check out the edit page in the /facilities/facility-detail-edit folder.
-    *************************************************************/
-    onEditButtonTap(): void {
-        this._routerExtensions.navigate(["/facilities/facility-detail-edit", this._facility.LicenseNumber],
-            {
-                animated: true,
-                transition: {
-                    name: "slideTop",
-                    duration: 200,
-                    curve: "ease"
-                }
-            });
-    }
-
-    onAddRoomButtonTap(): void {
-      this._metrcService.createRooms({licenseNumber: "123-ABC", Rooms: [{Name: "Harvest Room"}]})
-        .finally(() => {
-          console.log('room added')
-        })
     }
 }

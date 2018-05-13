@@ -1,3 +1,4 @@
+import _ = require('lodash');
 import { Component, Input, OnInit } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
 import { Data } from "../data.service";
@@ -34,7 +35,8 @@ export class MyDrawerItemComponent implements OnInit {
     *************************************************************/
     onNavItemTap(navItemRoute: string): void {
         if (!this.data.subscribed && (navItemRoute == '/transfers' || navItemRoute == '/packages' || navItemRoute == '/harvests' || navItemRoute == '/plants')) {
-          TNSFancyAlert.showInfo(`Paid Feature: ${navItemRoute}`, 'For full access, navigate to Compliance Reporting page on the Settings page and setup your KipoTrac subription.', 'Okay')
+          navItemRoute = _.capitalize(_.trim(navItemRoute, '/'))
+          TNSFancyAlert.showInfo(`Paid Feature: ${navItemRoute}`, 'For full access, navigate to Compliance Reporting on the Settings page and setup your KipoTrac subription.', 'Okay')
             .then(() => {});
         } else {
           this.routerExtensions.navigate([navItemRoute], {

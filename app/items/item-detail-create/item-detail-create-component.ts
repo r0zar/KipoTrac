@@ -91,7 +91,7 @@ export class ItemDetailCreateComponent implements OnInit {
 
     findValidUnits() {
       // find what quantity type the choice is...
-      this.itemCategory = _.find(this.categories, {Name: this._item.ItemCategory})
+      this.itemCategory = _.find(this.categories, {Name: this._item.ItemCategory as any})
       // adjust units of measure list to only show valid options
       return _.map(_.filter(this.units, {QuantityType: this.itemCategory.QuantityType}), 'Name')
     }

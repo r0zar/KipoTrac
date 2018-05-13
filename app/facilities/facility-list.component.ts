@@ -1,3 +1,4 @@
+import { map, assign } from "lodash";
 import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { ObservableArray } from "data/observable-array";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -5,13 +6,10 @@ import { ListViewEventData } from "nativescript-ui-listview";
 import firebase = require("nativescript-plugin-firebase");
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
-
 import { Facility } from "./shared/facility.model";
 import { FacilityService } from "./shared/facility.service";
 import { MetrcService } from "../shared/metrc.service";
 import { Data } from "../shared/data.service";
-
-import _ = require('lodash');
 
 @Component({
     selector: "Facilities",
@@ -45,11 +43,12 @@ export class FacilityListComponent implements OnInit {
         this._isLoading = true;
 
         this._metrcService.getFacilities()
-            .subscribe((facilities: Array<Facility>) => {
-                let f = _.map(facilities, facility => {
-                  return (facility.License.Number == FacilityService.facility) ? _.assign(facility, {backgroundColor: '#7a4116', fontColor: 'white'}) : facility
+            .subscribe((facilities: Array<any>) => {
+                let f = map(facilities, facility => {
+                  let selectedFacility = facility.License.Number == FacilityService.facility
+                  return selectedFacility ? assign(facility, {selected: true}) : facility
                 })
-                this._facilities = new ObservableArray(f);
+                this._facilities = new ObservableArray(facilities);
                 this._isLoading = false;
             });
 
@@ -79,11 +78,12 @@ export class FacilityListComponent implements OnInit {
 
     public onPullToRefreshInitiated(args: ListViewEventData) {
         this._metrcService.getFacilities()
-            .subscribe((facilities: Array<Facility>) => {
-                let f = _.map(facilities, facility => {
-                  return (facility.License.Number == FacilityService.facility) ? _.assign(facility, {backgroundColor: '#7a4116', fontColor: 'white'}) : facility
+            .subscribe((facilities: Array<any>) => {
+                let f = map(facilities, facility => {
+                  let selectedFacility = facility.License.Number == FacilityService.facility
+                  return selectedFacility ? assign(facility, {selected: true}) : facility
                 })
-                this._facilities = new ObservableArray(f);
+                this._facilities = new ObservableArray(facilities);
                 args.object.notifyPullToRefreshFinished();
             });
     }
@@ -110,7 +110,6 @@ export class FacilityListComponent implements OnInit {
     *************************************************************/
     onFacilityItemTap(args: ListViewEventData): void {
         const tappedFacilityItem = args.view.bindingContext;
-
         this._routerExtensions.navigate(["/facilities/facility-detail", tappedFacilityItem.License.Number],
         {
             animated: true,
