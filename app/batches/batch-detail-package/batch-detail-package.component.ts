@@ -61,6 +61,11 @@ export class BatchDetailPackageComponent implements OnInit {
                   this._metrcService.getItems()
                       .subscribe((items: Array<any>) => {
                           this._items = _.map(_.filter(items, {StrainName: batch.StrainName, ProductCategoryName: 'Immature Plant'}), 'Name')
+                          // HACK could probably just ask them if they want to make the item on the spot from a confirmation
+                          if (this._items.length == 0) {
+                            alert({title: 'Item Required', message: `Please first create an Item with category of Immature Plant and strain ${batch.StrainName} to create a package of this batch.`, okButtonText: "Got it"})
+                              .then(() => this.onBackButtonTap())
+                          }
                           this._batchPackage.Item = this._items[0]
                       });
                 })
@@ -140,7 +145,14 @@ export class BatchDetailPackageComponent implements OnInit {
             .subscribe((batch: Batch) => {
               // save the event to the activity log
               firebase.push("/users/" + AuthService.token + '/activity', {object: 'package', status: 'created', createdAt: Date.now()});
-              this._routerExtensions.backToPreviousPage()
+              this._routerExtensions.navigate(['/batches'], {
+                  animated: true,
+                  transition: {
+                      name: "flipRight",
+                      duration: 500,
+                      curve: "linear"
+                  }
+              })
             });
     }
 

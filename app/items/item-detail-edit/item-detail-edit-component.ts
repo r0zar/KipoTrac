@@ -74,7 +74,7 @@ export class ItemDetailEditComponent implements OnInit {
                           this._metrcService.getUnitsOfMeasure()
                             .subscribe((units: Array<any>) => {
                                 this.units = units
-                                this._validUnitsOfMeasure = this.findValidUnits()
+                                this.findValidUnits()
                                 this._chemicalUnits = _.map(_.filter(units, {QuantityType: 'WeightBased'}), 'Name')
                                 this._volumeUnits = _.map(_.filter(units, {QuantityType: 'VolumeBased'}), 'Name')
                                 this.toggle = true
@@ -86,11 +86,13 @@ export class ItemDetailEditComponent implements OnInit {
 
     updateValidUnits(args) {
       if (this.toggle && args.propertyName == 'ItemCategory') {
-        this._validUnitsOfMeasure = this.findValidUnits()
+        this.findValidUnits()
       }
     }
 
     findValidUnits() {
+      // HACK typo in METRC API has a space on the end of kief
+      if (this._item.ItemCategory == 'Kief') {this._item.ItemCategory = `${this._item.ItemCategory} `}
       // find what quantity type the choice is...
       this.itemCategory = _.find(this.categories, {Name: this._item.ItemCategory as any})
       // show the valid units fields
@@ -98,7 +100,9 @@ export class ItemDetailEditComponent implements OnInit {
       this.weightRequired = this.itemCategory.RequiresUnitWeight
       this.volumeRequired = this.itemCategory.RequiresUnitVolume
       // adjust units of measure list to only show valid options
-      return _.map(_.filter(this.units, {QuantityType: this.itemCategory.QuantityType}), 'Name')
+      this._validUnitsOfMeasure = _.map(_.filter(this.units, {QuantityType: this.itemCategory.QuantityType}), 'Name')
+      // default to first in the list
+      this._item.UnitOfMeasure = this._validUnitsOfMeasure[0]
     }
 
     get item(): ItemDetail {

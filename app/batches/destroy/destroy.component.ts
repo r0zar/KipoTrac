@@ -60,7 +60,16 @@ export class DestroyComponent implements OnInit {
         this._isLoading = true
         this._metrcService.destroyPlantBatches(this._destroy)
             .finally(() => this._isLoading = false)
-            .subscribe(() => this._routerExtensions.backToPreviousPage());
+            .subscribe(() => {
+              this._routerExtensions.navigate(['/batches'], {
+                  animated: true,
+                  transition: {
+                      name: "flipRight",
+                      duration: 500,
+                      curve: "linear"
+                  }
+              })
+            });
     }
 
     /* ***********************************************************

@@ -59,33 +59,38 @@ export class ItemDetailCreateComponent implements OnInit {
           .subscribe((strains: Array<any>) => {
               this._strains = _.map(strains, 'Name')
               this._item.Strain = this._strains[0]
+
+              this._metrcService.getItemCategories()
+                .subscribe((categories: Array<any>) => {
+                    // HACK results until we find out why METRCs API is broken for Kief
+                    categories = _.reject(categories, category => category.Name == 'Kief ')
+                    this.categories = categories
+                    this._itemCategories = _.map(categories, 'Name')
+                    this._item.ItemCategory = this._itemCategories[0]
+                    this._metrcService.getUnitsOfMeasure()
+                      .subscribe((units: Array<any>) => {
+                          this.units = units
+                          this.findValidUnits()
+                          this._item = new ItemDetail(_.extend(this._item, {Name: `${this._item.Strain} ${this._item.ItemCategory}`}))
+                          this._chemicalUnits = _.map(_.filter(units, {QuantityType: 'WeightBased'}), 'Name')
+                          this._volumeUnits = _.map(_.filter(units, {QuantityType: 'VolumeBased'}), 'Name')
+                          this.toggle = true
+                      })
+                })
           });
 
-        this._metrcService.getItemCategories()
-          .subscribe((categories: Array<any>) => {
-              this.categories = categories
-              this._itemCategories = _.map(categories, 'Name')
-              this._item.ItemCategory = this._itemCategories[0]
-
-              this._metrcService.getUnitsOfMeasure()
-                .subscribe((units: Array<any>) => {
-                    this.units = units
-                    this._validUnitsOfMeasure = this.findValidUnits()
-                    this._chemicalUnits = _.map(_.filter(units, {QuantityType: 'WeightBased'}), 'Name')
-                    this._volumeUnits = _.map(_.filter(units, {QuantityType: 'VolumeBased'}), 'Name')
-                    this.toggle = true
-                })
-          })
 
     }
 
     updateValidUnits(args) {
-      if (this.toggle && args.propertyName == 'ItemCategory') {
-        this._validUnitsOfMeasure = this.findValidUnits()
+      if (this.toggle && (args.propertyName == 'ItemCategory' || args.propertyName == 'Strain')) {
+        this.findValidUnits()
         // show the valid units fields
         this.thcRequired = this.itemCategory.RequiresUnitThcContent
         this.weightRequired = this.itemCategory.RequiresUnitWeight
         this.volumeRequired = this.itemCategory.RequiresUnitVolume
+        // update name based on choices
+        this._item = new ItemDetail(_.extend(this._item, {Name: `${this._item.Strain} ${this._item.ItemCategory}`}))
       }
     }
 
@@ -93,7 +98,9 @@ export class ItemDetailCreateComponent implements OnInit {
       // find what quantity type the choice is...
       this.itemCategory = _.find(this.categories, {Name: this._item.ItemCategory as any})
       // adjust units of measure list to only show valid options
-      return _.map(_.filter(this.units, {QuantityType: this.itemCategory.QuantityType}), 'Name')
+      this._validUnitsOfMeasure = _.map(_.filter(this.units, {QuantityType: this.itemCategory.QuantityType}), 'Name')
+      // default to first in the list
+      this._item.UnitOfMeasure = this._validUnitsOfMeasure[0]
     }
 
     get item(): ItemDetail {
@@ -141,14 +148,21 @@ export class ItemDetailCreateComponent implements OnInit {
     * Check out the data service as items/shared/item.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
-        this._isUpdating = true
-        this._metrcService.createItem(this._item)
-            .subscribe((item: ItemDetail) => {
-              // save the event to the activity log
-              firebase.push("/users/" + AuthService.token + '/activity', {object: 'item', status: 'created', createdAt: Date.now()});
-              this._isUpdating = false
-              this._routerExtensions.backToPreviousPage()
-            });
+      this._isUpdating = true
+      this._metrcService.createItem(this._item)
+        .subscribe((item: ItemDetail) => {
+          // save the event to the activity log
+          firebase.push("/users/" + AuthService.token + '/activity', {object: 'item', status: 'created', createdAt: Date.now()});
+          this._isUpdating = false
+          this._routerExtensions.navigate(['/items'], {
+              animated: true,
+              transition: {
+                  name: "slideBottom",
+                  duration: 200,
+                  curve: "ease"
+              }
+          })
+        });
     }
 
     /* ***********************************************************

@@ -56,9 +56,9 @@ export class ItemDetail {
   constructor(options: any) {
       this.Id = Number(options.Id);
       this.Name = options.Name || '';
-      this.ItemCategory = options.ProductCategoryName || '';
-      this.UnitOfMeasure = options.UnitOfMeasureName || '';
-      this.Strain = options.StrainName || '';
+      this.ItemCategory = options.ProductCategoryName || options.ItemCategory || '';
+      this.UnitOfMeasure = options.UnitOfMeasureName || options.UnitOfMeasure || '';
+      this.Strain = options.StrainName || options.Strain || '';
       this.UnitThcContent = Number(options.UnitThcContent);
       this.UnitThcContentUnitOfMeasure = options.UnitThcContentUnitOfMeasureName || 'Milligrams';
       this.UnitVolume = Number(options.UnitVolume);

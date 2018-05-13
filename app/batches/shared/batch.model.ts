@@ -26,7 +26,7 @@ export class Batch {
     constructor(options: any) {
         this.Id = Number(options.Id);
         this.Name = options.Name || '';
-        this.Type = options.Type || '';
+        this.Type = options.Type || 'Clone';
         this.RoomId = Number(options.RoomId);
         this.RoomName = options.RoomName || '';
         this.StrainId = Number(options.StrainId);
@@ -42,8 +42,8 @@ export class Batch {
         this.SourcePlantLabel = options.SourcePlantLabel || '';
         this.PlantedDate = options.PlantedDate || '';
         this.LastModified = options.LastModified || '';
-        this.ActualDate = options.ActualDate || '';
-        this.Strain = options.StrainName || '';
+        this.ActualDate = options.ActualDate || new Date();
+        this.Strain = options.StrainName || options.Strain || '';
         this.imageUrl = options.imageUrl;
         this.imageStoragePath = options.imageStoragePath;
     }
