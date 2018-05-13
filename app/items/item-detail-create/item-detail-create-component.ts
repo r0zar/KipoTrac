@@ -141,20 +141,6 @@ export class ItemDetailCreateComponent implements OnInit {
     * Check out the data service as items/shared/item.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
-        // delete this._item.Id
-        // if (!this._item.UnitThcContent) {
-        //     this._item.UnitThcContent = null
-        //     this._item.UnitThcContentUnitOfMeasureName = null
-        // }
-        // if (!this._item.UnitVolume) {
-        //     this._item.UnitVolume = null
-        //     this._item.UnitVolumeUnitOfMeasureName = null
-        // }
-        // if (!this._item.UnitWeight) {
-        //     this._item.UnitWeight = null
-        //     this._item.UnitWeightUnitOfMeasureName = null
-        // }
-        console.log(this._item)
         this._isUpdating = true
         this._metrcService.createItem(this._item)
             .subscribe((item: ItemDetail) => {

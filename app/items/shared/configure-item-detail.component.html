@@ -30,32 +30,26 @@
                 <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
 
-            <TKPropertyGroup tkDataFormGroups name="THC Potency" [hidden]="!thcRequired">
-              <TKEntityProperty tkPropertyGroupProperties name="UnitThcContent" displayName="THC Content" index=4>
+              <TKEntityProperty tkDataFormProperty name="UnitThcContent" displayName="Product THC Content" index=4 [hidden]="!thcRequired">
                   <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
               </TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="UnitThcContentUnitOfMeasure" displayName="Units" [valuesProvider]="chemicalUnitsOfMeasure" index=5>
+            <TKEntityProperty tkDataFormProperty name="UnitThcContentUnitOfMeasure" displayName="Units" [valuesProvider]="chemicalUnitsOfMeasure" index=5 [hidden]="!thcRequired">
                 <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
-            </TKPropertyGroup>
+\
+              <TKEntityProperty tkDataFormProperty name="UnitVolume" displayName="Product Volume" index=6 [hidden]="!volumeRequired">
+                  <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
+              </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="UnitVolumeUnitOfMeasure" displayName="Units" [valuesProvider]="volumeUnitsOfMeasure" index=7 [hidden]="!volumeRequired">
+                <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
+            </TKEntityProperty>
 
-            <TKPropertyGroup tkDataFormGroups name="Product Volume" [hidden]="!volumeRequired">
-              <TKEntityProperty tkPropertyGroupProperties name="UnitVolume" displayName="Volume" index=6>
+              <TKEntityProperty tkDataFormProperty name="UnitWeight" displayName="Product Weight" index=8 [hidden]="!weightRequired">
                   <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
               </TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="UnitVolumeUnitOfMeasure" displayName="Units" [valuesProvider]="volumeUnitsOfMeasure" index=7>
+            <TKEntityProperty tkDataFormProperty name="UnitWeightUnitOfMeasure" displayName="Units" [valuesProvider]="chemicalUnitsOfMeasure" index=9 [hidden]="!weightRequired">
                 <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
-            </TKPropertyGroup>
-
-            <TKPropertyGroup tkDataFormGroups name="Product Weight" [hidden]="!weightRequired">
-              <TKEntityProperty tkPropertyGroupProperties name="UnitWeight" displayName="Weight" index=8>
-                  <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
-              </TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="UnitWeightUnitOfMeasure" displayName="Units" [valuesProvider]="chemicalUnitsOfMeasure" index=9>
-                <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
-            </TKEntityProperty>
-            </TKPropertyGroup>
 
             <TKPropertyGroup tkDataFormGroups name="Hidden" hidden="true">
                 <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
