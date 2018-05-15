@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import firebase = require("nativescript-plugin-firebase");
 import { alert } from "ui/dialogs";
+import { Data } from "../shared/data.service";
 
 @Component({
     selector: "Payment",
@@ -13,21 +14,18 @@ export class PaymentComponent implements OnInit {
     public activeSubscription: boolean = false;
 
     constructor(
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private data: Data
     ) { }
 
-
     ngOnInit(): void {
-
-      firebase.getCurrentUser()
-        .then(user => firebase.getValue("/users/" + user.uid + '/subscription'))
-        .then(subscription => this.activeSubscription = subscription.value.transactionState == 'purchased')
-        .catch(() => this.activeSubscription = false)
-
+      this.data.isSubscribed.subscribe(subscription => {
+        this.activeSubscription = subscription
+      })
     }
 
     betaTester(): void {
-      alert({title: 'Early Access', message: 'Enjoy our 100% guarantee that we\'ll never raise your rates for METRC compliance services in KipoTrac.', okButtonText: "Dope"})
+      alert({title: 'Early Access', message: 'We can\'t express how much it means to us that you are using our product, KipoTrac. We work hard to make sure it\'s the best track and trace program on the market and we really hope you love it and it actually makes your life more enjoyable. We have a few rewards and surprises planned for you coming up as our way of saying thanks.', okButtonText: "Dope"})
     }
 
     onBackButtonTap(): void {

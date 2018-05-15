@@ -5,7 +5,7 @@ import { alert } from "ui/dialogs";
 import { EventData } from "data/observable";
 import { DataFormEventData } from "nativescript-ui-dataform";
 import { DatePicker } from "ui/date-picker";
-import { Item } from "../shared/item.model";
+import { ItemDetail } from "../shared/item.model";
 import { MetrcService } from "../../shared/metrc.service";
 import { screen } from 'platform';
 import firebase = require("nativescript-plugin-firebase");
@@ -22,20 +22,22 @@ import _ = require('lodash');
     templateUrl: "../shared/configure-item-detail.component.html"
 })
 export class ItemDetailCreateComponent implements OnInit {
-    private _item: Item;
-    private _strains: any;
-    private _unitsOfMeasure: any;
-    private _validUnitsOfMeasure: any;
-    private _itemCategories: any;
-    private _chemicalUnits: any;
-    private _volumeUnits: any;
+    private _item: ItemDetail;
+    private _strains: any = [];
+    private _validUnitsOfMeasure: any = [];
+    private _itemCategories: any = [];
+    private _chemicalUnits: any = [];
+    private _volumeUnits: any = [];
     private thcRequired: boolean = false;
     private weightRequired: boolean = false;
     private volumeRequired: boolean = false;
-    private categories: any;
+    private categories: any = [];
     private units: any;
     private uid: string;
+    private itemCategory: any;
+    private toggle: boolean = false;
     private screenHeight: number = screen.mainScreen.heightDIPs;
+    private _isUpdating: boolean = false;
 
     constructor(
         private http: HttpClient,
@@ -51,68 +53,78 @@ export class ItemDetailCreateComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
 
-        this._item = new Item({UnitOfMeasure: 'Each'})
-
-        this._metrcService.getStrains()
-            .subscribe((strains: Array<any>) => {
-                this._strains = _.map(strains, 'Name')
-            });
+        this._item = new ItemDetail({})
 
         this._metrcService.getStrains()
           .subscribe((strains: Array<any>) => {
-              this._strains = strains
-          })
+              this._strains = _.map(strains, 'Name')
+              this._item.Strain = this._strains[0]
 
-        this._metrcService.getItemCategories()
-          .subscribe((categories: Array<any>) => {
-              this._itemCategories = categories
-              this.dfPropertyCommitted({})
-          })
+              this._metrcService.getItemCategories()
+                .subscribe((categories: Array<any>) => {
+                    // HACK results until we find out why METRCs API is broken for Kief
+                    categories = _.reject(categories, category => category.Name == 'Kief ')
+                    this.categories = categories
+                    this._itemCategories = _.map(categories, 'Name')
+                    this._item.ItemCategory = this._itemCategories[0]
+                    this._metrcService.getUnitsOfMeasure()
+                      .subscribe((units: Array<any>) => {
+                          this.units = units
+                          this.findValidUnits()
+                          this._item = new ItemDetail(_.extend(this._item, {Name: `${this._item.Strain} ${this._item.ItemCategory}`}))
+                          this._chemicalUnits = _.map(_.filter(units, {QuantityType: 'WeightBased'}), 'Name')
+                          this._volumeUnits = _.map(_.filter(units, {QuantityType: 'VolumeBased'}), 'Name')
+                          this.toggle = true
+                      })
+                })
+          });
 
-        this._metrcService.getUnitsOfMeasure()
-          .subscribe((units: Array<any>) => {
-              this._unitsOfMeasure = units
-              this._chemicalUnits = _.filter(units, {QuantityType: 'WeightBased'})
-              this._volumeUnits = _.filter(units, {QuantityType: 'VolumeBased'})
-              this.dfPropertyCommitted({})
-          })
 
     }
 
-    dfPropertyCommitted(args) {
-        // find what quantity type the choice is...
-        let itemCategory = _.find(this._itemCategories, {Name: this._item.ItemCategory})
-        let QuantityType = itemCategory.QuantityType
-        // adjust units of measure list to only show valid options
-        this._validUnitsOfMeasure = _.filter(this._unitsOfMeasure, {QuantityType})
+    updateValidUnits(args) {
+      if (this.toggle && (args.propertyName == 'ItemCategory' || args.propertyName == 'Strain')) {
+        this.findValidUnits()
         // show the valid units fields
-        this.thcRequired = itemCategory.RequiresUnitThcContent
-        this.weightRequired = itemCategory.RequiresUnitWeight
-        this.volumeRequired = itemCategory.RequiresUnitVolume
+        this.thcRequired = this.itemCategory.RequiresUnitThcContent
+        this.weightRequired = this.itemCategory.RequiresUnitWeight
+        this.volumeRequired = this.itemCategory.RequiresUnitVolume
+        // update name based on choices
+        this._item = new ItemDetail(_.extend(this._item, {Name: `${this._item.Strain} ${this._item.ItemCategory}`}))
+      }
     }
 
-    get item(): Item {
-        return this._item;
+    findValidUnits() {
+      // find what quantity type the choice is...
+      this.itemCategory = _.find(this.categories, {Name: this._item.ItemCategory as any})
+      // adjust units of measure list to only show valid options
+      this._validUnitsOfMeasure = _.map(_.filter(this.units, {QuantityType: this.itemCategory.QuantityType}), 'Name')
+      // default to first in the list
+      this._item.UnitOfMeasure = this._validUnitsOfMeasure[0]
+    }
+
+    get item(): ItemDetail {
+        return this._item
     }
 
     get strains(): any {
-        return _.map(this._strains, 'Name');
+        return this._strains
     }
 
     get itemCategories(): any {
-        return _.map(this._itemCategories, 'Name')
+        return this._itemCategories
     }
 
     get unitsOfMeasure(): any {
-        return _.map(this._validUnitsOfMeasure, 'Name');
+        return this._validUnitsOfMeasure
     }
 
     get chemicalUnitsOfMeasure(): any {
-        return _.map(this._chemicalUnits, 'Name');
+        return this._chemicalUnits
     }
 
     get volumeUnitsOfMeasure(): any {
-        return _.map(this._volumeUnits, 'Name');
+        return this._volumeUnits
     }
 
     onTap(): void {
@@ -122,12 +134,12 @@ export class ItemDetailCreateComponent implements OnInit {
       this.http.get<any[]>(`https://api.datamuse.com/words?rel_jjb=${item}`)
         .subscribe((words: Array<any>) => {
             adjective = _.capitalize(_.sample(words).word)
-            this._item = new Item(_.extend(this._item, {Name: `${adjective} ${noun}`}))
+            this._item = new ItemDetail(_.extend(this._item, {Name: `${adjective} ${noun}`}))
         });
       this.http.get<any[]>(`https://api.datamuse.com/words?ml=${this._item.Strain}`)
         .subscribe((words: Array<any>) => {
             noun = _.capitalize(_.sample(words).word)
-            this._item = new Item(_.extend(this._item, {Name: `${adjective} ${noun}`}))
+            this._item = new ItemDetail(_.extend(this._item, {Name: `${adjective} ${noun}`}))
         });
     }
 
@@ -136,12 +148,21 @@ export class ItemDetailCreateComponent implements OnInit {
     * Check out the data service as items/shared/item.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
-        this._metrcService.createItem(this._item)
-            .subscribe((item: Item) => {
-              // save the event to the activity log
-              firebase.push("/users/" + AuthService.token + '/activity', {object: 'item', status: 'created', createdAt: Date.now()});
-              this._routerExtensions.backToPreviousPage()
-            });
+      this._isUpdating = true
+      this._metrcService.createItem(this._item)
+        .subscribe((item: ItemDetail) => {
+          // save the event to the activity log
+          firebase.push("/users/" + AuthService.token + '/activity', {object: 'item', status: 'created', createdAt: Date.now()});
+          this._isUpdating = false
+          this._routerExtensions.navigate(['/items'], {
+              animated: true,
+              transition: {
+                  name: "slideBottom",
+                  duration: 200,
+                  curve: "ease"
+              }
+          })
+        });
     }
 
     /* ***********************************************************

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { alert } from "ui/dialogs";;
 import { EventData } from "data/observable";
 import { DataFormEventData } from "nativescript-ui-dataform";
-
+import { screen } from 'platform';
 import { Package } from "../shared/harvest.model";
 import { MetrcService } from "../../shared/metrc.service";
 
@@ -26,6 +26,7 @@ export class CreatePackageComponent implements OnInit {
     private _unitsOfWeight: any;
     private _itemCategories: any;
     private _isLoading: boolean = false;
+    private screenHeight: number = screen.mainScreen.heightDIPs;
 
     constructor(
         private http: HttpClient,
@@ -53,7 +54,7 @@ export class CreatePackageComponent implements OnInit {
 
         this._metrcService.getUnitsOfMeasure()
             .subscribe((units: Array<any>) => {
-                this._unitsOfWeight = units
+                this._unitsOfWeight = _.map(_.filter(units, {QuantityType: 'WeightBased'}), 'Name')
             });
 
         this._metrcService.getItemCategories()
@@ -88,7 +89,7 @@ export class CreatePackageComponent implements OnInit {
     }
 
     get unitsOfWeight(): any {
-        return _.map(_.filter(this._unitsOfWeight, {QuantityType: 'WeightBased'}), 'Name');
+        return this._unitsOfWeight;
     }
 
     /* ***********************************************************

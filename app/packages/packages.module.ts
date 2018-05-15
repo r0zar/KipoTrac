@@ -4,7 +4,6 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { NativeScriptUIDataFormModule } from "nativescript-ui-dataform/angular";
 import { SharedModule } from "../shared/shared.module";
 import { PackagesRoutingModule } from "./packages-routing.module";
-
 import { PackageListComponent } from "./package-list.component";
 import { PackageDetailComponent } from "./package-detail/package-detail.component";
 import { AdjustComponent } from "./adjust/adjust.component";

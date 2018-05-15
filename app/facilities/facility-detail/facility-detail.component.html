@@ -7,7 +7,7 @@
 	<StackLayout>
 		<StackLayout #topView [height]="imageHeight" style="background-image: url('https://michigan-marijuana-lawyer.com/wp-content/uploads/2018/02/cannabis-property.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
       <GridLayout rows="0, *">
-          <FAB #fabView row="1" (tap)="fabTap()" icon="~/images/star.png" rippleColor="#f1f1f1" class="fab-button" [backgroundColor]="iconColor" style="height: 60; width: 60; margin: 15; horizontal-align: right; vertical-align: bottom; "></FAB>
+          <FAB #fabView row="1" (tap)="fabTap()" icon="~/images/star.png" rippleColor="#f1f1f1" class="fab-button" [ngClass]="{'selected': selectedFacility, 'notSelected': !selectedFacility}"></FAB>
       </GridLayout>
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">

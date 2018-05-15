@@ -33,10 +33,9 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     -->
     <GridLayout class="page page-content" tkMainContent>
 
-      <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
       <RadListView [items]="facilities" (itemTap)="onFacilityItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)">
           <ng-template let-item="item">
-              <StackLayout [class.odd]="odd" [class.even]="even" [backgroundColor]="item.backgroundColor" [color]="item.fontColor">
+              <StackLayout [class.odd]="odd" [class.even]="even" [ngClass]="{'selected': item.selected}">
                 <GridLayout columns="auto, *, 40" rows="auto, auto">
                   <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf275;"></Label>
                   <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.DisplayName'></Label>
@@ -45,9 +44,10 @@ it shouldn't have any other siblings other than the <ActionBar> component.
               </StackLayout>
           </ng-template>
       </RadListView>
-      <GridLayout *ngIf="!facilities.length" class="page page-content" tkMainContent>
+      <GridLayout *ngIf="!facilities.length && !isLoading" class="page page-content">
           <Label class="page-icon fa" text="&#xf275;"></Label>
           <Label class="page-placeholder" text="Enter your API key to view your licenced facilities."></Label>
       </GridLayout>
+      <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
     </GridLayout>
 </RadSideDrawer>

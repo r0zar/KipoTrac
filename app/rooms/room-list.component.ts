@@ -38,8 +38,8 @@ export class RoomListComponent implements OnInit {
     * Use the sideDrawerTransition property to change the open/close animation of the drawer.
     *************************************************************/
     ngOnInit(): void {
-        this._sideDrawerTransition = new SlideInOnTopTransition();
         this._isLoading = true;
+        this._sideDrawerTransition = new SlideInOnTopTransition();
 
         // main rooms lookup logic
         this._metrcService.getRooms()
@@ -47,19 +47,6 @@ export class RoomListComponent implements OnInit {
             this._rooms = new ObservableArray(rooms);
             this._isLoading = false;
           })
-        /* ***********************************************************
-        * The data is retrieved remotely from FireBase.
-        * The actual data retrieval code is wrapped in a data service.
-        * Check out the service in rooms/shared/room.service.ts
-        *************************************************************/
-        // this._roomService.load()
-        //     .finally(() => {
-        //       this._isLoading = false
-        //     })
-        //     .subscribe((rooms: Array<Room>) => {
-        //         this._rooms = new ObservableArray(rooms);
-        //         this._isLoading = false;
-        //     });
 
     }
 

@@ -2,8 +2,9 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptFormsModule } from "nativescript-angular/forms"
 import { AuthProviders, AppRoutingModule } from "./app.routing";
+import { MetrcService } from "./shared/metrc.service";
 import { Data } from "./shared/data.service";
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
@@ -11,6 +12,7 @@ import "./rxjs.imports";
 
 @NgModule({
   providers: [
+    MetrcService,
     AuthProviders,
     Data
   ],
@@ -20,7 +22,8 @@ import "./rxjs.imports";
   imports: [
     NativeScriptModule,
     NativeScriptFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,

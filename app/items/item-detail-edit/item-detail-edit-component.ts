@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { alert } from "ui/dialogs";
-import { DatePicker } from "ui/date-picker";
 import { EventData } from "data/observable";
-import { Item } from "../shared/item.model";
+import { DataFormEventData } from "nativescript-ui-dataform";
+import { DatePicker } from "ui/date-picker";
+import { Item, ItemDetail } from "../shared/item.model";
 import { MetrcService } from "../../shared/metrc.service";
 import { screen } from 'platform';
 import firebase = require("nativescript-plugin-firebase");
@@ -21,17 +22,20 @@ import _ = require('lodash');
     templateUrl: "../shared/configure-item-detail.component.html"
 })
 export class ItemDetailEditComponent implements OnInit {
-    private _item: Item;
+    private _item: ItemDetail;
     private _isUpdating: boolean = false;
-    private _strains: any;
-    private _unitsOfMeasure: any;
-    private _validUnitsOfMeasure: any;
-    private _itemCategories: any;
-    private _chemicalUnits: any;
-    private _volumeUnits: any;
+    private _strains: any = [];
+    private _validUnitsOfMeasure: any = [];
+    private _itemCategories: any = [];
+    private _chemicalUnits: any = [];
+    private _volumeUnits: any = [];
     private thcRequired: boolean = false;
     private weightRequired: boolean = false;
     private volumeRequired: boolean = false;
+    private categories: any = [];
+    private units: any;
+    private itemCategory: any;
+    private toggle: boolean = false;
     private screenHeight: number = screen.mainScreen.heightDIPs;
 
     constructor(
@@ -46,9 +50,6 @@ export class ItemDetailEditComponent implements OnInit {
     * private property that holds it inside the component.
     *************************************************************/
     ngOnInit(): void {
-
-
-
         /* ***********************************************************
         * Learn more about how to get navigation parameters in this documentation article:
         * http://docs.nativescript.org/angular/core-concepts/angular-navigation.html#passing-parameter
@@ -58,68 +59,74 @@ export class ItemDetailEditComponent implements OnInit {
             .forEach((params) => {
               this._metrcService.getItem(params.id)
                   .subscribe((item: Item) => {
-                    this._item = new Item(item)
+                    this._item = new ItemDetail(item)
 
                     this._metrcService.getStrains()
-                    .subscribe((strains: Array<any>) => {
-                        this._strains = strains
-                    })
+                      .subscribe((strains: Array<any>) => {
+                          this._strains = _.map(strains, 'Name')
+                      });
 
                     this._metrcService.getItemCategories()
-                    .subscribe((categories: Array<any>) => {
-                        this._itemCategories = categories
-                        this.dfPropertyCommitted({})
-                    })
+                      .subscribe((categories: Array<any>) => {
+                          this.categories = categories
+                          this._itemCategories = _.map(categories, 'Name')
 
-                    this._metrcService.getUnitsOfMeasure()
-                    .subscribe((units: Array<any>) => {
-                        this._unitsOfMeasure = units
-                        this._chemicalUnits = _.filter(units, {QuantityType: 'WeightBased'})
-                        this._volumeUnits = _.filter(units, {QuantityType: 'VolumeBased'})
-                        this.dfPropertyCommitted({})
-                    })
+                          this._metrcService.getUnitsOfMeasure()
+                            .subscribe((units: Array<any>) => {
+                                this.units = units
+                                this.findValidUnits()
+                                this._chemicalUnits = _.map(_.filter(units, {QuantityType: 'WeightBased'}), 'Name')
+                                this._volumeUnits = _.map(_.filter(units, {QuantityType: 'VolumeBased'}), 'Name')
+                                this.toggle = true
+                            })
+                      })
                   })
             })
     }
 
-    dfPropertyCommitted(args) {
-        // find what quantity type the choice is...
-        let itemCategory = _.find(this._itemCategories, {Name: this._item.ItemCategory})
-        let QuantityType = itemCategory.QuantityType
-        // adjust units of measure list to only show valid options
-        this._validUnitsOfMeasure = _.filter(this._unitsOfMeasure, {QuantityType})
-        // show the valid units fields
-        this.thcRequired = itemCategory.RequiresUnitThcContent
-        this.weightRequired = itemCategory.RequiresUnitWeight
-        this.volumeRequired = itemCategory.RequiresUnitVolume
+    updateValidUnits(args) {
+      if (this.toggle && args.propertyName == 'ItemCategory') {
+        this.findValidUnits()
+      }
     }
 
-    get isUpdating(): boolean {
-        return this._isUpdating;
+    findValidUnits() {
+      // HACK typo in METRC API has a space on the end of kief
+      if (this._item.ItemCategory == 'Kief') {this._item.ItemCategory = `${this._item.ItemCategory} `}
+      // find what quantity type the choice is...
+      this.itemCategory = _.find(this.categories, {Name: this._item.ItemCategory as any})
+      // show the valid units fields
+      this.thcRequired = this.itemCategory.RequiresUnitThcContent
+      this.weightRequired = this.itemCategory.RequiresUnitWeight
+      this.volumeRequired = this.itemCategory.RequiresUnitVolume
+      // adjust units of measure list to only show valid options
+      this._validUnitsOfMeasure = _.map(_.filter(this.units, {QuantityType: this.itemCategory.QuantityType}), 'Name')
+      // default to first in the list
+      this._item.UnitOfMeasure = this._validUnitsOfMeasure[0]
     }
 
-    get item(): Item {
-        return this._item;
+    get item(): ItemDetail {
+        return this._item
     }
 
     get strains(): any {
-        return _.map(this._strains, 'Name');
+        return this._strains
     }
 
     get itemCategories(): any {
-        return _.map(this._itemCategories, 'Name')
+        return this._itemCategories
     }
 
     get unitsOfMeasure(): any {
-        return _.map(this._validUnitsOfMeasure, 'Name');
+        return this._validUnitsOfMeasure
     }
 
     get chemicalUnitsOfMeasure(): any {
-        return _.map(this._chemicalUnits, 'Name');
+        return this._chemicalUnits
     }
 
     get volumeUnitsOfMeasure(): any {
-        return _.map(this._volumeUnits, 'Name');
+        return this._volumeUnits
     }
 
     /* ***********************************************************
@@ -127,10 +134,12 @@ export class ItemDetailEditComponent implements OnInit {
     * Check out the data service as items/shared/item.service.ts
     *************************************************************/
     onDoneButtonTap(): void {
+        this._isUpdating = true
         this._metrcService.updateItem(this._item)
-            .subscribe((item: Item) => {
+            .subscribe((item: ItemDetail) => {
               // save the event to the activity log
               firebase.push("/users/" + AuthService.token + '/activity', {object: 'item', status: 'updated', createdAt: Date.now()});
+              this._isUpdating = false
               this._routerExtensions.backToPreviousPage()
             });
     }

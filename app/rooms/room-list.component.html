@@ -32,10 +32,6 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     Use the tkMainContent directive to display the content of the page when you have an app drawer.
     -->
     <GridLayout class="page page-content" tkMainContent>
-
-
-
-      <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
       <RadListView [items]="rooms" (itemTap)="onRoomItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)">
           <ng-template let-item="item">
               <StackLayout [class.odd]="odd" [class.even]="even">
@@ -46,9 +42,11 @@ it shouldn't have any other siblings other than the <ActionBar> component.
               </StackLayout>
           </ng-template>
       </RadListView>
-      <GridLayout *ngIf="!rooms.length" class="page page-content" tkMainContent>
+      <GridLayout *ngIf="!rooms.length && !isLoading" class="page page-content">
           <Label class="page-icon fa" text="&#xf0c8;"></Label>
           <Label class="page-placeholder" text="Add a room for each lighted grow or drying area."></Label>
       </GridLayout>
+      <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
     </GridLayout>
+
 </RadSideDrawer>

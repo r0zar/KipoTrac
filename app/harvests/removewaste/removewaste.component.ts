@@ -47,7 +47,7 @@ export class RemoveWasteComponent implements OnInit {
 
         this._metrcService.getUnitsOfMeasure()
             .subscribe((units: Array<any>) => {
-                this._unitsOfWeight = units
+                this._unitsOfWeight = _.map(_.filter(units, {QuantityType: 'WeightBased'}), 'Name')
             });
 
         this._metrcService.getItemCategories()
@@ -79,7 +79,7 @@ export class RemoveWasteComponent implements OnInit {
     }
 
     get unitsOfWeight(): any {
-        return _.map(_.filter(this._unitsOfWeight, {QuantityType: 'WeightBased'}), 'Name');
+        return this._unitsOfWeight;
     }
 
     /* ***********************************************************

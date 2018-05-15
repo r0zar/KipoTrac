@@ -1,8 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
-
-import { AuthGuard } from "../shared/auth-guard.service";
 import { PlantsComponent } from "./plants.component";
 import { PlantDetailComponent } from "./plant-detail/plant-detail.component";
 import { ChangeGrowthPhasesComponent } from "./changegrowthphases/changegrowthphases.component";
@@ -14,13 +12,13 @@ import { MoveComponent } from "./move/move.component"
 
 const routes: Routes = [
     { path: "", component: PlantsComponent },
-    { path: "plant-detail/:id", component: PlantDetailComponent, canActivate: [AuthGuard] },
-    { path: "changegrowthphases/:id", component: ChangeGrowthPhasesComponent, canActivate: [AuthGuard] },
-    { path: "createplantings/:id", component: CreatePlantingsComponent, canActivate: [AuthGuard] },
-    { path: "destroy/:id", component: DestroyComponent, canActivate: [AuthGuard] },
-    { path: "harvest/:id", component: HarvestComponent, canActivate: [AuthGuard] },
-    { path: "manicure/:id", component: ManicureComponent, canActivate: [AuthGuard] },
-    { path: "move/:id", component: MoveComponent, canActivate: [AuthGuard] }
+    { path: "plant-detail/:id", component: PlantDetailComponent },
+    { path: "changegrowthphases/:id", component: ChangeGrowthPhasesComponent },
+    { path: "createplantings/:id", component: CreatePlantingsComponent },
+    { path: "destroy/:id", component: DestroyComponent },
+    { path: "harvest/:id", component: HarvestComponent },
+    { path: "manicure/:id", component: ManicureComponent },
+    { path: "move/:id", component: MoveComponent }
 ];
 
 @NgModule({

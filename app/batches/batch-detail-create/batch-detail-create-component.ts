@@ -21,12 +21,11 @@ import _ = require('lodash');
     templateUrl: "./batch-detail-create.component.html"
 })
 export class BatchDetailCreateComponent implements OnInit {
-    private _batch: Batch;
+    private _batch: Batch = new Batch({});
     private _strains: any;
     private _unitsOfMeasure: any;
     private _batchTypes: any;
     private _isCreating: boolean = false;
-    private uid: string;
 
     constructor(
         private http: HttpClient,
@@ -41,9 +40,6 @@ export class BatchDetailCreateComponent implements OnInit {
     * private property that holds it inside the component.
     *************************************************************/
     ngOnInit(): void {
-        // this is for creating unique ids in the sandbox
-        firebase.getCurrentUser()
-          .then(user => {this.uid = user.uid})
 
         this._metrcService.getStrains()
             .subscribe((strains: Array<any>) => {
@@ -62,7 +58,7 @@ export class BatchDetailCreateComponent implements OnInit {
                 this.http.get<any[]>("https://api.datamuse.com/words?rel_jja=grass")
                   .subscribe((words: Array<any>) => {
                       var noun = _.capitalize(_.sample(words).word)
-                      this._batch = new Batch({Name: `${adjective} ${noun}`, ActualDate: new Date(), Type: 'Clone'})
+                      this._batch = new Batch(_.extend(this._batch, {Name: `${adjective} ${noun}`}))
                   });
             });
 
@@ -99,16 +95,15 @@ export class BatchDetailCreateComponent implements OnInit {
             .subscribe((batch: Batch) => {
               // save the event to the activity log
               firebase.push("/users/" + AuthService.token + '/activity', {object: 'batch', status: 'created', createdAt: Date.now()});
-              this._routerExtensions.navigate(['/batches'],
-                {
-                    animated: true,
-                    transition: {
-                        name: "slideBottom",
-                        duration: 200,
-                        curve: "ease"
-                    }
-                })
-              });
+              this._routerExtensions.navigate(['/batches'], {
+                  animated: true,
+                  transition: {
+                      name: "slideBottom",
+                      duration: 200,
+                      curve: "ease"
+                  }
+              })
+            });
     }
 
     /* ***********************************************************

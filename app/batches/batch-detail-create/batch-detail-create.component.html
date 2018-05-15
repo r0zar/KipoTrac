@@ -12,6 +12,9 @@
         <StackLayout class="item-list">
 
           <RadDataForm height="600" tkExampleTitle tkToggleNavButton [source]="batch" [isReadOnly]="false">
+            <TKEntityProperty tkDataFormProperty name="Name">
+              <TKPropertyEditor tkEntityPropertyEditor></TKPropertyEditor>
+            </TKEntityProperty>
             <TKEntityProperty tkDataFormProperty name="Count">
               <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
             </TKEntityProperty>

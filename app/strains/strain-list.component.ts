@@ -5,11 +5,8 @@ import { ListViewEventData } from "nativescript-ui-listview";
 import firebase = require("nativescript-plugin-firebase");
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
-
 import { Strain } from "./shared/strain.model";
 import { MetrcService } from "../shared/metrc.service";
-
-import _ = require('lodash');
 
 @Component({
     selector: "Strains",
@@ -40,11 +37,9 @@ export class StrainListComponent implements OnInit {
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
         this._isLoading = true;
-
         // main rooms lookup logic
         this._metrcService.getStrains()
             .subscribe((strains: Array<Strain>) => {
-
                 this._strains = new ObservableArray(strains);
                 this._isLoading = false;
             })
@@ -63,7 +58,6 @@ export class StrainListComponent implements OnInit {
         // main rooms lookup logic
         this._metrcService.getStrains()
             .subscribe((strains: Array<Strain>) => {
-
                 this._strains = new ObservableArray(strains);
                 this._isLoading = false;
                 args.object.notifyPullToRefreshFinished();
@@ -79,7 +73,6 @@ export class StrainListComponent implements OnInit {
     *************************************************************/
     onStrainItemTap(args: ListViewEventData): void {
         const tappedStrainItem = args.view.bindingContext;
-
         this._routerExtensions.navigate(["/strains/strain-detail", tappedStrainItem.Id],
         {
             animated: true,

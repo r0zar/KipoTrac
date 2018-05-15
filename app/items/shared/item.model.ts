@@ -29,7 +29,7 @@ export class Item {
         this.UnitOfMeasure = options.UnitOfMeasure || options.UnitOfMeasureName || '';
         this.UnitOfMeasureName = options.UnitOfMeasureName || '';
         this.StrainId = Number(options.StrainId);
-        this.Strain = options.Strain || options.StrainName || '';
+        this.Strain = options.Strain || options.StrainName;
         this.StrainName = options.StrainName || '';
         this.UnitThcContent = Number(options.UnitThcContent);
         this.UnitThcContentUnitOfMeasureName = options.UnitThcContentUnitOfMeasureName || 'Milligrams';
@@ -38,4 +38,32 @@ export class Item {
         this.UnitWeight = Number(options.UnitWeight);
         this.UnitWeightUnitOfMeasureName = options.UnitWeightUnitOfMeasureName || 'Milligrams';
     }
+}
+
+export class ItemDetail {
+    Id: number;
+    Name: string;
+    ItemCategory: string;
+    UnitOfMeasure: string;
+    Strain: string;
+    UnitThcContent: number;
+    UnitThcContentUnitOfMeasure: string;
+    UnitVolume: number;
+    UnitVolumeUnitOfMeasure: string;
+    UnitWeight: number;
+    UnitWeightUnitOfMeasure: string;
+
+  constructor(options: any) {
+      this.Id = Number(options.Id);
+      this.Name = options.Name || '';
+      this.ItemCategory = options.ProductCategoryName || options.ItemCategory || '';
+      this.UnitOfMeasure = options.UnitOfMeasureName || options.UnitOfMeasure || '';
+      this.Strain = options.StrainName || options.Strain || '';
+      this.UnitThcContent = Number(options.UnitThcContent);
+      this.UnitThcContentUnitOfMeasure = options.UnitThcContentUnitOfMeasureName || 'Milligrams';
+      this.UnitVolume = Number(options.UnitVolume);
+      this.UnitVolumeUnitOfMeasure = options.UnitVolumeUnitOfMeasureName || 'Milliliters';
+      this.UnitWeight = Number(options.UnitWeight);
+      this.UnitWeightUnitOfMeasure = options.UnitWeightUnitOfMeasureName || 'Milligrams';
+  }
 }

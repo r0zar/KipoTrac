@@ -12,6 +12,7 @@ import firebase = require("nativescript-plugin-firebase");
 import { AuthService } from "../../shared/auth.service";
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
+import { screen } from 'platform';
 
 /* ***********************************************************
 * This is the batch detail create component.
@@ -29,6 +30,7 @@ export class BatchDetailPackageComponent implements OnInit {
     private _itemCategories: any;
     private _isCreating: boolean = false;
     private _fabMenuOpen: boolean = false;
+    private screenHeight: number = screen.mainScreen.heightDIPs;
     @ViewChild("fabView") fabView: ElementRef;
     @ViewChild("actionItem1") actionItem1: ElementRef;
     @ViewChild("actionItem2") actionItem2: ElementRef;
@@ -61,6 +63,11 @@ export class BatchDetailPackageComponent implements OnInit {
                   this._metrcService.getItems()
                       .subscribe((items: Array<any>) => {
                           this._items = _.map(_.filter(items, {StrainName: batch.StrainName, ProductCategoryName: 'Immature Plant'}), 'Name')
+                          // HACK could probably just ask them if they want to make the item on the spot from a confirmation
+                          if (this._items.length == 0) {
+                            alert({title: 'Item Required', message: `Please first create an Item with category of Immature Plant and strain ${batch.StrainName} to create a package of this batch.`, okButtonText: "Got it"})
+                              .then(() => this.onBackButtonTap())
+                          }
                           this._batchPackage.Item = this._items[0]
                       });
                 })
@@ -140,7 +147,14 @@ export class BatchDetailPackageComponent implements OnInit {
             .subscribe((batch: Batch) => {
               // save the event to the activity log
               firebase.push("/users/" + AuthService.token + '/activity', {object: 'package', status: 'created', createdAt: Date.now()});
-              this._routerExtensions.backToPreviousPage()
+              this._routerExtensions.navigate(['/batches'], {
+                  animated: true,
+                  transition: {
+                      name: "flipRight",
+                      duration: 500,
+                      curve: "linear"
+                  }
+              })
             });
     }
 

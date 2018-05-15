@@ -1,3 +1,4 @@
+import moment = require('moment');
 import { Injectable } from '@angular/core';
 import { getString, setString } from "application-settings";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -6,22 +7,66 @@ import firebase = require("nativescript-plugin-firebase");
 @Injectable()
 export class Data {
 
+    public constructor() {}
+
     public storage: any;
 
-    private messageSource = new BehaviorSubject<any>({});
-    currentMessage = this.messageSource.asObservable();
+    public user: object = {};
+
+    private subscription = new BehaviorSubject<any>({});
+    isSubscribed = this.subscription.asObservable();
+    public subscribed = false;
 
     private selectedFacility = new BehaviorSubject<any>(false);
     isFacilitySelected = this.selectedFacility.asObservable();
 
-    public constructor() {}
+    private apiKey = new BehaviorSubject<any>('');
+    isApiKeySet = this.apiKey.asObservable();
 
-    changeMessage(message: any) {
-      this.messageSource.next(message)
+    private roomsActivated = new BehaviorSubject<any>(false);
+    isRoomsActivated = this.roomsActivated.asObservable();
+
+    private batchesActivated = new BehaviorSubject<any>(false);
+    isBatchesActivated = this.batchesActivated.asObservable();
+
+    private plantsActivated = new BehaviorSubject<any>(false);
+    isPlantsActivated = this.plantsActivated.asObservable();
+
+    private harvestsActivated = new BehaviorSubject<any>(false);
+    isHarvestsActivated = this.harvestsActivated.asObservable();
+
+    forceSubscription(activated: boolean) {
+      this.subscribed = activated
+      this.subscription.next(activated)
+    }
+
+    setSubscription(subscription: any) {
+      this.subscribed = moment(Number(subscription.expiryTimeMillis)).isAfter()
+      this.subscription.next(this.subscribed)
     }
 
     setFacilitySelected(message: any) {
       this.selectedFacility.next(message)
+    }
+
+    setApiKey(apiKey: any) {
+      this.apiKey.next(apiKey)
+    }
+
+    activateRooms(message: any) {
+      this.roomsActivated.next(message)
+    }
+
+    activateBatches(message: any) {
+      this.batchesActivated.next(message)
+    }
+
+    activatePlants(message: any) {
+      this.plantsActivated.next(message)
+    }
+
+    activateHarvests(message: any) {
+      this.harvestsActivated.next(message)
     }
 
 }

@@ -52,36 +52,6 @@ export class BatchListComponent implements OnInit {
                 this._isLoading = false;
             })
 
-
-        /* ***********************************************************
-        * The data is retrieved remotely from FireBase.
-        * The actual data retrieval code is wrapped in a data service.
-        * Check out the service in batches/shared/batch.service.ts
-        *************************************************************/
-        // this._batchService.load()
-        //     .finally(() => {
-        //       this._isLoading = false
-        //     })
-        //     .subscribe((batches: Array<Batch>) => {
-        //         this._batches = new ObservableArray(batches);
-        //         this._isLoading = false;
-        //     });
-
-    }
-
-    fabTap(actionItem1: View, actionItem2: View, actionItem3: View, actionItem4: View): void {
-      this._fabMenuOpen = !this._fabMenuOpen
-      if (this._fabMenuOpen) {
-        actionItem1.animate({ translate: { x: -70, y: 0 } }).then(() => { }, () => { });
-        actionItem2.animate({ translate: { x: -50, y: -60 } }).then(() => { }, () => { });
-        actionItem3.animate({ translate: { x: -30, y: -120 } }).then(() => { }, () => { });
-        actionItem4.animate({ translate: { x: 0, y: -180 } }).then(() => { }, () => { });
-      } else {
-        actionItem1.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
-        actionItem2.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
-        actionItem3.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
-        actionItem4.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
-      }
     }
 
     get batches(): ObservableArray<Batch> {

@@ -9,6 +9,7 @@ import { MetrcService } from "../../shared/metrc.service";
 import firebase = require("nativescript-plugin-firebase");
 import { AuthService } from "../../shared/auth.service";
 import _ = require('lodash');
+import { screen } from 'platform';
 
 /* ***********************************************************
 * This is the batch detail create component.
@@ -24,6 +25,7 @@ export class BatchDetailGrowthPhaseComponent implements OnInit {
     private _rooms: any;
     private _itemCategories: any;
     private _isCreating: boolean = false;
+    private screenHeight: number = screen.mainScreen.heightDIPs;
 
     constructor(
         private http: HttpClient,

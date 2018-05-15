@@ -7,6 +7,8 @@ import firebase = require("nativescript-plugin-firebase");
 import { alert } from "ui/dialogs";
 import { Data } from "../shared/data.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
+// import { TNSCoachMarks, TNSCoachMark } from 'nativescript-coachmarks';
+import { Page } from "ui/page";
 
 
 @Component({
@@ -29,6 +31,7 @@ export class HomeComponent implements OnInit {
       private barcodeScanner: BarcodeScanner,
       private _routerExtensions: RouterExtensions,
       private data: Data
+      // private page: Page
     ){}
 
 
@@ -48,7 +51,6 @@ export class HomeComponent implements OnInit {
                 }
               })
           })
-
 
         // this._metrcService.getSalesReceipts()
         //   .subscribe(() => {})

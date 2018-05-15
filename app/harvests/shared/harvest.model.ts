@@ -69,14 +69,14 @@ export class Package {
     this.Room = options.Room || '';
     this.Item = options.Item || '';
     this.Weight = Number(options.Weight);
-    this.UnitOfWeight = options.UnitOfWeight || '';
+    this.UnitOfWeight = options.UnitOfWeight || 'Grams';
     this.Tag = options.Tag || '';
     this.IsProductionBatch = options.IsProductionBatch || false;
     this.ProductionBatchNumber = options.ProductionBatchNumber || '';
     this.ProductRequiresRemediation = options.ProductRequiresRemediation || false;
     this.RemediateProduct = options.RemediateProduct || false;
     this.RemediationMethodId = options.RemediationMethodId || '';
-    this.RemediationDate = options.RemediationDate || '';
+    this.RemediationDate = options.RemediationDate || new Date();
     this.RemediationSteps = options.RemediationSteps || '';
     this.ActualDate = options.ActualDate || new Date();
 
