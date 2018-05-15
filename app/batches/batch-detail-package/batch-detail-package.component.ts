@@ -12,6 +12,7 @@ import firebase = require("nativescript-plugin-firebase");
 import { AuthService } from "../../shared/auth.service";
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
+import { screen } from 'platform';
 
 /* ***********************************************************
 * This is the batch detail create component.
@@ -29,6 +30,7 @@ export class BatchDetailPackageComponent implements OnInit {
     private _itemCategories: any;
     private _isCreating: boolean = false;
     private _fabMenuOpen: boolean = false;
+    private screenHeight: number = screen.mainScreen.heightDIPs;
     @ViewChild("fabView") fabView: ElementRef;
     @ViewChild("actionItem1") actionItem1: ElementRef;
     @ViewChild("actionItem2") actionItem2: ElementRef;

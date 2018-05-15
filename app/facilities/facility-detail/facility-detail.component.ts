@@ -91,14 +91,13 @@ export class FacilityDetailComponent implements OnInit {
     * The back button is essential for a master-detail feature.
     *************************************************************/
     onBackButtonTap(): void {
-        this._routerExtensions.navigate(["/facilities"],
-            {
-                animated: true,
-                transition: {
-                    name: "slideRight",
-                    duration: 200,
-                    curve: "ease"
-                }
-            })
+      this._routerExtensions.navigate(["/facilities"], {
+          animated: true,
+          transition: {
+              name: "slideRight",
+              duration: 200,
+              curve: "ease"
+          }
+      })
     }
 }

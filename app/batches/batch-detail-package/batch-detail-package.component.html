@@ -9,7 +9,7 @@
 
 <GridLayout rows="0, *" class="page page-content">
     <ScrollView row="1">
-        <StackLayout class="item-list">
+        <StackLayout [height]="imageHeight" class="item-list">
           <RadDataForm tkExampleTitle tkToggleNavButton [source]="batchPackage" [isReadOnly]="false">
 
             <TKEntityProperty tkDataFormProperty name="Item" [valuesProvider]="items" index=0>
