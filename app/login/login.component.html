@@ -12,8 +12,7 @@
         </RadDataForm> -->
 
         <GridLayout columns="auto,*" class="input input-border m-l-15 m-r-15" padding="10">
-  				<!--<Label col="0" class="fa far" text="&#xf0e0;" width="24" height="24"></Label>-->
-          <Label col="0" class="mdi" text="mdi-email" style="font-size:24px;" width="24"></Label>
+  				<Label col="0" class="fa" text="&#xf0e0;" style="font-size:22px;" width="24" height="24"></Label>
   				<TextField col="1" hint="Email Address" class="input m-l-5" horizontalAlignment="stretch" keyboardType="email" autocorrect="false" autocapitalization="none" [(ngModel)]="email"></TextField>
   			</GridLayout>
   			<GridLayout columns="auto,*" class="input input-border m-l-15 m-r-15" padding="10">
@@ -32,8 +31,6 @@
         <TextField class="m-l-15 m-r-15" hint="Password" secure="true" autocorrect="false" autocapitalization="none"
             [(ngModel)]="password"></TextField> -->
 
-        <Label class="mdi" text="mdi-email"></Label>
-        <Label class="far" text="fa-envelope"></Label>
         <Button class="btn btn-primary m-t-10" text="SIGN IN" (tap)="onSigninButtonTap()"></Button>
 
         <!-- <GridLayout columns="90, *, auto" rows="auto, *" >
