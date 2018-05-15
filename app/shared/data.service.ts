@@ -20,6 +20,9 @@ export class Data {
     private selectedFacility = new BehaviorSubject<any>(false);
     isFacilitySelected = this.selectedFacility.asObservable();
 
+    private apiKey = new BehaviorSubject<any>('');
+    isApiKeySet = this.apiKey.asObservable();
+
     private roomsActivated = new BehaviorSubject<any>(false);
     isRoomsActivated = this.roomsActivated.asObservable();
 
@@ -44,6 +47,10 @@ export class Data {
 
     setFacilitySelected(message: any) {
       this.selectedFacility.next(message)
+    }
+
+    setApiKey(apiKey: any) {
+      this.apiKey.next(apiKey)
     }
 
     activateRooms(message: any) {

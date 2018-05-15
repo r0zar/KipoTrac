@@ -38,10 +38,7 @@ export class MyDrawerComponent implements OnInit {
         * Use the MyDrawerComponent "onInit" event handler to initialize the properties data values.
         *************************************************************/
 
-        // HACK hardcode the API key
-        AuthService.apiKey = 'FusVbe4Yv6W1DGNuxKNhByXU6RO6jSUPcbRCoRDD98VNXc4D'
-
-        // this receives an async message to check if subscription is valid
+        // this receives an async message to check if facility is selected
         this.data.isFacilitySelected.subscribe(selected => this.facilitySelected = selected)
 
         // this recieves an async message and adjusts the menu to allow users to click on certain menu options

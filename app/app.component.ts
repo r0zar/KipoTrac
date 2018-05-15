@@ -61,8 +61,8 @@ export class AppComponent implements OnInit {
           // TODO all remote initialization should be set from here
           // it will trigger on login and reactivly set the users state and ui
           // the best way i've found to do this is with the data service observables
-          // they will get picked up by subscribers in the sidebar menu and then will
-          // dynamically change the menu options. this works much better than services
+          // they will get picked up by subscribers in other components and then will
+          // dynamically change the relevant options. this works much better than services
           // which will only be set when the sidebar menu is intialized.
 
           // initializate users API key
@@ -70,7 +70,9 @@ export class AppComponent implements OnInit {
           this.dataService.user = data.user;
           firebase.getValue("/users/" + AuthService.token + "/account/apiKey")
             .then(key => {
-              AuthService.apiKey = key.value
+              // HACK hardcode the API key
+              this.dataService.setApiKey('FusVbe4Yv6W1DGNuxKNhByXU6RO6jSUPcbRCoRDD98VNXc4D')
+              // this.dataService.setApiKey(key.value)
             })
             .catch(error => console.dir(error))
 
@@ -91,17 +93,12 @@ export class AppComponent implements OnInit {
             })
             .catch(error => console.dir(error))
 
-          this._metrcService.getRooms().subscribe(() => this.dataService.activateRooms(true), () => this.dataService.activateRooms(false))
-          this._metrcService.getBatches().subscribe(() => this.dataService.activateBatches(true), () => this.dataService.activateBatches(false))
-          this._metrcService.getVegetativePlants().subscribe(() => this.dataService.activatePlants(true), () => this.dataService.activatePlants(false))
-          this._metrcService.getHarvests('active').subscribe(() => this.dataService.activateHarvests(true), () => this.dataService.activateHarvests(false))
-
         }
         else {
           // unset state when user logs out
-          AuthService.token = '';
-          AuthService.apiKey = '';
-          FacilityService.facility = '';
+          AuthService.token = ''
+          this.dataService.setApiKey('')
+          this.dataService.setFacilitySelected(false)
         }
       }
     })
