@@ -17,5 +17,6 @@ report/
 test-results.xml
 .tmp_backup/
 app/App_Resources
+haxm_silent_run.log
 
 app/shared/shared.env.json

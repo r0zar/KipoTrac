@@ -2,44 +2,47 @@
 // other than “light”, switch the path to the alternative scheme,
 // for example '~nativescript-theme-core/scss/dark'.
 @import '~nativescript-theme-core/scss/orange';
-
 // Customize any of the theme’s variables here, for instance $btn-color: red;
-
 // Import the theme’s main ruleset.
 @import '~nativescript-theme-core/scss/index';
-
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
 
 /* Import shared animations */
+
 @import './shared/animate';
 
 /* Import custom theme */
-@import "./shared/custom";
 
+@import "./shared/custom";
 * {
-  font-family: "Nunito Sans";
+    font-family: "Nunito Sans";
 }
 
+
 /* Font icon */
+.mdi {
+  font-family: "Material Icons", "MaterialIcons-Regular";
+}
+
 .fa {
-  font-family: "FontAwesome";
+    font-family: "FontAwesome";
 }
 
 .fab {
-  font-family: "Font Awesome 5 Free Brands";
+    font-family: "Font Awesome 5 Free Brands";
 }
 
 .fas {
-  font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free";
 }
 
 .far {
-  font-family: "fa-regular-400";
+    font-family: "FontAwesome", "fa-regular-400";
 }
 
 .fa-large {
-  font-size: 36;
+    font-size: 36;
 }
 
 .fab-button {
@@ -55,25 +58,23 @@
   animation-duration: 3s;
 }
 
-.login-stack > .login-failed {
-  animation-name: shake;
-  animation-duration: 3s;
+.login-stack>.login-failed {
+    animation-name: shake;
+    animation-duration: 3s;
 }
 
 .page-content {
-
-  .page-placeholder {
-    @extend .text-muted;
-    font-size: 12;
-    vertical-align: center;
-    horizontal-align: center;
-  }
-
-  .page-icon {
-    @extend .text-muted;
-    font-size: 72;
-    vertical-align: top;
-    horizontal-align: center;
-    margin-top: 20%;
-  }
+    .page-placeholder {
+        @extend .text-muted;
+        font-size: 12;
+        vertical-align: center;
+        horizontal-align: center;
+    }
+    .page-icon {
+        @extend .text-muted;
+        font-size: 72;
+        vertical-align: top;
+        horizontal-align: center;
+        margin-top: 20%;
+    }
 }
