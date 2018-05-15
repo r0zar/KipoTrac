@@ -38,9 +38,16 @@
   font-family: "fa-regular-400";
 }
 
-
 .fa-large {
   font-size: 36;
+}
+
+.fab-button {
+  height: 60;
+  width: 60;
+  margin: 15;
+  horizontal-align: right;
+  vertical-align: bottom;
 }
 
 .login-stack > .loading {

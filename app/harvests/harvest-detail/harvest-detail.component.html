@@ -23,7 +23,39 @@
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
       <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="harvest" [isReadOnly]="true">
-
+        <TKEntityProperty tkDataFormProperty name="HarvestStartDate">
+          <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty name="CurrentWeight">
+          <TKPropertyEditor tkEntityPropertyEditor type="Label"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty name="TotalWetWeight">
+          <TKPropertyEditor tkEntityPropertyEditor type="Label"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty name="TotalWasteWeight">
+          <TKPropertyEditor tkEntityPropertyEditor type="Label"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty name="LastModified">
+          <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty name="TotalPackagedWeight">
+          <TKPropertyEditor tkEntityPropertyEditor type="Label"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty name="PlantCount">
+          <TKPropertyEditor tkEntityPropertyEditor type="Label"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty name="PackageCount">
+          <TKPropertyEditor tkEntityPropertyEditor type="Label"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty [hidden]="!FinishedDate" name="FinishedDate">
+          <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty [hidden]="!ArchivedDate" name="ArchivedDate">
+          <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+        </TKEntityProperty>
+        <TKEntityProperty tkDataFormProperty [hidden]="!LabTestingStateDate" name="LabTestingStateDate">
+          <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+        </TKEntityProperty>
         <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
             <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="DryingRoomId"></TKEntityProperty>

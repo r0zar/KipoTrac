@@ -9,8 +9,8 @@
 
 <GridLayout rows="0, *" class="page page-content">
     <ScrollView row="1">
-        <StackLayout [height]="imageHeight" class="item-list">
-          <RadDataForm tkExampleTitle tkToggleNavButton [source]="batchPackage" [isReadOnly]="false">
+        <StackLayout class="item-list">
+          <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="batchPackage" [isReadOnly]="false">
 
             <TKEntityProperty tkDataFormProperty name="Item" [valuesProvider]="items" index=0>
               <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
@@ -34,8 +34,8 @@
         </StackLayout>
     </ScrollView>
     <ActivityIndicator [busy]="isCreating"></ActivityIndicator>
-    <FAB #actionItem2 row="1" (tap)="actionItem2Tap()" icon="~/images/product-barcode.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
+    <FAB #actionItem2 row="1" (tap)="actionItem2Tap()" icon="~/images/product-barcode.png" rippleColor="#f1f1f1" class="fab-button" style="background-color: #db7d34;"></FAB>
     <!-- <FAB #actionItem1 row="1" (tap)="actionItem1Tap()" icon="~/images/scanner.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB> -->
-    <FAB #fabView row="1" (tap)="fabTap(actionItem2)" icon="res://icon" rippleColor="#db7d34" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #ffffff; horizontal-align: right; vertical-align: bottom; "></FAB>
+    <FAB #fabView row="1" (tap)="fabTap(actionItem2)" icon="res://icon" rippleColor="#db7d34" class="fab-button" style="background-color: #ffffff;"></FAB>
 
 </GridLayout>

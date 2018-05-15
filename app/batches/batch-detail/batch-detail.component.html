@@ -12,21 +12,17 @@
 			<!-- this is the header for collapsing --->
 			<!-- Note: this can be any type of layout you want -->
       <GridLayout rows="0, *">
-        <FAB #actionItem3 row="1" (tap)="actionItem3Tap()" icon="~/images/trash.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
-        <FAB #actionItem2 row="1" (tap)="actionItem2Tap()" icon="~/images/arrow-up.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
-        <FAB #actionItem1 row="1" (tap)="actionItem1Tap()" icon="~/images/box.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
-        <FAB #fabView row="1" (tap)="fabTap(actionItem1, actionItem2, actionItem3)" icon="res://icon" rippleColor="#db7d34" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #ffffff; horizontal-align: right; vertical-align: bottom; "></FAB>
+        <FAB #actionItem3 row="1" (tap)="actionItem3Tap()" icon="~/images/trash.png" rippleColor="#f1f1f1" class="fab-button" style="background-color: #db7d34;"></FAB>
+        <FAB #actionItem2 row="1" (tap)="actionItem2Tap()" icon="~/images/arrow-up.png" rippleColor="#f1f1f1" class="fab-button" style="background-color: #db7d34;"></FAB>
+        <FAB #actionItem1 row="1" (tap)="actionItem1Tap()" icon="~/images/box.png" rippleColor="#f1f1f1" class="fab-button" style="background-color: #db7d34;"></FAB>
+        <FAB #fabView row="1" (tap)="fabTap(actionItem1, actionItem2, actionItem3)" icon="res://icon" rippleColor="#db7d34" class="fab-button" style="background-color: #ffffff;"></FAB>
       </GridLayout>
 		</StackLayout>
 		<StackLayout width="100%" backgroundColor="white" padding="10">
 			<!--Add your page content here-->
       <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="batch" [isReadOnly]="true">
 
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Origin Information" hidden="false" index=1>
-            <TKEntityProperty tkPropertyGroupProperties name="SourcePackageLabel"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="SourcePlantLabel"></TKEntityProperty>
-        </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Plant Batch Details" hidden="false" index=0>
+        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="false" name="Plant Batch Details">
             <TKEntityProperty tkPropertyGroupProperties name="StrainName"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Type"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Count">
@@ -47,9 +43,13 @@
             <TKEntityProperty tkPropertyGroupProperties name="PlantedDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="LastModified" index=2>
+            <TKEntityProperty tkPropertyGroupProperties name="LastModified">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
+        </TKPropertyGroup>
+        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Origin Information">
+            <TKEntityProperty tkPropertyGroupProperties name="SourcePackageLabel"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="SourcePlantLabel"></TKEntityProperty>
         </TKPropertyGroup>
 
         <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">

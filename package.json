@@ -5,10 +5,10 @@
   "repository": "https://github.com/r0zar/KipoTrac",
   "nativescript": {
     "id": "com.kipotrac.mobile",
-    "tns-android": {
+    "tns-ios": {
       "version": "4.0.1"
     },
-    "tns-ios": {
+    "tns-android": {
       "version": "4.0.1"
     }
   },

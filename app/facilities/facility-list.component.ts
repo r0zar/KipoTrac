@@ -1,5 +1,5 @@
 import { map, assign } from "lodash";
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
+import { Component, OnInit, OnChanges, ViewChild, Input } from "@angular/core";
 import { ObservableArray } from "data/observable-array";
 import { RouterExtensions } from "nativescript-angular/router";
 import { ListViewEventData } from "nativescript-ui-listview";
@@ -17,7 +17,7 @@ import { Data } from "../shared/data.service";
     templateUrl: "./facility-list.component.html",
     styleUrls: ["./facility-list.component.scss"]
 })
-export class FacilityListComponent implements OnInit {
+export class FacilityListComponent implements OnInit, OnChanges {
     /* ***********************************************************
     * Use the @ViewChild decorator to get a reference to the drawer component.
     * It is used in the "onDrawerButtonTap" function below to manipulate the drawer.
@@ -39,6 +39,19 @@ export class FacilityListComponent implements OnInit {
     * Use the sideDrawerTransition property to change the open/close animation of the drawer.
     *************************************************************/
     ngOnInit(): void {
+
+        this._metrcService.getFacilities()
+            .subscribe((facilities: Array<any>) => {
+                let f = map(facilities, facility => {
+                  let selectedFacility = facility.License.Number == FacilityService.facility
+                  return selectedFacility ? assign(facility, {selected: true}) : facility
+                })
+                this._facilities = new ObservableArray(facilities);
+            });
+
+    }
+
+    ngOnChanges(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
         this._isLoading = true;
 
@@ -51,20 +64,6 @@ export class FacilityListComponent implements OnInit {
                 this._facilities = new ObservableArray(facilities);
                 this._isLoading = false;
             });
-
-        /* ***********************************************************
-        * The data is retrieved remotely from FireBase.
-        * The actual data retrieval code is wrapped in a data service.
-        * Check out the service in facilities/shared/facility.service.ts
-        *************************************************************/
-        // this._facilityService.load()
-        //     .finally(() => {
-        //       this._isLoading = false
-        //     })
-        //     .subscribe((facilities: Array<Facility>) => {
-        //         this._facilities = new ObservableArray(facilities);
-        //         this._isLoading = false;
-        //     });
 
     }
 

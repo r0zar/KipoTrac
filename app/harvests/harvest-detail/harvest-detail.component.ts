@@ -4,7 +4,7 @@ import { DataFormEventData } from "nativescript-ui-dataform";
 
 import { Harvest } from "../shared/harvest.model";
 import { MetrcService } from "../../shared/metrc.service";
-
+import * as dialogs from "ui/dialogs";
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { Image } from 'tns-core-modules/ui/image';
 import { View } from 'tns-core-modules/ui/core/view';
@@ -146,17 +146,37 @@ export class HarvestDetailComponent implements OnInit {
     }
 
     actionItem3Tap(): void {
-      console.log('finish harvest')
-      this._isLoading = true;
-      this._metrcService.finishHarvest({Id: this._harvest.Id, ActualDate: new Date()})
-        .subscribe(() => this._isLoading = false)
+      dialogs.confirm({
+          title: "Finish Harvest",
+          message: "Would you like to mark this harvest as finished?",
+          okButtonText: "Yes",
+          cancelButtonText: "Cancel"
+      }).then(result => {
+        console.log('finish harvest')
+        this._isLoading = true;
+        this._metrcService.finishHarvest({Id: this._harvest.Id, ActualDate: new Date()})
+          .subscribe(() => {
+            this._isLoading = false
+            this._routerExtensions.backToPreviousPage();
+          })
+      });
     }
 
     actionItem4Tap(): void {
-      console.log('unfinish harvest')
-      this._isLoading = true;
-      this._metrcService.unfinishHarvest({Id: this._harvest.Id})
-        .subscribe(() => this._isLoading = false)
+      dialogs.confirm({
+          title: "Restore Harvest",
+          message: "Would you like to restore this harvest?",
+          okButtonText: "Yes",
+          cancelButtonText: "Cancel"
+      }).then(result => {
+        console.log('unfinish harvest')
+        this._isLoading = true;
+        this._metrcService.unfinishHarvest({Id: this._harvest.Id})
+          .subscribe(() => {
+            this._isLoading = false
+            this._routerExtensions.backToPreviousPage();
+          })
+      });
     }
 
     get harvest(): Harvest {

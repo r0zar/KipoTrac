@@ -10,8 +10,7 @@
 <GridLayout class="page page-content">
     <ScrollView>
         <StackLayout class="item-list">
-
-          <RadDataForm tkExampleTitle tkToggleNavButton [source]="package" [isReadOnly]="false">
+          <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="package" [isReadOnly]="false">
             <TKEntityProperty tkDataFormProperty name="Room" [valuesProvider]="rooms">
               <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
@@ -25,6 +24,9 @@
               <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
             <TKEntityProperty tkDataFormProperty name="ActualDate">
+              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+            </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="RemediationDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
 
