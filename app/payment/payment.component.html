@@ -4,15 +4,26 @@
 </ActionBar>
 
 <StackLayout>
-  <Label text="Active Reporting (California)" class="font-weight-bold m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
+  <Label text="Active Reporting (California)" class="font-weight-bold m-t-20 m-b-10 m-l-20 m-r-20"></Label>
 
-  <Label *ngIf="!activeSubscription" text="&#xf071;  Limited METRC Compliance Reporting" class="fas m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
-  <Label *ngIf="activeSubscription" text="&#xf505;  Full METRC Compliance Reporting" class="fas m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
+  <GridLayout *ngIf="!activeSubscription" columns="auto, *" rows="auto">
+    <Label col="0" class="m-t-20 m-l-20 fas" text="&#xf071;"></Label>
+    <Label col="1" class="m-t-20 m-l-10" text='Limited METRC Compliance Reporting'></Label>
+  </GridLayout>
+  <GridLayout *ngIf="activeSubscription" columns="auto, *" rows="auto">
+    <Label col="0" class="m-t-20 m-l-20 fas" text="&#xf505;"></Label>
+    <Label col="1" class="m-t-20 m-l-10" text='Full METRC Compliance Reporting'></Label>
+  </GridLayout>
 
   <Label *ngIf="activeSubscription" text="Manage your subscription" class="text-primary m-t-10 m-b-10 m-l-20 m-r-20" [nsRouterLink]="['/payment/add']"></Label>
-  <Label *ngIf="!activeSubscription" text="Upgrade to Full METRC Compliance Reporting (Paid)" class="text-primary m-t-10 m-b-10 m-l-20 m-r-20" [nsRouterLink]="['/payment/add']"></Label>
-  <StackLayout class="hr-light"></StackLayout>
+  <Label *ngIf="!activeSubscription" text="Upgrade to Full METRC Compliance Reporting" class="text-primary m-t-10 m-b-10 m-l-20 m-r-20" [nsRouterLink]="['/payment/add']"></Label>
+
+  <StackLayout class="hr-light m-t-10 m-b-10"></StackLayout>
+
   <Label text="Promotions Applied" class="font-weight-bold m-t-10 m-b-10 m-l-20 m-r-20"></Label>
 
-  <Label text="&#xf0c3;  Early Access User" class="fa m-t-20 m-t-10 m-b-10 m-l-20 m-r-20" (tap)="betaTester()"></Label>
+  <GridLayout columns="auto, *" (tap)="betaTester()" rows="auto">
+    <Label col="0" class="m-t-20 m-l-20 fas" text="&#xf0c3;"></Label>
+    <Label col="1" class="m-t-20 m-l-10" text='Early Access User'></Label>
+  </GridLayout>
 </StackLayout>

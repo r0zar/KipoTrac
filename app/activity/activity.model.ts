@@ -20,6 +20,8 @@ export class Activity {
           this.objectIcon = String.fromCharCode(0xf4fe)
         } else if (options.object == 'room') {
           this.objectIcon = String.fromCharCode(0xf0c8)
+        } else if (options.object == 'strain') {
+          this.objectIcon = String.fromCharCode(0xf471)
         } else if (options.object == 'item') {
           this.objectIcon = String.fromCharCode(0xf02b)
         } else if (options.object == 'batch') {

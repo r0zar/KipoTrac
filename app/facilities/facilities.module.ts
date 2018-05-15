@@ -2,10 +2,8 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { NativeScriptUIDataFormModule } from "nativescript-ui-dataform/angular";
-
 import { SharedModule } from "../shared/shared.module";
 import { FacilityDetailComponent } from "./facility-detail/facility-detail.component";
-import { CreateComponent } from "./create/create.component";
 import { FacilityListComponent } from "./facility-list.component";
 import { FacilitiesRoutingModule } from "./facilities-routing.module";
 import { FacilityService } from "./shared/facility.service";
@@ -20,8 +18,7 @@ import { FacilityService } from "./shared/facility.service";
     ],
     declarations: [
         FacilityListComponent,
-        FacilityDetailComponent,
-        CreateComponent,
+        FacilityDetailComponent
     ],
     entryComponents: [
     ],

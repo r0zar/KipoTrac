@@ -45,7 +45,6 @@ export class ItemListComponent implements OnInit {
         // main rooms lookup logic
         this._metrcService.getItems()
             .subscribe((items: Array<Item>) => {
-
                 this._items = new ObservableArray(items);
                 this._isLoading = false;
             })
@@ -64,7 +63,6 @@ export class ItemListComponent implements OnInit {
         // main rooms lookup logic
         this._metrcService.getItems()
             .subscribe((items: Array<Item>) => {
-
                 this._items = new ObservableArray(items);
                 this._isLoading = false;
                 args.object.notifyPullToRefreshFinished();

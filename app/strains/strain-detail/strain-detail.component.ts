@@ -1,18 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { DataFormEventData } from "nativescript-ui-dataform";
-
 import { Strain } from "../shared/strain.model";
 import { MetrcService } from "../../shared/metrc.service";
-
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { Image } from 'tns-core-modules/ui/image';
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
 import { confirm } from "ui/dialogs";
 import { screen } from 'platform';
-
-import { ViewChild, ElementRef, AfterViewInit } from "@angular/core";
 import { RadialNeedle } from "nativescript-ui-gauge";
 
 /* ***********************************************************
@@ -28,7 +24,6 @@ import { RadialNeedle } from "nativescript-ui-gauge";
 export class StrainDetailComponent implements OnInit, AfterViewInit {
     private _needle: RadialNeedle;
     public values = [60, 80, 120, 160];
-
     private _strain: Strain;
     private name: string;
     private _fabMenuOpen: boolean = false;
@@ -49,10 +44,6 @@ export class StrainDetailComponent implements OnInit, AfterViewInit {
     *************************************************************/
     ngOnInit(): void {
         this._isLoading = true;
-        /* ***********************************************************
-        * Learn more about how to get navigation parameters in this documentation article:
-        * http://docs.nativescript.org/angular/core-concepts/angular-navigation.html#passing-parameter
-        *************************************************************/
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {

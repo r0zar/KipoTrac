@@ -33,9 +33,6 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     -->
     <GridLayout class="page page-content" tkMainContent>
 
-
-
-      <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
       <RadListView [items]="items" (itemTap)="onItemItemTap($event)" pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)">
           <ng-template let-item="item">
               <StackLayout [class.odd]="odd" [class.even]="even">
@@ -46,9 +43,11 @@ it shouldn't have any other siblings other than the <ActionBar> component.
               </StackLayout>
           </ng-template>
       </RadListView>
-      <GridLayout *ngIf="!items.length" class="page page-content" tkMainContent>
+      <GridLayout *ngIf="!items.length && !isLoading" class="page page-content">
           <Label class="page-icon fa" text="&#xf02c;"></Label>
           <Label class="page-placeholder" text="No defined items."></Label>
       </GridLayout>
+      <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
+
     </GridLayout>
 </RadSideDrawer>

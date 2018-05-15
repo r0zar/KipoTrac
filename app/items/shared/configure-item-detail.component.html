@@ -12,8 +12,6 @@
     <ScrollView>
         <StackLayout class="item-list">
 
-          <ActivityIndicator [busy]="_isUpdating"></ActivityIndicator>
-
           <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="item" [isReadOnly]="false" (propertyCommitted)="updateValidUnits($event)">
 
             <TKEntityProperty tkDataFormProperty name="Name" index=0>
@@ -58,4 +56,5 @@
 
         </StackLayout>
     </ScrollView>
+    <ActivityIndicator [busy]="_isUpdating"></ActivityIndicator>
 </GridLayout>

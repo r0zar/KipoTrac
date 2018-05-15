@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { PreloadAllModules } from "@angular/router";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes } from "@angular/router";
 import { AuthGuard } from "./shared/auth-guard.service";
@@ -6,6 +7,7 @@ import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
 
 export const AuthProviders = [AuthGuard];
+// TODO enforce auth guard based on subscription statue as well
 
 const routes: Routes = [
     { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -28,7 +30,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [NativeScriptRouterModule.forRoot(routes)],
+    imports: [NativeScriptRouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
     exports: [NativeScriptRouterModule]
 })
 export class AppRoutingModule { }

@@ -6,11 +6,9 @@ import { FacilityService } from "../shared/facility.service";
 import { MetrcService } from "../../shared/metrc.service";
 import { Data } from "../../shared/data.service";
 import firebase = require("nativescript-plugin-firebase");
-import { alert } from "ui/dialogs";
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { screen } from 'platform';
 import { View } from 'tns-core-modules/ui/core/view';
-import { Page } from "ui/page";
 
 /* ***********************************************************
 * This is the item details component in the master-detail structure.

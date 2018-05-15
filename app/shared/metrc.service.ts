@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { alert } from "ui/dialogs";
 import { Observable } from "rxjs/Observable";
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';

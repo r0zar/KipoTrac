@@ -11,7 +11,7 @@
     <ScrollView>
         <StackLayout class="item-list">
 
-          <RadDataForm height="500" tkExampleTitle tkToggleNavButton [source]="strain" [isReadOnly]="false">
+          <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="strain" [isReadOnly]="false">
             <TKEntityProperty tkDataFormProperty name="ThcLevel">
                 <TKPropertyEditor tkEntityPropertyEditor type="Decimal"></TKPropertyEditor>
             </TKEntityProperty>
