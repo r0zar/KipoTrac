@@ -1,24 +1,25 @@
 // Import the theme’s variables. If you’re using a color scheme
 // other than “light”, switch the path to the alternative scheme,
 // for example '~nativescript-theme-core/scss/dark'.
-@import '~nativescript-theme-core/scss/orange';
+@import '~nativescript-theme-core/scss/light';
+
 // Customize any of the theme’s variables here, for instance $btn-color: red;
 // Import the theme’s main ruleset.
 @import '~nativescript-theme-core/scss/index';
+
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
 
-/* Import shared animations */
+/* Import custom theme */
+@import './_custom';
 
+/* Import shared animations */
 @import './shared/animate';
 
-/* Import custom theme */
-
-@import "./shared/custom";
+/* Import font family */
 * {
     font-family: "Nunito Sans";
 }
-
 
 /* Font icon */
 .mdi {
@@ -39,10 +40,6 @@
 
 .far {
     font-family: "FontAwesome", "fa-regular-400";
-}
-
-.fa-large {
-    font-size: 36;
 }
 
 .fab-button {
@@ -77,4 +74,15 @@
         horizontal-align: center;
         margin-top: 20%;
     }
+}
+
+.selected {
+  background-color: $kipotrac-secondary;
+  Label {
+      color: #f1f1f1;
+  }
+}
+
+.notSelected {
+  background-color: #cecece;
 }

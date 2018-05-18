@@ -21,16 +21,4 @@ $sidedrawer-header-image-offset-bottom: 5;
             color: rgba($ab-color, 0.5);
         }
     }
-
-    .sidedrawer-header {
-        background-color: #db7d34;
-
-        .sidedrawer-header-brand {
-            color: $ab-color;
-        }
-    }
-
-    .sidedrawer-content {
-        background-color: $side-drawer-background;
-    }
 }
