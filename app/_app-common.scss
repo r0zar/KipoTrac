@@ -50,6 +50,17 @@
   vertical-align: bottom;
 }
 
+.login-stack {
+    Label {
+        color: white;
+    }
+    TextField, .textfield {
+        border-width: 0 0 1 0;
+        border-bottom-color: #898989;
+        color: white;
+    }
+}
+
 .login-stack > .loading {
   animation-name: pulse;
   animation-duration: 3s;
