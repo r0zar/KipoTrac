@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     // this is for the purchase plugin
-    purchase.init(['monthly', 'metrc.monthly'])
+    purchase.init(['monthly', 'metrc.monthly', 'test', 'testsub'])
     purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
         if (transaction.transactionState === TransactionState.Purchased) {
             console.log(`Congratulations you just bought ${transaction.productIdentifier}!`);

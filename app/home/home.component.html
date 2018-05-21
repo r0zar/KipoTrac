@@ -29,7 +29,23 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     Use the tkMainContent directive to display the content of the page when you have an app drawer.
     -->
     <GridLayout class="page page-content" tkMainContent>
-        <Label class="page-icon fa" text="&#xf015;" (tap)="onScanBarcodeTap()"></Label>
-        <Label class="page-placeholder" text="Nothing to see here, yet."></Label>
+        <TabView (selectedIndexChanged)="onSelectedIndexChanged($event)">
+            <StackLayout *tabItem="{title: 'Dashboard', iconSource: getIconSource('plant-leaf')}">
+              <GridLayout rows="0, *">
+                <GridLayout row="1" class="page page-content">
+                    <Label class="page-icon fas" text="&#xf3fd;"></Label>
+                    <Label class="page-placeholder" text="Nothing to see here, yet."></Label>
+                </GridLayout>
+              </GridLayout>
+            </StackLayout>
+            <StackLayout *tabItem="{title: 'Notifications', iconSource: getIconSource('branch')}">
+              <GridLayout rows="0, *">
+                <GridLayout row="1" class="page page-content">
+                    <Label class="page-icon fa" text="&#xf01c;"></Label>
+                    <Label class="page-placeholder" text="Your inbox is empty."></Label>
+                </GridLayout>
+              </GridLayout>
+            </StackLayout>
+        </TabView>
     </GridLayout>
 </RadSideDrawer>
