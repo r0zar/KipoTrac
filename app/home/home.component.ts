@@ -12,6 +12,11 @@ import { BarcodeScanner } from 'nativescript-barcodescanner';
 // import { TNSCoachMarks, TNSCoachMark } from 'nativescript-coachmarks';
 import { Page } from "ui/page";
 
+import { ObservableArray } from "data/observable-array";
+import { Observable } from "rxjs/Observable";
+import { Notification } from "./notification.model";
+import { NotificationService } from "./notification.service";
+
 
 @Component({
     selector: "Home",
@@ -26,12 +31,15 @@ export class HomeComponent implements OnInit {
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
     private _sideDrawerTransition: DrawerTransitionBase;
     private _title: string;
+    private _notifications: ObservableArray<Notification> = new ObservableArray<Notification>([]);
+    private _notification: Notification;
 
     constructor(
       private _metrcService: MetrcService,
       private barcodeScanner: BarcodeScanner,
       private _routerExtensions: RouterExtensions,
-      private data: Data
+      private data: Data,
+      private Notifications: NotificationService
     ){}
 
     /* ***********************************************************
@@ -39,6 +47,11 @@ export class HomeComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
+
+        this.Notifications.load()
+          .subscribe((notifications: Array<Notification>) => {
+            this._notifications = new ObservableArray(notifications);
+          });
 
         firebase.getCurrentUser()
           .then(user => {
@@ -49,6 +62,10 @@ export class HomeComponent implements OnInit {
                 }
               })
           })
+    }
+
+    get notifications(): ObservableArray<Notification> {
+      return this._notifications;
     }
 
     get title(): string {

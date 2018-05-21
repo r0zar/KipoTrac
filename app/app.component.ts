@@ -1,4 +1,5 @@
 import { Component, OnInit, enableProdMode } from "@angular/core";
+import { RouterExtensions } from "nativescript-angular/router";
 import { AuthService } from "./shared/auth.service";
 import { MetrcService } from "./shared/metrc.service";
 import { FacilityService } from "./facilities/shared/facility.service";
@@ -7,7 +8,6 @@ import { Data } from "./shared/data.service";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import *  as purchase from "nativescript-purchase";
 import { Transaction, TransactionState } from "nativescript-purchase/transaction";
-import {  } from '@angular/core';
 // add custom elements to UI from 3rd party plugins
 import { registerElement } from "nativescript-angular/element-registry";
 registerElement("Fab", () => require("nativescript-floatingactionbutton").Fab);
@@ -22,7 +22,8 @@ export class AppComponent implements OnInit {
   constructor(
     private dataService: Data,
     private http: HttpClient,
-    private _metrcService: MetrcService
+    private _metrcService: MetrcService,
+    private _routerExtensions: RouterExtensions
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +57,15 @@ export class AppComponent implements OnInit {
     // intialize firebase connection
     firebase.init({
       persist: false,
+      onMessageReceivedCallback: (message: any) => {
+        firebase.push("/users/" + AuthService.token + '/notifications', message);
+        // I added some logic here so we have have notifications route the app to a page
+        if (message.data.route) {
+          this._routerExtensions.navigate([`/${message.data.route}`],
+            {animated: true, transition: {name: "fade", duration: 200, curve: "ease"}
+          })
+        }
+      },
       onAuthStateChanged: (data: any) => {
         if (data.loggedIn) {
           // TODO all remote initialization should be set from here
