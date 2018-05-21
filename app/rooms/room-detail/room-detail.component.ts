@@ -10,7 +10,7 @@ import { Image } from 'tns-core-modules/ui/image';
 import { screen } from 'platform';
 import { View } from 'tns-core-modules/ui/core/view';
 import { Page } from "ui/page";
-import { confirm } from "ui/dialogs";;
+import { confirm } from "ui/dialogs";
 
 
 /* ***********************************************************

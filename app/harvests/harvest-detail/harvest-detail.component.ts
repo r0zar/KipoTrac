@@ -150,7 +150,8 @@ export class HarvestDetailComponent implements OnInit {
           title: "Finish Harvest",
           message: "Would you like to mark this harvest as finished?",
           okButtonText: "Yes",
-          cancelButtonText: "Cancel"
+          cancelButtonText: "No",
+          neutralButtonText: "Cancel"
       }).then(result => {
         console.log('finish harvest')
         this._isLoading = true;

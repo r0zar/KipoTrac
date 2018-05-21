@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { DataFormEventData } from "nativescript-ui-dataform";
-
 import { Package } from "../shared/package.model";
 import { MetrcService } from "../../shared/metrc.service";
-
+import { confirm } from "ui/dialogs";
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { Image } from 'tns-core-modules/ui/image';
 import { screen } from 'platform';
@@ -176,8 +175,28 @@ export class PackageDetailComponent implements OnInit {
 
     actionItem4Tap(): void {
       console.log('finish/unfinish package')
-      this._metrcService.finishPackage({Label: this._package.Label, ActualDate: new Date()})
-        .subscribe(() => {})
+      let options = {
+          title: "Finish Package",
+          message: "Are you sure you want to finish this package?",
+          okButtonText: "Yes",
+          cancelButtonText: "No",
+          neutralButtonText: "Cancel"
+      };
+      confirm(options).then((result: boolean) => {
+        if (result) {
+          this._metrcService.finishPackage({Label: this._package.Label, ActualDate: new Date()})
+            .subscribe(() => {
+              this._routerExtensions.navigate(["/packages"],
+                  {
+                      animated: true,
+                      transition: {
+                          name: "fade",
+                          duration: 1000
+                      }
+                  });
+            })
+        }
+      });
     }
 
     actionItem5Tap(): void {
