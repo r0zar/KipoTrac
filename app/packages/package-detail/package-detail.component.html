@@ -6,11 +6,9 @@
         <Label text="Edit" class="action-item"></Label>
     </ActionItem> -->
 </ActionBar>
-<ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, fabView, actionItem1, actionItem2, actionItem3, actionItem4, actionItem5)">
+<ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView, fabView, actionItem1, actionItem2, actionItem3, actionItem4, actionItem5)">
 	<StackLayout>
-    <!-- for some reason the paralax is bugging out on JUST packages... -->
-		<!-- <StackLayout #topView height="200" style="background-image: url('~/images/packages.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;"> -->
-		<StackLayout [height]="imageHeight" style="background-image: url('~/images/packages.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+		<StackLayout #topView [height]="imageHeight" style="background-image: url('~/images/packages.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
 			<!-- this is the header for collapsing --->
 			<!-- Note: this can be any type of layout you want -->
       <GridLayout rows="0, *">
@@ -26,36 +24,40 @@
 			<!--Add your page content here-->
       <RadDataForm [height]="screenHeight" tkExampleTitle tkToggleNavButton [source]="package" [isReadOnly]="true">
         <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Package Details" hidden="false" index=0>
-            <TKEntityProperty tkPropertyGroupProperties name="ProductName"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="ProductCategoryName" displayName="Product Category"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Quantity" [displayName]="displayName"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="Label" index=3></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="RoomName" displayName="Location"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="LastModified">
-              <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
-            </TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="RoomName" name="RoomName" displayName="Location"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="IsProductionBatch"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="ProductRequiresRemediation"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="ContainsRemediatedProduct"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="IsOnHold"></TKEntityProperty>
         </TKPropertyGroup>
-        <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Lab Testing" hidden="false" index=2>
+        <!-- <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Lab Testing" hidden="false" index=2>
             <TKEntityProperty tkPropertyGroupProperties name="InitialLabTestingState"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="LabTestingState"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="LabTestingStateName"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="LabTestingStateDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
-        </TKPropertyGroup>
+        </TKPropertyGroup> -->
         <TKPropertyGroup tkDataFormGroups collapsible="true" collapsed="true" name="Source Information" hidden="false" index=1>
-            <TKEntityProperty tkPropertyGroupProperties name="ReceivedFromManifestNumber"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="ReceivedFromManifestNumber" name="ReceivedFromManifestNumber"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="PackagedDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="SourceHarvestNames"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="ProductionBatchNumber"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="ReceivedFromFacilityLicenseNumber"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="ReceivedFromFacilityName"></TKEntityProperty>
-            <TKEntityProperty tkPropertyGroupProperties name="ReceivedDateTime">
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="ProductionBatchNumber" name="ProductionBatchNumber"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="ReceivedFromFacilityLicenseNumber" name="ReceivedFromFacilityLicenseNumber"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="ReceivedFromFacilityName" name="ReceivedFromFacilityName"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="ReceivedDateTime" name="ReceivedDateTime">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
         </TKPropertyGroup>
+
+        <TKEntityProperty tkDataFormProperty name="LastModified">
+          <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
+        </TKEntityProperty>
 
         <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
             <TKEntityProperty tkPropertyGroupProperties name="Id"></TKEntityProperty>
@@ -77,6 +79,17 @@
             </TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="ActualDate"></TKEntityProperty>
             <TKEntityProperty tkPropertyGroupProperties name="amount"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="InitialLabTestingState"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="LabTestingState"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="LabTestingStateName"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="LabTestingStateDate"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties name="ProductName"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="!RoomName" name="RoomName" displayName="Location"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="!ReceivedFromManifestNumber" name="ReceivedFromManifestNumber"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="!ReceivedFromFacilityLicenseNumber" name="ReceivedFromFacilityLicenseNumber"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="!ReceivedFromFacilityName" name="ReceivedFromFacilityName"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="!ReceivedDateTime" name="ReceivedDateTime"></TKEntityProperty>
+            <TKEntityProperty tkPropertyGroupProperties *ngIf="!ProductionBatchNumber" name="ProductionBatchNumber"></TKEntityProperty>
         </TKPropertyGroup>
       </RadDataForm>
 		</StackLayout>

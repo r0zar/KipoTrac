@@ -19,7 +19,7 @@ import _ = require('lodash');
     templateUrl: "./move.component.html"
 })
 export class MoveComponent implements OnInit {
-    private _move: Move;
+    private _move: Move = new Move({});
     private _plant: Plant;
     private _rooms: any;
     private _isLoading: boolean = false;

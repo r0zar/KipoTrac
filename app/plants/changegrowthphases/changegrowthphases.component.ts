@@ -20,7 +20,7 @@ import _ = require('lodash');
     templateUrl: "./changegrowthphases.component.html"
 })
 export class ChangeGrowthPhasesComponent implements OnInit {
-    private _growthPhaseChange: GrowthPhaseChange;
+    private _growthPhaseChange: GrowthPhaseChange = new GrowthPhaseChange({});
     private _rooms: any;
     private _isLoading: boolean = false;
 

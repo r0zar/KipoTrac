@@ -20,8 +20,9 @@ import _ = require('lodash');
     templateUrl: "./createplantings.component.html"
 })
 export class CreatePlantingsComponent implements OnInit {
-    private _plantings: Plantings;
+    private _plantings: Plantings = new Plantings({});
     private _rooms: any;
+    private _strains: any;
     private _isLoading: boolean = false;
 
     constructor(
@@ -48,18 +49,22 @@ export class CreatePlantingsComponent implements OnInit {
             .forEach((params) => {
               this._metrcService.getPlantById(params.id)
                 .subscribe((plant: Plant) => {
-                  let adjective = ''
-                  let noun = ''
+
                   this.http.get<any[]>("https://api.datamuse.com/words?rel_jjb=marijuana")
-                    .subscribe((words: Array<any>) => {
-                        adjective = _.capitalize(_.sample(words).word)
-                        this._plantings = new Plantings({Label: plant.Label, PlantBatchName: `${adjective} ${noun}`, StrainName: plant.StrainName})
-                    });
-                  this.http.get<any[]>("https://api.datamuse.com/words?rel_jja=grass")
-                    .subscribe((words: Array<any>) => {
-                        noun = _.capitalize(_.sample(words).word)
-                        this._plantings = new Plantings({Label: plant.Label, PlantBatchName: `${adjective} ${noun}`, StrainName: plant.StrainName})
-                    });
+                      .subscribe((words: Array<any>) => {
+                          var adjective = _.capitalize(_.sample(words).word)
+                          this.http.get<any[]>("https://api.datamuse.com/words?rel_jja=grass")
+                            .subscribe((words: Array<any>) => {
+                                var noun = _.capitalize(_.sample(words).word)
+                                this._plantings = new Plantings(_.extend(this._plantings, {Name: `${adjective} ${noun}`}))
+                            });
+                      });
+
+                  this._metrcService.getStrains()
+                      .subscribe((strains: Array<any>) => {
+                          this._strains = _.map(strains, 'Name')
+                          this._plantings.StrainName = plant.StrainName
+                      });
                 });
             });
 
@@ -67,6 +72,10 @@ export class CreatePlantingsComponent implements OnInit {
 
     get createPlantings(): Plantings {
         return this._plantings;
+    }
+
+    get strains(): any {
+        return this._strains;
     }
 
     get rooms(): any {

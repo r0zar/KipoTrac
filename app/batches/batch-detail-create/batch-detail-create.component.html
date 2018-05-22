@@ -13,9 +13,7 @@
 
           <RadDataForm height="600" tkExampleTitle tkToggleNavButton [source]="batch" [isReadOnly]="false">
             <TKEntityProperty tkDataFormProperty name="Name">
-              <TKPropertyEditor tkEntityPropertyEditor>
-        				<TKPropertyEditorStyle tkPropertyEditorStyle labelFontName="Nunito Sans"></TKPropertyEditorStyle>
-              </TKPropertyEditor>
+              <TKPropertyEditor tkEntityPropertyEditor></TKPropertyEditor>
             </TKEntityProperty>
             <TKEntityProperty tkDataFormProperty name="Count">
               <TKPropertyEditor tkEntityPropertyEditor type="Number"></TKPropertyEditor>
@@ -24,9 +22,7 @@
                 <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
             </TKEntityProperty>
             <TKEntityProperty tkDataFormProperty name="Type" displayName="Type" [valuesProvider]="batchTypes">
-                <TKPropertyEditor tkEntityPropertyEditor type="SegmentedEditor">
-          				<TKPropertyEditorStyle tkPropertyEditorStyle strokeColor="#00695c"></TKPropertyEditorStyle>
-                </TKPropertyEditor>
+                <TKPropertyEditor tkEntityPropertyEditor type="SegmentedEditor"></TKPropertyEditor>
             </TKEntityProperty>
             <TKEntityProperty tkDataFormProperty name="ActualDate" displayName="Actual Date">
                 <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>

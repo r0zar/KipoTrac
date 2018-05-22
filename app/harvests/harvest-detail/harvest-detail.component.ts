@@ -23,7 +23,7 @@ import { screen } from 'platform';
     templateUrl: "./harvest-detail.component.html"
 })
 export class HarvestDetailComponent implements OnInit {
-    private _harvest: Harvest;
+    private _harvest: Harvest = new Harvest({});
     private name: string;
     private _fabMenuOpen: boolean = false;
     private _isLoading: boolean = false;
@@ -50,8 +50,6 @@ export class HarvestDetailComponent implements OnInit {
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {
-
-                //this._harvest = this._harvestService.getHarvestById(harvestId);
                 this._metrcService.getHarvest(params.id)
                     .subscribe((harvest: Harvest) => {
                         this._harvest = new Harvest(harvest);

@@ -21,6 +21,9 @@
             <TKEntityProperty tkDataFormProperty name="ActualDate">
               <TKPropertyEditor tkEntityPropertyEditor type="DatePicker"></TKPropertyEditor>
             </TKEntityProperty>
+            <TKEntityProperty tkDataFormProperty name="StrainName" displayName="Strain" [valuesProvider]="strains">
+                <TKPropertyEditor tkEntityPropertyEditor type="Picker"></TKPropertyEditor>
+            </TKEntityProperty>
 
             <TKPropertyGroup tkDataFormGroups collapsible="true" name="Hidden" hidden="true">
               <TKEntityProperty tkPropertyGroupProperties name="PlantLabel"></TKEntityProperty>

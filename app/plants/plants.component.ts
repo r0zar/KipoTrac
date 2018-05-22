@@ -56,8 +56,8 @@ export class PlantsComponent implements OnInit {
               this._isLoading = false
             })
             .subscribe((plants: Array<Plant>) => {
-                this._vegetativePlants = new ObservableArray(plants);
-                this._isLoading = false;
+              this._vegetativePlants = new ObservableArray(plants);
+              this._isLoading = false;
             });
 
         this._metrcService.getFloweringPlants()
@@ -65,8 +65,8 @@ export class PlantsComponent implements OnInit {
               this._isLoading = false
             })
             .subscribe((plants: Array<Plant>) => {
-                this._floweringPlants = new ObservableArray(plants);
-                this._isLoading = false;
+              this._floweringPlants = new ObservableArray(plants);
+              this._isLoading = false;
             });
     }
 

@@ -23,18 +23,14 @@ export class HarvestListComponent implements OnInit {
     * It is used in the "onDrawerButtonTap" function below to manipulate the drawer.
     *************************************************************/
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
-
     private _sideDrawerTransition: DrawerTransitionBase;
-
     private _isLoading: boolean = false;
-
     private _harvests: ObservableArray<Harvest> = new ObservableArray<Harvest>([]);
 
     constructor (
         private _metrcService: MetrcService,
         private _routerExtensions: RouterExtensions,
     ){}
-
 
     /* ***********************************************************
     * Use the sideDrawerTransition property to change the open/close animation of the drawer.
@@ -51,20 +47,6 @@ export class HarvestListComponent implements OnInit {
                 this._harvests = new ObservableArray(harvests);
                 this._isLoading = false;
             });
-
-        /* ***********************************************************
-        * The data is retrieved remotely from FireBase.
-        * The actual data retrieval code is wrapped in a data service.
-        * Check out the service in harvests/shared/harvest.service.ts
-        *************************************************************/
-        // this._harvestService.load()
-        //     .finally(() => {
-        //       this._isLoading = false
-        //     })
-        //     .subscribe((harvests: Array<Harvest>) => {
-        //         this._harvests = new ObservableArray(harvests);
-        //         this._isLoading = false;
-        //     });
 
     }
 
