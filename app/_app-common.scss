@@ -50,27 +50,6 @@
   vertical-align: bottom;
 }
 
-.login-stack {
-    Label {
-        color: white;
-    }
-    TextField, .textfield {
-        border-width: 0 0 1 0;
-        border-bottom-color: #898989;
-        color: white;
-    }
-}
-
-.login-stack > .loading {
-  animation-name: pulse;
-  animation-duration: 3s;
-}
-
-.login-stack>.login-failed {
-    animation-name: shake;
-    animation-duration: 3s;
-}
-
 .page-content {
     .page-placeholder {
         @extend .text-muted;
@@ -96,4 +75,72 @@
 
 .notSelected {
   background-color: #cecece;
+}
+
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Light / Dark Theme Definitions */
+
+.login-stack {
+    background-image:url('~/images/kipo-logo-transparent-fade-20.png');
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-color:#ffffff;
+    color:#36393B;
+    Label {
+        color: #787878;
+    }
+    TextField, .textfield {
+        border-width: 0 0 1 0;
+        border-bottom-color: #36393B;
+        color: black;
+    }
+    .login-logo {
+        text-align:left;
+        font-size:72px;
+        font-weight:bold;
+        color:#656565;
+        text-shadow: 0px 0px 2px #343434;
+    }
+    .loading {
+        animation-name: pulse;
+        animation-duration: 3s;
+    }
+
+    .login-failed {
+        animation-name: shake;
+        animation-duration: 3s;
+    }
+}
+
+.dark {
+
+    background-color:#36393B !important;
+    color:#ffffff !important;
+
+    .login-stack {
+        background-color:#36393B;
+        color:#ffffff;
+        .login-logo {
+            color:white;
+        }
+    }
+
+    Label {
+        color: #aaaaaa;
+    }
+
+    TextField, .textfield {
+        border-width: 0 0 1 0;
+        border-bottom-color: #898989;
+        color: white;
+    }
+
+    ScrollView {
+        background-color:#36393B !important;
+        color:#ffffff !important;
+    }
+
 }

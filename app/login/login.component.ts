@@ -6,6 +6,7 @@ import { Switch } from "ui/switch";
 import * as dialogs from "ui/dialogs";
 import firebase = require("nativescript-plugin-firebase");
 
+
 // this is to fix the soft keyboard on login thing
 // import { isAndroid } from "platform";
 // import * as app from 'application';
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
     rememberMe: boolean;
     loading: boolean;
     loginFailed: boolean;
+    dark: boolean;
 
     constructor(page: Page, private routerExtensions: RouterExtensions) {
         page.actionBarHidden = true;

@@ -1,15 +1,17 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Sign up"></Label>
+    <Label class="action-bar-title" text="Sign Up"></Label>
     <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" (tap)="this.routerExtensions.back()"></NavigationButton>
 </ActionBar>
 <ScrollView>
-    <StackLayout class="page p-t-15">
-        <TextField class="m-t-10 m-b-10 m-l-15 m-r-15" hint="Name" autocorrect="false" autocapitalization="none" [(ngModel)]="name"></TextField>
-        <TextField class="m-t-10 m-b-10 m-l-15 m-r-15" hint="Email Address" keyboardType="email" autocorrect="false" autocapitalization="none"
+    <StackLayout padding="15">
+
+        <TextField class="m-t-10 m-b-10 textfield" hint="Name" autocorrect="false" autocapitalization="none" [(ngModel)]="name"></TextField>
+        <TextField class="m-t-10 m-b-10 textfield" hint="Email Address" keyboardType="email" autocorrect="false" autocapitalization="none"
             [(ngModel)]="email"></TextField>
-        <TextField class="m-t-10 m-b-10 m-l-15 m-r-15" hint="Password" secure="true" autocorrect="false" autocapitalization="none"
+        <TextField class="m-t-10 m-b-10 textfield" hint="Password" secure="true" autocorrect="false" autocapitalization="none"
             [(ngModel)]="password"></TextField>
 
         <Button class="btn btn-primary" text="SIGN UP" (tap)="onSignupButtonTap()"></Button>
+
     </StackLayout>
 </ScrollView>

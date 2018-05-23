@@ -1,0 +1,31 @@
+<ActionBar class="action-bar">
+    <Label class="action-bar-title" text="KipoTrac"></Label>
+</ActionBar>
+    
+<ScrollView height="100%">
+    <GridLayout height="100%" rows="auto" cols="auto">
+        <Carousel height="100%" pageChanged="myChangeEvent" indicatorAnimation="worm">
+            <CarouselItem id="slide1" height="100%" verticalAlignment="center" backgroundColor="#b3cde0">
+                <Label text="Slide 1" verticalAlignment="center" horizontalAlignment="center"></Label>
+
+                <Label
+                    horizontalAlignment="center"
+                    verticalAlignment="center"
+                    class="fa text-center" 
+                    text="&#xf275;" 
+                    style="font-size:72px;" 
+                    width="72" 
+                    height="72">
+                </Label>
+
+            </CarouselItem>
+            <CarouselItem id="slide2" class="p-t-30" verticalAlignment="center" backgroundColor="#6497b1">
+                <Label text="Slide 2" verticalAlignment="center" horizontalAlignment="center"></Label>
+            </CarouselItem>
+            <CarouselItem id="slide3" class="p-t-30" verticalAlignment="center" backgroundColor="#005b96">
+                <Label text="Slide 3" verticalAlignment="center" horizontalAlignment="center"></Label>
+            </CarouselItem>
+        </Carousel>
+    </GridLayout>
+</ScrollView>
+

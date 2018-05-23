@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
+import { WelcomeComponent } from "./welcome/welcome.component";
 import "./rxjs.imports";
 
 @NgModule({
@@ -28,7 +29,8 @@ import "./rxjs.imports";
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    WelcomeComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

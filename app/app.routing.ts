@@ -5,6 +5,7 @@ import { Routes } from "@angular/router";
 import { AuthGuard } from "./shared/auth-guard.service";
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
+import { WelcomeComponent } from "./welcome/welcome.component";
 
 export const AuthProviders = [AuthGuard];
 // TODO enforce auth guard based on subscription statue as well
@@ -13,6 +14,7 @@ const routes: Routes = [
     { path: "", redirectTo: "/home", pathMatch: "full" },
     { path: "login", component: LoginComponent },
     { path: "signup", component: SignupComponent },
+    { path: "welcome", component: WelcomeComponent },
     { path: "home", loadChildren: "./home/home.module#HomeModule", canActivate: AuthProviders },
     { path: "facilities", loadChildren: "./facilities/facilities.module#FacilitiesModule", canActivate: AuthProviders },
     { path: "rooms", loadChildren: "./rooms/rooms.module#RoomsModule", canActivate: AuthProviders },
