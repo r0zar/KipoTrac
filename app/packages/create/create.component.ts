@@ -22,7 +22,7 @@ import _ = require('lodash');
     templateUrl: "./create.component.html"
 })
 export class CreateComponent implements OnInit {
-    private _package: Create;
+    private _package: Create = new Create({});
     private _rooms: any;
     private _items: any;
     private _unitsOfWeight: any;
@@ -38,11 +38,6 @@ export class CreateComponent implements OnInit {
         private data: Data
     ) { }
 
-    /* ***********************************************************
-    * Use the "ngOnInit" handler to get the data noun id parameter passed through navigation.
-    * Get the data noun details from the data service using this id and assign it to the
-    * private property that holds it inside the component.
-    *************************************************************/
     ngOnInit(): void {
 
         console.log(JSON.stringify(this.data.storage))
@@ -61,8 +56,6 @@ export class CreateComponent implements OnInit {
             .subscribe((units: Array<any>) => {
                 this._unitsOfWeight = units
             });
-
-        this._package = new Create({})
 
     }
 

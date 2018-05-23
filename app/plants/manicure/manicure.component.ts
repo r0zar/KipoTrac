@@ -20,7 +20,7 @@ import _ = require('lodash');
     templateUrl: "./manicure.component.html"
 })
 export class ManicureComponent implements OnInit {
-    private _manicure: Harvest;
+    private _manicure: Harvest = new Harvest({});
     private _rooms: any;
     private plant: Plant;
     private _unitsOfWeight: any;
@@ -80,18 +80,15 @@ export class ManicureComponent implements OnInit {
     }
 
     onTap(): void {
-      var adjective = '';
-      var noun = '';
       this.http.get<any[]>(`https://api.datamuse.com/words?ml=${this.plant.StrainName}`)
-        .subscribe((words: Array<any>) => {
-            adjective = _.capitalize(_.sample(words).word)
-            this._manicure = new Harvest(_.extend(this._manicure, {HarvestName: `${adjective} ${noun}`}))
-        });
-      this.http.get<any[]>(`https://api.datamuse.com/words?ml=harvest`)
-        .subscribe((words: Array<any>) => {
-            noun = _.capitalize(_.sample(words).word)
-            this._manicure = new Harvest(_.extend(this._manicure, {HarvestName: `${adjective} ${noun}`}))
-        });
+          .subscribe((words: Array<any>) => {
+              var adjective = _.capitalize(_.sample(words).word)
+              this.http.get<any[]>("https://api.datamuse.com/words?ml=harvest")
+                .subscribe((words: Array<any>) => {
+                    var noun = _.capitalize(_.sample(words).word)
+                    this._manicure = new Harvest(_.extend(this._manicure, {HarvestName: `${adjective} ${noun}`}))
+                });
+          });
     }
 
 

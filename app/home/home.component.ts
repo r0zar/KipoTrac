@@ -4,11 +4,18 @@ import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-ui-si
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 import { MetrcService } from "../shared/metrc.service";
 import firebase = require("nativescript-plugin-firebase");
+import { SelectedIndexChangedEventData, TabView, TabViewItem } from "tns-core-modules/ui/tab-view";
 import { alert } from "ui/dialogs";
+import { isAndroid } from "platform";
 import { Data } from "../shared/data.service";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
 // import { TNSCoachMarks, TNSCoachMark } from 'nativescript-coachmarks';
 import { Page } from "ui/page";
+
+import { ObservableArray } from "data/observable-array";
+import { Observable } from "rxjs/Observable";
+import { Notification } from "./notification.model";
+import { NotificationService } from "./notification.service";
 
 
 @Component({
@@ -22,18 +29,18 @@ export class HomeComponent implements OnInit {
     * It is used in the "onDrawerButtonTap" function below to manipulate the drawer.
     *************************************************************/
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
-
     private _sideDrawerTransition: DrawerTransitionBase;
-
+    private _title: string;
+    private _notifications: ObservableArray<Notification> = new ObservableArray<Notification>([]);
+    private _notification: Notification;
 
     constructor(
       private _metrcService: MetrcService,
       private barcodeScanner: BarcodeScanner,
       private _routerExtensions: RouterExtensions,
-      private data: Data
-      // private page: Page
+      private data: Data,
+      private Notifications: NotificationService
     ){}
-
 
     /* ***********************************************************
     * Use the sideDrawerTransition property to change the open/close animation of the drawer.
@@ -41,6 +48,10 @@ export class HomeComponent implements OnInit {
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
 
+        this.Notifications.load()
+          .subscribe((notifications: Array<Notification>) => {
+            this._notifications = new ObservableArray(notifications);
+          });
 
         firebase.getCurrentUser()
           .then(user => {
@@ -51,80 +62,36 @@ export class HomeComponent implements OnInit {
                 }
               })
           })
-
-        // this._metrcService.getSalesReceipts()
-        //   .subscribe(() => {})
-        // this._metrcService.createSalesReceipt({
-        //   "SalesDateTime": "2016-10-04T16:44:53.000",
-        //   "SalesCustomerType": "Consumer",
-        //   "PatientLicenseNumber": null,
-        //   "CaregiverLicenseNumber": null,
-        //   "Transactions": [
-        //     {
-        //       "PackageLabel": "1A4FF0100000028000000008",
-        //       "Quantity": 1.0,
-        //       "UnitOfMeasure": "Ounces",
-        //       "TotalAmount": 9.99
-        //     }
-        //   ]
-        // })
-        // .subscribe(() => {})
-
-        // this._metrcService.updateSalesReceipt({
-        //   "Id": 337,
-        //   "SalesDateTime": new Date(),
-        //   "SalesCustomerType": "Consumer",
-        //   "PatientLicenseNumber": null,
-        //   "CaregiverLicenseNumber": null,
-        //   "Transactions": [
-        //     {
-        //       "PackageLabel": "1A4FF0100000028000000008",
-        //       "Quantity": 2.0,
-        //       "UnitOfMeasure": "Ounces",
-        //       "TotalAmount": 9.99
-        //     }
-        //   ]
-        // })
-        // .subscribe(() => {})
-
-        // this._metrcService.voidSalesReceipt(337).subscribe(() => {})
-
-        // this._metrcService.getLabTestTypes()
-        //   .subscribe(() => {})
-
-        // this._metrcService.recordLabTest({
-        //   "Label": "1A4FF0300000026000000007",
-        //   "ResultDate": new Date(),
-        //   "Results": [
-        //     {
-        //       "LabTestTypeName": "THC (percent)",
-        //       "Quantity": 100.2345,
-        //       "Passed": true,
-        //       "Notes": "WOW!"
-        //     }
-        //   ]
-        // }).subscribe(() => {})
     }
 
-    onScanBarcodeTap(): void {
+    get notifications(): ObservableArray<Notification> {
+      return this._notifications;
+    }
 
-      // var scanner = this.barcodeScanner;
-      // scanner.available()
-      //   .then(() => {
-      //     scanner.hasCameraPermission()
-      //       .then(granted => {
-      //         if (granted) {
-      //           this.barcode(scanner)
-      //         } else {
-      //           scanner.requestCameraPermission()
-      //             .then(granted => {
-      //               return granted ? this.barcode(scanner) : null
-      //             })
-      //         }
-      //       })
-      //
-      //   })
+    get title(): string {
+        return this._title;
+    }
 
+    set title(value: string) {
+        if (this._title !== value) {
+            this._title = value;
+        }
+    }
+
+    /* ***********************************************************
+    * The "getIconSource" function returns the correct tab icon source
+    * depending on whether the app is ran on Android or iOS.
+    * You can find all resources in /App_Resources/os
+    *************************************************************/
+    getIconSource(icon: string): string {
+        return isAndroid ? "" : "res://tabIcons/" + icon;
+    }
+
+    onSelectedIndexChanged(args: SelectedIndexChangedEventData) {
+        const tabView = <TabView>args.object;
+        const selectedTabViewItem = tabView.items[args.newIndex];
+
+        this.title = selectedTabViewItem.title;
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {

@@ -34,16 +34,17 @@ export class MyDrawerItemComponent implements OnInit {
     * based on the tapped navigationItem's route.
     *************************************************************/
     onNavItemTap(navItemRoute: string): void {
-        if (!this.data.subscribed && (navItemRoute == '/transfers' || navItemRoute == '/packages' || navItemRoute == '/harvests' || navItemRoute == '/plants')) {
-          navItemRoute = _.capitalize(_.trim(navItemRoute, '/'))
-          TNSFancyAlert.showInfo(`Paid Feature: ${navItemRoute}`, 'For full access, navigate to Compliance Reporting on the Settings page and setup your KipoTrac subription.', 'Okay')
-            .then(() => {});
-        } else {
+      // HACK
+        // if (!this.data.subscribed && (navItemRoute == '/transfers' || navItemRoute == '/packages' || navItemRoute == '/harvests' || navItemRoute == '/plants')) {
+        //   navItemRoute = _.capitalize(_.trim(navItemRoute, '/'))
+        //   TNSFancyAlert.showInfo(`Paid Feature: ${navItemRoute}`, 'For full access, navigate to Compliance Reporting on the Settings page and setup your KipoTrac subription.', 'Okay')
+        //     .then(() => {});
+        // } else {
           this.routerExtensions.navigate([navItemRoute], {
               transition: {
                   name: "fade"
               }
           });
-        }
+        // }
     }
 }

@@ -11,7 +11,7 @@ Feel free to customize layouts and components to change how your app drawer look
 
     <ScrollView row="1" >
         <StackLayout class="sidedrawer-content">
-            <MyDrawerItem title="Home" route="/home" icon="&#xf015;" [isSelected]="isPageSelected('Home')">
+            <MyDrawerItem title="Home" route="/home" icon="&#xf3fd;" [isSelected]="isPageSelected('Home')">
             </MyDrawerItem>
             <MyDrawerItem title="Facilities" route="/facilities" icon="&#xf275;" [isSelected]="isPageSelected('Facilities')">
             </MyDrawerItem>
@@ -29,13 +29,11 @@ Feel free to customize layouts and components to change how your app drawer look
             </MyDrawerItem>
             <MyDrawerItem *ngIf='facilitySelected' title="Packages" route="/packages" icon="&#xf466;" [isSelected]="isPageSelected('Packages')">
             </MyDrawerItem>
-            <MyDrawerItem *ngIf='facilitySelected' title="Transfers" route="/transfers" icon="&#xf0d1;" [isSelected]="isPageSelected('Transfers')">
-            </MyDrawerItem>
+            <!-- TODO enable this after launch -->
+            <!-- <MyDrawerItem *ngIf='facilitySelected' title="Transfers" route="/transfers" icon="&#xf0d1;" [isSelected]="isPageSelected('Transfers')">
+            </MyDrawerItem> -->
 
             <StackLayout class="hr-light"></StackLayout>
-
-            <!-- <MyDrawerItem title="Payment" route="/payment" icon="&#xf09d;" [isSelected]="isPageSelected('Payment')">
-            </MyDrawerItem>-->
             <MyDrawerItem title="Settings" route="/settings" icon="&#xf013;" [isSelected]="isPageSelected('Settings')">
             </MyDrawerItem>
         </StackLayout>

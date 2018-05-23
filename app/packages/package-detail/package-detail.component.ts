@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { DataFormEventData } from "nativescript-ui-dataform";
-
 import { Package } from "../shared/package.model";
 import { MetrcService } from "../../shared/metrc.service";
-
+import { confirm } from "ui/dialogs";
 import { ScrollView, ScrollEventData } from 'tns-core-modules/ui/scroll-view';
 import { Image } from 'tns-core-modules/ui/image';
 import { screen } from 'platform';
@@ -61,6 +60,7 @@ export class PackageDetailComponent implements OnInit {
     onScroll(
       event: ScrollEventData,
       scrollView: ScrollView,
+      topView: View,
       fabView: View,
       actionItem1: View,
       actionItem2: View,
@@ -72,7 +72,7 @@ export class PackageDetailComponent implements OnInit {
             const offset = scrollView.verticalOffset / 2;
             if (scrollView.ios) {
                 // iOS adjust the position with an animation to create a smother scrolling effect.
-                //topView.animate({ translate: { x: 0, y: offset } }).then(() => { }, () => { });
+                topView.animate({ translate: { x: offset, y: offset } }).then(() => { }, () => { });
                 fabView.animate({ translate: { x: offset, y: -1 * offset } }).then(() => { }, () => { });
                 if (this._fabMenuOpen) {
                   actionItem1.animate({ opacity: 1-offset/50 }).then(() => { }, () => { });
@@ -89,7 +89,7 @@ export class PackageDetailComponent implements OnInit {
                 }
             } else {
                 // Android, animations are jerky so instead just adjust the position without animation.
-                //topView.translateY = Math.floor(offset);
+                topView.translateY = Math.floor(offset);
                 fabView.translateY = Math.floor(-1 * offset);
                 fabView.translateX = Math.floor(offset);
                 if (this._fabMenuOpen) {
@@ -175,9 +175,30 @@ export class PackageDetailComponent implements OnInit {
     }
 
     actionItem4Tap(): void {
+      // BUG need to make it so for finished packages, this unfinishes them
       console.log('finish/unfinish package')
-      this._metrcService.finishPackage({Label: this._package.Label, ActualDate: new Date()})
-        .subscribe(() => {})
+      let options = {
+          title: "Finish Package",
+          message: "Are you sure you want to finish this package?",
+          okButtonText: "Yes",
+          cancelButtonText: "No",
+          neutralButtonText: "Cancel"
+      };
+      confirm(options).then((result: boolean) => {
+        if (result) {
+          this._metrcService.finishPackage({Label: this._package.Label, ActualDate: new Date()})
+            .subscribe(() => {
+              this._routerExtensions.navigate(["/packages"],
+                  {
+                      animated: true,
+                      transition: {
+                          name: "fade",
+                          duration: 1000
+                      }
+                  });
+            })
+        }
+      });
     }
 
     actionItem5Tap(): void {

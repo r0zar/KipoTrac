@@ -21,10 +21,12 @@ export class AddPaymentComponent implements OnInit {
 
     ngOnInit(): void {
       this._isLoading = true
-      purchase.getProducts().then((products: Array<Product>) => {
-          this._subscriptions = products;
-          this._isLoading = false
-      });
+      purchase.getProducts()
+        .then((products: Array<Product>) => {
+            this._subscriptions = products;
+            this._isLoading = false
+            console.dir(this._subscriptions.length)
+        })
 
     }
 

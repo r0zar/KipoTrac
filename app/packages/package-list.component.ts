@@ -25,13 +25,14 @@ export class PackageListComponent implements OnInit {
     * It is used in the "onDrawerButtonTap" function below to manipulate the drawer.
     *************************************************************/
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
-    @ViewChild("fabView") fabView: ElementRef;
     @ViewChild("actionItem1") actionItem1: ElementRef;
     @ViewChild("actionItem2") actionItem2: ElementRef;
+    private packageState: string = 'active';
+    private placeholderText: string = `No ${this.packageState} packages.`
     private _package: Package;
     private _fabMenuOpen: boolean = false;
     private _sideDrawerTransition: DrawerTransitionBase;
-    private _isLoading: boolean = false;
+    private _isLoading: boolean = true;
     private _packages: ObservableArray<Package> = new ObservableArray<Package>([]);
 
     constructor (
@@ -40,22 +41,18 @@ export class PackageListComponent implements OnInit {
         private data: Data,
     ){}
 
-
     /* ***********************************************************
     * Use the sideDrawerTransition property to change the open/close animation of the drawer.
     *************************************************************/
     ngOnInit(): void {
-        let fabView = <View>this.fabView.nativeElement;
-        fabView.opacity = 0
         let actionItem1 = <View>this.actionItem1.nativeElement;
         actionItem1.opacity = 0
         let actionItem2 = <View>this.actionItem2.nativeElement;
         actionItem2.opacity = 0
 
         this._sideDrawerTransition = new SlideInOnTopTransition();
-        this._isLoading = true;
 
-        this._metrcService.getPackages('active')
+        this._metrcService.getPackages(this.packageState)
           .subscribe((packages: Array<Package>) => {
               this._packages = new ObservableArray(packages);
               this._packages.forEach(p => {
@@ -63,17 +60,18 @@ export class PackageListComponent implements OnInit {
               })
               this._isLoading = false;
           });
-
     }
 
-    fabTap(actionItem1: View, actionItem2: View): void {
+    fabTap(actionItem1: View, actionItem2: View, actionItem3: View): void {
       this._fabMenuOpen = !this._fabMenuOpen
       if (this._fabMenuOpen) {
         actionItem1.animate({ translate: { x: -70, y: 0 } }).then(() => { }, () => { });
         actionItem2.animate({ translate: { x: -50, y: -60 } }).then(() => { }, () => { });
+        actionItem3.animate({ translate: { x: -30, y: -120 } }).then(() => { }, () => { });
       } else {
         actionItem1.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
         actionItem2.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
+        actionItem3.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
       }
     }
 
@@ -103,6 +101,22 @@ export class PackageListComponent implements OnInit {
           });
     }
 
+    actionItem3Tap(): void {
+      console.log('toggle package list')
+      this._isLoading = true;
+      if (this.packageState == 'active') {this.packageState = 'inactive'}
+      else {this.packageState = 'active'}
+      this._metrcService.getPackages(this.packageState)
+        .subscribe((packages: Array<Package>) => {
+            this._packages = new ObservableArray(packages);
+            this._packages.forEach(p => {
+              p.amount = `${p.Quantity} (${p.UnitOfMeasureAbbreviation})`
+            })
+            this.placeholderText = `No ${this.packageState} packages.`
+            this._isLoading = false;
+        });
+    }
+
     get packages(): ObservableArray<Package> {
         return this._packages;
     }
@@ -112,41 +126,26 @@ export class PackageListComponent implements OnInit {
     }
 
     public onPullToRefreshInitiated(args: ListViewEventData) {
-        this._metrcService.getPackages('active')
+        this._metrcService.getPackages(this.packageState)
             .subscribe((packages: Array<Package>) => {
                 this._packages = new ObservableArray(packages);
+                this._packages.forEach(p => {
+                  p.amount = `${p.Quantity} (${p.UnitOfMeasureAbbreviation})`
+                })
                 args.object.notifyPullToRefreshFinished();
             });
     }
 
-    public onItemSelected(args: ListViewEventData, fabView: View, actionItem1: View, actionItem2: View) {
+    public onItemSelected(args: ListViewEventData, actionItem1: View, actionItem2: View) {
         this.data.storage = _.map(args.object.getSelectedItems(), 'Label')
-
         if (this.data.storage.length) {
-          fabView.opacity = 1
           actionItem1.opacity = 1
           actionItem2.opacity = 1
         } else {
-          fabView.opacity = 0
           actionItem1.opacity = 0
           actionItem2.opacity = 0
         }
     }
-
-    public onItemDeselected(args: ListViewEventData, fabView: View, actionItem1: View, actionItem2: View) {
-        this.data.storage = _.map(args.object.getSelectedItems(), 'Label')
-
-        if (this.data.storage.length) {
-          fabView.opacity = 1
-          actionItem1.opacity = 1
-          actionItem2.opacity = 1
-        } else {
-          fabView.opacity = 0
-          actionItem1.opacity = 0
-          actionItem2.opacity = 0
-        }
-    }
-
 
     /* ***********************************************************
     * Use the "itemTap" event handler of the <RadListView> to navigate to the
@@ -157,7 +156,6 @@ export class PackageListComponent implements OnInit {
     *************************************************************/
     onPackageItemTap(args: ListViewEventData): void {
         const tappedPackageItem = args.view.bindingContext;
-
         this._routerExtensions.navigate(["/packages/package-detail", tappedPackageItem.Id],
         {
             animated: true,

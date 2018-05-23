@@ -21,7 +21,7 @@ import _ = require('lodash');
     templateUrl: "./destroy.component.html"
 })
 export class DestroyComponent implements OnInit {
-    private _destroy: Destroy;
+    private _destroy: Destroy = new Destroy({});
     private _rooms: any;
     private _isLoading: boolean = false;
     private screenHeight: number = screen.mainScreen.heightDIPs;

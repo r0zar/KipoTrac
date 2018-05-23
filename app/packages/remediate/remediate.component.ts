@@ -49,7 +49,6 @@ export class RemediateComponent implements OnInit {
                 this._itemCategories = _.map(itemCategories, 'Name')
             });
 
-
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => this._remediation = new Remediation({PackageLabel: params.id}));

@@ -52,8 +52,9 @@ export class AdjustComponent implements OnInit {
 
         this._metrcService.getUnitsOfMeasure()
             .subscribe((units: Array<any>) => {
-                this._unitsOfMeasure = units
+                this._unitsOfMeasure = _.map(units, 'Name');
                 this._adjustment.UnitOfMeasure = this._unitsOfMeasure[0]
+                //this._unitsOfWeight = _.map(_.filter(this._unitsOfMeasure, {QuantityType: 'WeightBased'}), 'Name');
             });
 
 
@@ -76,9 +77,8 @@ export class AdjustComponent implements OnInit {
     }
 
     get unitsOfMeasure(): any {
-        return _.map(this._unitsOfMeasure, 'Name');
-        // better
-        // return _.map(_.filter(this._unitsOfMeasure, {QuantityType: 'lookuppackageBasedtype'}), 'Name');
+        return this._unitsOfMeasure;
+        // TODO return _.map(_.filter(this._unitsOfMeasure, {QuantityType: 'lookuppackageBasedtype'}), 'Name');
     }
 
     get isLoading(): boolean {

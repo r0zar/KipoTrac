@@ -20,7 +20,7 @@ import _ = require('lodash');
     templateUrl: "./createpackage.component.html"
 })
 export class CreatePackageComponent implements OnInit {
-    private _package: Package;
+    private _package: Package = new Package({});
     private _rooms: any;
     private _items: any;
     private _unitsOfWeight: any;
