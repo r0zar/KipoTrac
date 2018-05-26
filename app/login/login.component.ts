@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     dark: boolean;
 
     constructor(page: Page, private routerExtensions: RouterExtensions) {
-        page.actionBarHidden = true;
+        // page.actionBarHidden = true;
     }
 
     ngOnInit(): void {

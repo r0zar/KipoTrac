@@ -1,17 +1,38 @@
+$kipotrac-primary: #db7d34;
+$kipotrac-primary-light: lighten($kipotrac-primary,15%);
+$kipotrac-primary-lighter: lighten($kipotrac-primary,30%);
+$kipotrac-primary-dark: darken($kipotrac-primary,15%);
+$kipotrac-primary-darker: darken($kipotrac-primary,30%);
+
+/*$kipotrac-secondary: #7ead2d;*/
+$kipotrac-secondary: #7AB317;
+$kipotrac-secondary-light: lighten($kipotrac-secondary,15%);
+$kipotrac-secondary-lighter: lighten($kipotrac-secondary,30%);
+$kipotrac-secondary-dark: darken($kipotrac-secondary,15%);
+$kipotrac-secondary-darker: darken($kipotrac-secondary,30%);
+
+$kipotrac-accent: #bada55;
+$kipotrac-accent-light: lighten($kipotrac-accent,15%);
+$kipotrac-accent-lighter: lighten($kipotrac-accent,30%);
+$kipotrac-accent-dark: darken($kipotrac-accent,15%);
+$kipotrac-accent-darker: darken($kipotrac-accent,30%);
+
 // Import the theme’s variables. If you’re using a color scheme
 // other than “light”, switch the path to the alternative scheme,
 // for example '~nativescript-theme-core/scss/dark'.
 @import '~nativescript-theme-core/scss/light';
+@import '~nativescript-theme-core/scss/index';
+@import './_custom';
 
 // Customize any of the theme’s variables here, for instance $btn-color: red;
 // Import the theme’s main ruleset.
-@import '~nativescript-theme-core/scss/index';
+
 
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
 
 /* Import custom theme */
-@import './_custom';
+
 
 /* Import shared animations */
 @import './shared/animate';
@@ -27,19 +48,19 @@
 }
 
 .fa {
-    font-family: "FontAwesome";
+    font-family: "fa-regular-400";
 }
 
 .fab {
-    font-family: "Font Awesome 5 Free Brands";
+    font-family: "fa-brands-400";
 }
 
 .fas {
-    font-family: "Font Awesome 5 Free";
+    font-family: "fa-solid-900";
 }
 
 .far {
-    font-family: "FontAwesome", "fa-regular-400";
+    font-family: "fa-regular-400";
 }
 
 .fab-button {
@@ -50,6 +71,33 @@
   vertical-align: bottom;
 }
 
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.login-stack {
+    background-image:url('~/images/kipo-logo-transparent-fade-20.png');
+    background-repeat:no-repeat;
+    background-size:cover;
+
+    .login-logo {
+        font-size:72px;
+        font-weight:bold;
+    }
+
+    .loading {
+        animation-name: pulse;
+        animation-duration: 3s;
+    }
+    
+    .login-failed {
+        animation-name: shake;
+        animation-duration: 3s;
+    }
+}
+
+
+/*
 .page-content {
     .page-placeholder {
         @extend .text-muted;
@@ -74,11 +122,9 @@
   background-color: #cecece;
 }
 
-.text-left { text-align: left; }
-.text-center { text-align: center; }
-.text-right { text-align: right; }
 
-/* Light / Dark Theme Definitions */
+
+
 
 .login-stack {
     background-image:url('~/images/kipo-logo-transparent-fade-20.png');
@@ -141,3 +187,5 @@
     }
 
 }
+
+*/

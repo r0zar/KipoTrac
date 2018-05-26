@@ -3,6 +3,7 @@ import { RouterExtensions } from "nativescript-angular/router";
 import * as dialogs from "ui/dialogs";
 import { Page } from "ui/page";
 import firebase = require("nativescript-plugin-firebase");
+declare var android;
 
 import {registerElement} from "nativescript-angular/element-registry";
 registerElement("Carousel", () => require("nativescript-carousel").Carousel);
@@ -22,6 +23,8 @@ registerElement("CarouselItem", () => require("nativescript-carousel").CarouselI
 })
 export class WelcomeComponent implements OnInit {
 
+    page: Page;
+
     constructor(page: Page, private routerExtensions: RouterExtensions) {
         /* ***********************************************************
         * Use the constructor to inject app services that you need in this component.
@@ -33,5 +36,17 @@ export class WelcomeComponent implements OnInit {
         /* ***********************************************************
         * Use the "ngOnInit" handler to initialize data for this component.
         *************************************************************/
+       this.setLabelShadow("factory-icon");
+    }
+
+    setLabelShadow (labelId: string) {
+        var label = this.page.getViewById(labelId);
+        var radius = 4;
+        var xOffset = 0.1;
+        var yOffset = 1;
+        var color = android.graphics.Color.parseColor("#7f7f7f");
+    
+        // call native setShadowLayer method
+        label.nativeView.setShadowLayer(radius, xOffset, yOffset, color);
     }
 }

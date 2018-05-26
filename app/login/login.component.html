@@ -1,9 +1,10 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="KipoTrac"></Label>
+    <Label class="action-bar-title" text="Login"></Label>
+    <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" (tap)="this.routerExtensions.back()"></NavigationButton>
 </ActionBar>
 
 <ScrollView>
-    <StackLayout class="login-stack p-t-15">
+    <StackLayout class="login-stack">
         
         <GridLayout columns="auto,*" 
                     class="m-t-15" 
@@ -19,7 +20,7 @@
             </Image>
 
             <Label  col="1" 
-                    class="m-l-10 login-logo" 
+                    class="m-l-10 login-logo"
                     text="KipoTrac">
             </Label>
 
@@ -37,7 +38,7 @@
                     padding="10">
             
             <Label  col="0" 
-                    class="fa text-center" 
+                    class="fas text-center" 
                     text="&#xf0e0;" 
                     style="font-size:24px;" 
                     width="24" 
@@ -62,9 +63,9 @@
                     padding="10">
 
             <Label  col="0" 
-                    class="fa text-center" 
+                    class="fas text-center" 
                     text="&#xf023;" 
-                    style="font-size:28px;" 
+                    style="font-size:24px;" 
                     width="24" 
                     height="24">
             </Label>
