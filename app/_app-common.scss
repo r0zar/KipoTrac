@@ -44,7 +44,7 @@ $kipotrac-accent-darker: darken($kipotrac-accent,30%);
 
 /* Font icon */
 .mdi {
-  font-family: "Material Icons", "MaterialIcons-Regular";
+    font-family: "Material Icons", "MaterialIcons-Regular";
 }
 
 .fa {
@@ -75,27 +75,38 @@ $kipotrac-accent-darker: darken($kipotrac-accent,30%);
 .text-center { text-align: center; }
 .text-right { text-align: right; }
 
+.rotate-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.loading {
+    animation-name: pulse;
+    animation-duration: 3s;
+}
+
+.login-failed {
+    animation-name: shake;
+    animation-duration: 3s;
+}
+
+.login-bottom-border-fix {
+    border-width: 0 0 1 0;
+    border-bottom-color: #757575;
+}
+
 .login-stack {
+    background-color: #424242;
+    color: #F5F5F5;
+    /*
     background-image:url('~/images/kipo-logo-transparent-fade-20.png');
     background-repeat:no-repeat;
     background-size:cover;
-
-    .login-logo {
-        font-size:72px;
-        font-weight:bold;
-    }
-
-    .loading {
-        animation-name: pulse;
-        animation-duration: 3s;
-    }
-    
-    .login-failed {
-        animation-name: shake;
-        animation-duration: 3s;
-    }
+    */
 }
-
 
 /*
 .page-content {

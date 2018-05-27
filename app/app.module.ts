@@ -1,6 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
-import { NativeScriptFormsModule } from "nativescript-angular/forms"
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { ModalDialogService } from "nativescript-angular/modal-dialog";
 import { AuthProviders, AppRoutingModule } from "./app.routing";
 import { MetrcService } from "./shared/metrc.service";
 import { Data } from "./shared/data.service";
@@ -15,7 +16,8 @@ import "./rxjs.imports";
   providers: [
     MetrcService,
     AuthProviders,
-    Data
+    Data,
+    ModalDialogService
   ],
   bootstrap: [
     AppComponent

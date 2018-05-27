@@ -6,6 +6,10 @@ import { Switch } from "ui/switch";
 import * as dialogs from "ui/dialogs";
 import firebase = require("nativescript-plugin-firebase");
 
+import { FingerprintAuth } from "nativescript-fingerprint-auth";
+import * as ApplicationSettings from "application-settings";
+
+import { LoadingIndicator } from "nativescript-loading-indicator";
 
 // this is to fix the soft keyboard on login thing
 // import { isAndroid } from "platform";
@@ -36,9 +40,14 @@ export class LoginComponent implements OnInit {
     loading: boolean;
     loginFailed: boolean;
     dark: boolean;
+    private fingerprintAuth: FingerprintAuth;
+    loader: LoadingIndicator;
+
 
     constructor(page: Page, private routerExtensions: RouterExtensions) {
-        // page.actionBarHidden = true;
+        page.actionBarHidden = true;
+        this.fingerprintAuth = new FingerprintAuth();
+        this.loader = new LoadingIndicator();
     }
 
     ngOnInit(): void {
@@ -50,6 +59,39 @@ export class LoginComponent implements OnInit {
         this.rememberMe = true
         this.loading = false
         this.loginFailed = false
+
+        ApplicationSettings.setBoolean("fingerprintAuth", true);
+
+        let isFingerprintEnabled = ApplicationSettings.getBoolean("fingerprintAuth", false);
+        if(isFingerprintEnabled) {
+            this.fingerprintAuth.available().then(available => {
+
+                let storeEmail = ApplicationSettings.getString("email", null);
+                let storePassword = ApplicationSettings.getString("password", null);
+
+                if (storeEmail !== null && storePassword !== null) {
+                    this.fingerprintAuth.verifyFingerprintWithCustomFallback({
+                        fallbackMessage: "Enter Your Device Password",
+                        message: "Authenticate via a Fingerprint"
+                    }).then(() => {
+                        this.email = storeEmail;
+                        this.password = storePassword;
+                        this.onSigninButtonTap();
+                        console.log("Fingerprint was OK");
+                    }, () => {
+                        dialogs.alert("The fingerprint was not valid");
+                    });
+                }
+            });
+        } else {
+            dialogs.alert("Fingerprint login is not enabled");
+        }
+
+    }
+
+    toggleFingerprint() {
+        let isFingerprintEnabled = ApplicationSettings.getBoolean("fingerprintAuth", false);
+        ApplicationSettings.setBoolean("fingerprintAuth", !isFingerprintEnabled);
     }
 
     onRememberMeToggle(args): void {
@@ -67,25 +109,29 @@ export class LoginComponent implements OnInit {
     }
 
     onSigninButtonTap(): void {
-      this.loginFailed = false
-      this.loading = true
-      firebase.login(
-        {
-          type: firebase.LoginType.PASSWORD,
-          passwordOptions: {
-            email: this.email,
-            password: this.password
-          }
+        this.loader.show();
+        this.loginFailed = false;
+        this.loading = true;
+        firebase.login(
+            {
+                type: firebase.LoginType.PASSWORD,
+                passwordOptions: {
+                email: this.email,
+                password: this.password
+            }
         })
         .then(result => {
-          firebase.analytics.logEvent({key: "log_in", parameters: [{key: "email", value: this.email}]})
-            .then(() => console.log("Firebase Analytics event logged"));
-          this.routerExtensions.navigate(["/home"], { clearHistory: true })
+            ApplicationSettings.setString("email", this.email);
+            ApplicationSettings.setString("password", this.password);
+            firebase.analytics.logEvent({key: "log_in", parameters: [{key: "email", value: this.email}]}).then(() => console.log("Firebase Analytics event logged"));
+            this.routerExtensions.navigate(["/home"], { clearHistory: true });
+            this.loader.hide();
         })
         .catch(error => {
-          this.loading = false
-          this.loginFailed = true
-          console.log(error)
+            this.loading = false;
+            this.loginFailed = true;
+            this.loader.hide();
+            console.log(error);
         });
 
         /* ***********************************************************

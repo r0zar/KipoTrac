@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewContainerRef } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
+import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 import * as dialogs from "ui/dialogs";
 import { Page } from "ui/page";
 import firebase = require("nativescript-plugin-firebase");
@@ -8,6 +9,8 @@ declare var android;
 import {registerElement} from "nativescript-angular/element-registry";
 registerElement("Carousel", () => require("nativescript-carousel").Carousel);
 registerElement("CarouselItem", () => require("nativescript-carousel").CarouselItem);
+
+import { LoginComponent } from "../login/login.component";
 
 /* ***********************************************************
 * Before you can navigate to this page from your app, you need to reference this page's module in the
@@ -25,28 +28,37 @@ export class WelcomeComponent implements OnInit {
 
     page: Page;
 
-    constructor(page: Page, private routerExtensions: RouterExtensions) {
+    constructor(
+        page: Page, 
+        private routerExtensions: RouterExtensions, 
+        private modalService: ModalDialogService, 
+        private vcRef: ViewContainerRef
+    ) {
         /* ***********************************************************
         * Use the constructor to inject app services that you need in this component.
         *************************************************************/
-       page.actionBarHidden = true;
+        page.actionBarHidden = true;
     }
 
     ngOnInit(): void {
         /* ***********************************************************
         * Use the "ngOnInit" handler to initialize data for this component.
         *************************************************************/
-       this.setLabelShadow("factory-icon");
     }
 
-    setLabelShadow (labelId: string) {
-        var label = this.page.getViewById(labelId);
-        var radius = 4;
-        var xOffset = 0.1;
-        var yOffset = 1;
-        var color = android.graphics.Color.parseColor("#7f7f7f");
-    
-        // call native setShadowLayer method
-        label.nativeView.setShadowLayer(radius, xOffset, yOffset, color);
+    onTap() {
+        this.createModelView().then(result => {
+            console.log(result)
+        }).catch(error => console.log(error));
+    }
+
+    private createModelView(): Promise<any> {
+        const options: ModalDialogOptions = {
+            viewContainerRef: this.vcRef,
+            context: "context",
+            fullscreen: false,
+        };
+
+        return this.modalService.showModal(LoginComponent, options);
     }
 }
