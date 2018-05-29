@@ -36,7 +36,7 @@ import { LoadingIndicator } from "nativescript-loading-indicator";
 export class LoginComponent implements OnInit {
     email: string;
     password: string;
-    rememberMe: boolean;
+    rememberEmailEnabled: boolean;
     loading: boolean;
     loginFailed: boolean;
     dark: boolean;
@@ -56,19 +56,21 @@ export class LoginComponent implements OnInit {
         *************************************************************/
         this.email = ''
         this.password = ''
-        this.rememberMe = true
         this.loading = false
         this.loginFailed = false
 
-        ApplicationSettings.setBoolean("fingerprintAuth", true);
+        this.rememberEmailEnabled = ApplicationSettings.getBoolean("rememberEmailEnabled", false);
 
-        let isFingerprintEnabled = ApplicationSettings.getBoolean("fingerprintAuth", false);
+        let storeEmail = ApplicationSettings.getString("email", null);
+        let storePassword = ApplicationSettings.getString("password", null);
+
+        if (this.rememberEmailEnabled && storeEmail !== null) {
+            this.email = storeEmail;
+        }
+
+        let isFingerprintEnabled = ApplicationSettings.getBoolean("fingerprintLoginEnabled", false);
         if(isFingerprintEnabled) {
             this.fingerprintAuth.available().then(available => {
-
-                let storeEmail = ApplicationSettings.getString("email", null);
-                let storePassword = ApplicationSettings.getString("password", null);
-
                 if (storeEmail !== null && storePassword !== null) {
                     this.fingerprintAuth.verifyFingerprintWithCustomFallback({
                         fallbackMessage: "Enter Your Device Password",
@@ -83,32 +85,27 @@ export class LoginComponent implements OnInit {
                     });
                 }
             });
-        } else {
-            dialogs.alert("Fingerprint login is not enabled");
         }
 
-    }
-
-    toggleFingerprint() {
-        let isFingerprintEnabled = ApplicationSettings.getBoolean("fingerprintAuth", false);
-        ApplicationSettings.setBoolean("fingerprintAuth", !isFingerprintEnabled);
     }
 
     onRememberMeToggle(args): void {
         let rememberMeSwitch = <Switch>args.object;
-        // remove this line when it actually works
-        rememberMeSwitch.isEnabled = false
-        if (rememberMeSwitch.checked) {
-            this.rememberMe = true;
-            // https://github.com/EddyVerbruggen/nativescript-plugin-firebase/issues/629
-            //AuthService.setPersistence('local')
-        } else {
-            this.rememberMe = false;
-            //AuthService.setPersistence('none')
-        }
+        this.rememberEmailEnabled = rememberMeSwitch.checked;
+        ApplicationSettings.setBoolean("rememberEmailEnabled", this.rememberEmailEnabled);
     }
 
     onSigninButtonTap(): void {
+
+        if (this.email === '' || this.password === '') {
+            dialogs.alert({
+                title: "Missing Required Fields",
+                message: "Please enter both your email address and password to login",
+                okButtonText: "OK"
+            });
+            return;
+        }
+
         this.loader.show();
         this.loginFailed = false;
         this.loading = true;
@@ -132,6 +129,11 @@ export class LoginComponent implements OnInit {
             this.loginFailed = true;
             this.loader.hide();
             console.log(error);
+            dialogs.alert({
+                title: "Login Failed",
+                message: "The email address or password you entered was incorrect, please try again",
+                okButtonText: "OK"
+            });
         });
 
         /* ***********************************************************

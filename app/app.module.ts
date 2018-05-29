@@ -10,6 +10,7 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
+import { ThemeService } from "./theme.service";
 import "./rxjs.imports";
 
 @NgModule({
@@ -17,7 +18,8 @@ import "./rxjs.imports";
     MetrcService,
     AuthProviders,
     Data,
-    ModalDialogService
+    ModalDialogService,
+    ThemeService
   ],
   bootstrap: [
     AppComponent

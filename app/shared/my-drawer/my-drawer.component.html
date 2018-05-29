@@ -2,9 +2,9 @@
 The MyDrawer custom component view is where you define what will be displayed in the app drawer.
 Feel free to customize layouts and components to change how your app drawer looks.
 -->
-<GridLayout rows="auto, *" class="sidedrawer sidedrawer-left">
+<GridLayout rows="auto, *" class="grid-layout sidedrawer sidedrawer-left" [ngClass]="{'dark': darkThemeEnabled, 'light': !darkThemeEnabled}">
     <StackLayout row="0" class="sidedrawer-header">
-        <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
+        <Label class="fas sidedrawer-header-image" text="&#xf2bd;"></Label>
         <Label class="sidedrawer-header-brand" text="{{name}}"></Label>
         <Label class="footnote" text="{{email}}"></Label>
     </StackLayout>
@@ -33,8 +33,8 @@ Feel free to customize layouts and components to change how your app drawer look
             <!-- <MyDrawerItem *ngIf='facilitySelected' title="Transfers" route="/transfers" icon="&#xf0d1;" [isSelected]="isPageSelected('Transfers')">
             </MyDrawerItem> -->
 
-            <StackLayout class="hr-light"></StackLayout>
-            <MyDrawerItem title="Settings" route="/settings" icon="&#xf013;" [isSelected]="isPageSelected('Settings')">
+            <StackLayout [ngClass]="{'hr-dark': darkThemeEnabled, 'hr-light': !darkThemeEnabled }"></StackLayout>
+            <MyDrawerItem title="Settings" route="/settings" icon="&#xf1de;" [isSelected]="isPageSelected('Settings')">
             </MyDrawerItem>
         </StackLayout>
     </ScrollView>

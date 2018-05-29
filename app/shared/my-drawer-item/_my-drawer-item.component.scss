@@ -8,15 +8,11 @@ $sidedrawer-list-icon-size: 20;
 .sidedrawer-list-item {
     padding-left: $sidedrawer-list-item-offset-left;
     Label {
-        color: black;
         vertical-align: center;
     }
     .fa,
     .fas {
         width: $sidedrawer-list-icon-size;
         margin-right: $sidedrawer-list-icon-offset;
-    }
-    &.selected {
-        background-color: $kipotrac-secondary;
     }
 }

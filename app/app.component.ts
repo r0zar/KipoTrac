@@ -7,26 +7,39 @@ import firebase = require("nativescript-plugin-firebase");
 import { Data } from "./shared/data.service";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import *  as purchase from "nativescript-purchase";
+import * as ApplicationSettings from "application-settings";
 import { Transaction, TransactionState } from "nativescript-purchase/transaction";
+import { ThemeService } from "./theme.service";
 // add custom elements to UI from 3rd party plugins
 import { registerElement } from "nativescript-angular/element-registry";
 registerElement("Fab", () => require("nativescript-floatingactionbutton").Fab);
 registerElement("BarcodeScanner", () => require("nativescript-barcodescanner").BarcodeScannerView);
 enableProdMode();
 
+// const Themes = require('nativescript-themes');
+
 @Component({
   selector: "ns-app",
   templateUrl: "app.component.html",
 })
 export class AppComponent implements OnInit {
+
+  darkThemeEnabled: boolean;
+
   constructor(
     private dataService: Data,
     private http: HttpClient,
     private _metrcService: MetrcService,
-    private _routerExtensions: RouterExtensions
+    private _routerExtensions: RouterExtensions,
+    public themeService: ThemeService
   ) {}
 
   ngOnInit(): void {
+    this.darkThemeEnabled = ApplicationSettings.getBoolean("darkThemeEnabled", false);
+
+    this.themeService.onThemeChanged.subscribe( (enableDarkTheme : any ) => {
+      this.handleOnThemeChanged(enableDarkTheme);
+    });
 
     // this is for the purchase plugin
     purchase.init(['monthly', 'metrc.monthly', 'test', 'testsub'])
@@ -115,5 +128,10 @@ export class AppComponent implements OnInit {
     .then(() => console.log("Firebase initialized"))
     .catch(err => console.log("Firebase initialization error: " + err));
 
+  }
+
+  handleOnThemeChanged(enableDarkTheme) {
+    console.log(`received theme change event, setting darkThemeEnabled to ${enableDarkTheme}`);
+    this.darkThemeEnabled = enableDarkTheme;
   }
 }

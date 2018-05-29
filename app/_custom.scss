@@ -5,7 +5,7 @@ color: #ffffff;
 }
 
 .action-bar {
-background-color: #d87309;
+background-color: $kipotrac-primary;
 }
 
 .page {
@@ -205,7 +205,7 @@ android-selected-tab-highlight-color: #6aa84f;
 }
 
 .sidedrawer-header {
-background-color: #d87309;
+background-color: $kipotrac-primary;
 }
 
 .sidedrawer-header-brand {
@@ -227,4 +227,3 @@ background-color: #6aa84f;
 .sidedrawer-list-item.active {
 color: #ffffff;
 }
-

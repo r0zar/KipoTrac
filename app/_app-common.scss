@@ -5,7 +5,9 @@ $kipotrac-primary-dark: darken($kipotrac-primary,15%);
 $kipotrac-primary-darker: darken($kipotrac-primary,30%);
 
 /*$kipotrac-secondary: #7ead2d;*/
-$kipotrac-secondary: #7AB317;
+/*$kipotrac-secondary: #7AB317;*/
+$kipotrac-secondary: #6aa84f;
+/*$kipotrac-secondary: #2E7D32;*/
 $kipotrac-secondary-light: lighten($kipotrac-secondary,15%);
 $kipotrac-secondary-lighter: lighten($kipotrac-secondary,30%);
 $kipotrac-secondary-dark: darken($kipotrac-secondary,15%);
@@ -16,6 +18,8 @@ $kipotrac-accent-light: lighten($kipotrac-accent,15%);
 $kipotrac-accent-lighter: lighten($kipotrac-accent,30%);
 $kipotrac-accent-dark: darken($kipotrac-accent,15%);
 $kipotrac-accent-darker: darken($kipotrac-accent,30%);
+
+$kiportrac-grey: #424242;
 
 // Import the theme’s variables. If you’re using a color scheme
 // other than “light”, switch the path to the alternative scheme,
@@ -64,11 +68,11 @@ $kipotrac-accent-darker: darken($kipotrac-accent,30%);
 }
 
 .fab-button {
-  height: 60;
-  width: 60;
-  margin: 15;
-  horizontal-align: right;
-  vertical-align: bottom;
+    height: 60;
+    width: 60;
+    margin: 15;
+    horizontal-align: right;
+    vertical-align: bottom;
 }
 
 .text-left { text-align: left; }
@@ -107,6 +111,67 @@ $kipotrac-accent-darker: darken($kipotrac-accent,30%);
     background-size:cover;
     */
 }
+.kipotrac-switch {
+    color: #ECECEC;
+    background-color: #757575;
+}
+.kipotrac-switch[checked=true] {
+    color: $kipotrac-secondary;
+    background-color: #757575;
+}
+
+.light {
+    .page,
+    .scroll-view,
+    .text-view,
+    .grid-layout {
+        background-color:#f3f3f3;
+        color: #252525; 
+    }
+
+    .sidedrawer-header { background-color: $kipotrac-primary; }
+    .sidedrawer-header-image { color: #f3f3f3; background-color: transparent; }
+    .sidedrawer-list-item {
+        Label { color: #252525; }
+        .fa, .fas { color: #252525; }
+        &.selected {
+            Label { color: #f3f3f3; }
+            color: #f3f3f3;
+            background-color: $kipotrac-secondary;
+        }
+    }
+}
+
+/*.dark, .page.dark, .page.dark > .page, .page > .dark {*/
+.dark {
+    background-color:#252525;
+    color: #f3f3f3;
+
+    .page,
+    .scroll-view,
+    .text-view,
+    .grid-layout {
+        background-color:#252525;
+        color: #f3f3f3; 
+    }
+
+    Label {
+        color: #f3f3f3;
+    }
+
+    .sidedrawer-header { background-color: $kipotrac-primary-dark; }
+    .sidedrawer-header-brand { color: #ffffff; }
+    .sidedrawer-header-image { color: #f3f3f3; background-color: transparent; }
+    .sidedrawer-content { background-color: #252525; color: #f3f3f3; }
+    .sidedrawer-list-item, &.sidedrawer-list-item {
+        background-color: #252525;
+        color: #f3f3f3;
+        Label { color: #f3f3f3; }
+        .fa, .fas { color: #f3f3f3; }
+        &.selected { color: #f3f3f3; background-color: $kipotrac-secondary-dark; }
+    }
+}
+
 
 /*
 .page-content {
@@ -125,13 +190,7 @@ $kipotrac-accent-darker: darken($kipotrac-accent,30%);
     }
 }
 
-.selected {
-  background-color: $kipotrac-secondary;
-}
 
-.notSelected {
-  background-color: #cecece;
-}
 
 
 
