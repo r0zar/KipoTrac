@@ -49,6 +49,8 @@ export class FacilityDetailComponent implements OnInit {
         // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:957)
         // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:941)
         // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:933)
+        // FOUND -> https://github.com/bradmartin/nativescript-floatingactionbutton/issues/70
+        // WORKAROUND -> https://github.com/bradmartin/nativescript-floatingactionbutton/issues/61
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {

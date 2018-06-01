@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { DataFormEventData } from "nativescript-ui-dataform";
 import { Room } from "../shared/room.model";
@@ -24,6 +24,8 @@ import { confirm } from "ui/dialogs";
     templateUrl: "./room-detail.component.html"
 })
 export class RoomDetailComponent implements OnInit {
+    @ViewChild("actionItem1") actionItem1: ElementRef;
+    @ViewChild("actionItem2") actionItem2: ElementRef;
     private _room: Room;
     private name: string;
     private _fabMenuOpen: boolean = false;
@@ -44,6 +46,10 @@ export class RoomDetailComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
         this._isLoading = true;
+        let actionItem1 = <View>this.actionItem1.nativeElement;
+        actionItem1.opacity = 0
+        let actionItem2 = <View>this.actionItem2.nativeElement;
+        actionItem2.opacity = 0
         /* ***********************************************************
         * Learn more about how to get navigation parameters in this documentation article:
         * http://docs.nativescript.org/angular/core-concepts/angular-navigation.html#passing-parameter
@@ -99,11 +105,11 @@ export class RoomDetailComponent implements OnInit {
     fabTap(actionItem1: View, actionItem2: View): void {
       this._fabMenuOpen = !this._fabMenuOpen
       if (this._fabMenuOpen) {
-        actionItem1.animate({ translate: { x: -70, y: 0 } }).then(() => { }, () => { });
-        actionItem2.animate({ translate: { x: -50, y: -60 } }).then(() => { }, () => { });
+        actionItem1.animate({ opacity: 1, translate: { x: -70, y: 0 } }).then(() => { }, () => { });
+        actionItem2.animate({ opacity: 1, translate: { x: -50, y: -60 } }).then(() => { }, () => { });
       } else {
-        actionItem1.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
-        actionItem2.animate({ translate: { x: 0, y: 0 } }).then(() => { }, () => { });
+        actionItem1.animate({ opacity: 0, translate: { x: 0, y: 0 } }).then(() => { }, () => { });
+        actionItem2.animate({ opacity: 0, translate: { x: 0, y: 0 } }).then(() => { }, () => { });
       }
     }
 

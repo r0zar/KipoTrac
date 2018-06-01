@@ -38,7 +38,6 @@ export class HarvestListComponent implements OnInit {
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
         this._isLoading = true;
-
         this._metrcService.getHarvests('active')
             .finally(() => {
               this._isLoading = false
@@ -66,16 +65,8 @@ export class HarvestListComponent implements OnInit {
             });
     }
 
-    /* ***********************************************************
-    * Use the "itemTap" event handler of the <RadListView> to navigate to the
-    * harvest details page. Retrieve a reference for the data harvest (the id) and pass it
-    * to the harvest details page, so that it can identify which data harvest to display.
-    * Learn more about navigating with a parameter in this documentation article:
-    * http://docs.nativescript.org/angular/core-concepts/angular-navigation.html#passing-parameter
-    *************************************************************/
     onHarvestItemTap(args: ListViewEventData): void {
         const tappedHarvestItem = args.view.bindingContext;
-
         this._routerExtensions.navigate(["/harvests/harvest-detail", tappedHarvestItem.Id],
         {
             animated: true,
@@ -97,17 +88,12 @@ export class HarvestListComponent implements OnInit {
                     curve: "ease"
                 }
             });
-
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
         return this._sideDrawerTransition;
     }
 
-    /* ***********************************************************
-    * According to guidelines, if you have a drawer on your page, you should always
-    * have a button that opens it. Use the showDrawer() function to open the app drawer section.
-    *************************************************************/
     onDrawerButtonTap(): void {
         this.drawerComponent.sideDrawer.showDrawer();
     }

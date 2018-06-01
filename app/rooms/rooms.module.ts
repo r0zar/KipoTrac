@@ -2,8 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { NativeScriptUIDataFormModule } from "nativescript-ui-dataform/angular";
-
-import { SharedModule } from "../shared/shared.module";;
+import { SharedModule } from "../shared/shared.module";
 import { RoomDetailComponent } from "./room-detail/room-detail.component";
 import { RoomListComponent } from "./room-list.component";
 import { CreateComponent } from "./create/create.component";
@@ -16,7 +15,7 @@ import { RoomsRoutingModule } from "./rooms-routing.module";
         NativeScriptCommonModule,
         NativeScriptUIListViewModule,
         NativeScriptUIDataFormModule,
-        SharedModule
+        SharedModule,
     ],
     declarations: [
         RoomListComponent,

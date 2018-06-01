@@ -1,9 +1,6 @@
-import _ = require('lodash');
 import { Component, Input, OnInit } from "@angular/core";
 import { Data } from "../data.service";
 import firebase = require("nativescript-plugin-firebase");
-import { AuthService } from "../auth.service";
-import { FacilityService } from "../../facilities/shared/facility.service";
 
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer component class.

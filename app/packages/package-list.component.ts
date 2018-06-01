@@ -41,9 +41,6 @@ export class PackageListComponent implements OnInit {
         private data: Data,
     ){}
 
-    /* ***********************************************************
-    * Use the sideDrawerTransition property to change the open/close animation of the drawer.
-    *************************************************************/
     ngOnInit(): void {
         let actionItem1 = <View>this.actionItem1.nativeElement;
         actionItem1.opacity = 0

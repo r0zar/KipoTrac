@@ -12,9 +12,12 @@
 			<!-- this is the header for collapsing --->
 			<!-- Note: this can be any type of layout you want -->
       <GridLayout rows="0, *">
-        <FAB #actionItem2 row="1" (tap)="actionItem2Tap()" icon="~/images/remove-symbol.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
-        <FAB #actionItem1 row="1" (tap)="actionItem1Tap()" icon="~/images/pencil.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB>
-        <FAB #fabView row="1" (tap)="fabTap(actionItem1, actionItem2)" icon="res://icon" rippleColor="#db7d34" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #ffffff; horizontal-align: right; vertical-align: bottom; "></FAB>
+        <!-- <FAB #actionItem2 row="1" (tap)="actionItem2Tap()" icon="~/images/remove-symbol.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB> -->
+        <Button #actionItem2 row="1" shadow elevation="5" shape="OVAL" bgcolor="#bada55" class="floating-action-button fas" (tap)="actionItem2Tap()" text="&#xf12d;"></Button>
+        <!-- <FAB #actionItem1 row="1" (tap)="actionItem1Tap()" icon="~/images/pencil.png" rippleColor="#f1f1f1" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #db7d34; horizontal-align: right; vertical-align: bottom; "></FAB> -->
+        <Button #actionItem1 row="1" shadow elevation="5" shape="OVAL" bgcolor="#bada55" class="floating-action-button fa" (tap)="actionItem1Tap()" text="&#xf040;"></Button>
+        <!-- <FAB #fabView row="1" (tap)="fabTap(actionItem1, actionItem2)" icon="res://icon" rippleColor="#db7d34" class="fab-button" style="height: 60; width: 60; margin: 15; background-color: #ffffff; horizontal-align: right; vertical-align: bottom; "></FAB> -->
+        <Button #fabView row="1" shadow elevation="16" shape="OVAL" class="floating-action-menu fas" (tap)="fabTap(actionItem1, actionItem2)" text="&#xf0c9;"></Button>
         <ActivityIndicator row="1" [busy]="isLoading"></ActivityIndicator>
       </GridLayout>
 		</StackLayout>

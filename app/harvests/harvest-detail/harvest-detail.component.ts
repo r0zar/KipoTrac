@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { DataFormEventData } from "nativescript-ui-dataform";
-
 import { Harvest } from "../shared/harvest.model";
 import { MetrcService } from "../../shared/metrc.service";
 import * as dialogs from "ui/dialogs";
@@ -23,7 +22,7 @@ import { screen } from 'platform';
     templateUrl: "./harvest-detail.component.html"
 })
 export class HarvestDetailComponent implements OnInit {
-    private _harvest: Harvest = new Harvest({});
+    private _harvest: Harvest;
     private name: string;
     private _fabMenuOpen: boolean = false;
     private _isLoading: boolean = false;
@@ -37,16 +36,7 @@ export class HarvestDetailComponent implements OnInit {
         private _routerExtensions: RouterExtensions
     ) { }
 
-    /* ***********************************************************
-    * Use the "ngOnInit" handler to get the data harvest id parameter passed through navigation.
-    * Get the data harvest details from the data service using this id and assign it to the
-    * private property that holds it inside the component.
-    *************************************************************/
     ngOnInit(): void {
-        /* ***********************************************************
-        * Learn more about how to get navigation parameters in this documentation article:
-        * http://docs.nativescript.org/angular/core-concepts/angular-navigation.html#passing-parameter
-        *************************************************************/
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {
