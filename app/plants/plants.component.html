@@ -41,7 +41,7 @@ it shouldn't have any other siblings other than the <ActionBar> component.
                   <ng-template let-item="item">
                       <StackLayout [class.odd]="odd" [class.even]="even">
                         <GridLayout columns="auto, *, auto" rows="auto, auto">
-                          <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf06c;"></Label>
+                          <Label col="0" class="m-t-20 m-b-20 m-l-20 fas" text="&#xf1bb;"></Label>
                           <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.PlantBatchName'></Label>
                           <Label col="2" class="m-t-20 m-b-20 m-l-10 m-r-15 right" [text]='item.Id'></Label>
                         </GridLayout>
@@ -49,7 +49,7 @@ it shouldn't have any other siblings other than the <ActionBar> component.
                   </ng-template>
                 </RadListView>
                 <GridLayout row="1" *ngIf="!vegetativePlants.length" class="page page-content" tkMainContent>
-                    <Label class="page-icon fa" text="&#xf06c;"></Label>
+                    <Label class="page-icon fas" text="&#xf1bb;"></Label>
                     <Label class="page-placeholder" text="No active vegetative plants."></Label>
                 </GridLayout>
               </GridLayout>
@@ -60,7 +60,7 @@ it shouldn't have any other siblings other than the <ActionBar> component.
                   <ng-template let-item="item">
                       <StackLayout [class.odd]="odd" [class.even]="even">
                         <GridLayout columns="auto, *, auto" rows="auto, auto">
-                          <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf18c;"></Label>
+                          <Label col="0" class="m-t-20 m-b-20 m-l-20 fas" text="&#xf1bb;"></Label>
                           <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.PlantBatchName'></Label>
                           <Label col="2" class="m-t-20 m-b-20 m-l-10 m-r-15 right" [text]='item.Id'></Label>
                         </GridLayout>
@@ -68,7 +68,7 @@ it shouldn't have any other siblings other than the <ActionBar> component.
                   </ng-template>
                 </RadListView>
                 <GridLayout row="1" *ngIf="!floweringPlants.length" class="page page-content" tkMainContent>
-                    <Label class="page-icon fa" text="&#xf18c;"></Label>
+                    <Label class="page-icon fas" text="&#xf1bb;"></Label>
                     <Label class="page-placeholder" text="No active flowering plants."></Label>
                 </GridLayout>
               </GridLayout>
