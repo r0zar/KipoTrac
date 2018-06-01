@@ -24,7 +24,7 @@ enableProdMode();
 })
 export class AppComponent implements OnInit {
 
-  darkThemeEnabled: boolean;
+  darkThemeEnabled: boolean = false;
 
   constructor(
     private dataService: Data,
@@ -35,8 +35,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.darkThemeEnabled = ApplicationSettings.getBoolean("darkThemeEnabled", false);
-
     this.themeService.onThemeChanged.subscribe( (enableDarkTheme : any ) => {
       this.handleOnThemeChanged(enableDarkTheme);
     });
@@ -101,7 +99,9 @@ export class AppComponent implements OnInit {
 
           // initializate users selected facility
           firebase.getValue("/users/" + data.user.uid + "/license")
-            .then(license => FacilityService.facility = license.value.number)
+            .then(license => {
+              FacilityService.facility = license.value.number
+            })
             .then(() => {
               this.dataService.setFacilitySelected(true)
             })
