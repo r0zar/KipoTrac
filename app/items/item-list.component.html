@@ -37,14 +37,14 @@ it shouldn't have any other siblings other than the <ActionBar> component.
           <ng-template let-item="item">
               <StackLayout [class.odd]="odd" [class.even]="even">
                 <GridLayout columns="auto, *" rows="auto, auto">
-                  <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf02b;"></Label>
+                  <Label col="0" class="m-t-20 m-b-20 m-l-20 fas" text="&#xf02b;"></Label>
                   <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.Name'></Label>
                 </GridLayout>
               </StackLayout>
           </ng-template>
       </RadListView>
       <GridLayout *ngIf="!items.length && !isLoading" class="page page-content">
-          <Label class="page-icon fa" text="&#xf02c;"></Label>
+          <Label class="page-icon fas" text="&#xf02c;"></Label>
           <Label class="page-placeholder" text="No defined items."></Label>
       </GridLayout>
       <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
