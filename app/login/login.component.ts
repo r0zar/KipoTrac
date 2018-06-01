@@ -6,6 +6,11 @@ import { Switch } from "ui/switch";
 import * as dialogs from "ui/dialogs";
 import firebase = require("nativescript-plugin-firebase");
 
+import { FingerprintAuth } from "nativescript-fingerprint-auth";
+import * as ApplicationSettings from "application-settings";
+
+import { LoadingIndicator } from "nativescript-loading-indicator";
+
 // this is to fix the soft keyboard on login thing
 // import { isAndroid } from "platform";
 // import * as app from 'application';
@@ -31,12 +36,18 @@ import firebase = require("nativescript-plugin-firebase");
 export class LoginComponent implements OnInit {
     email: string;
     password: string;
-    rememberMe: boolean;
+    rememberEmailEnabled: boolean;
     loading: boolean;
     loginFailed: boolean;
+    dark: boolean;
+    private fingerprintAuth: FingerprintAuth;
+    loader: LoadingIndicator;
+
 
     constructor(page: Page, private routerExtensions: RouterExtensions) {
         page.actionBarHidden = true;
+        this.fingerprintAuth = new FingerprintAuth();
+        this.loader = new LoadingIndicator();
     }
 
     ngOnInit(): void {
@@ -45,45 +56,84 @@ export class LoginComponent implements OnInit {
         *************************************************************/
         this.email = ''
         this.password = ''
-        this.rememberMe = true
         this.loading = false
         this.loginFailed = false
+
+        this.rememberEmailEnabled = ApplicationSettings.getBoolean("rememberEmailEnabled", false);
+
+        let storeEmail = ApplicationSettings.getString("email", null);
+        let storePassword = ApplicationSettings.getString("password", null);
+
+        if (this.rememberEmailEnabled && storeEmail !== null) {
+            this.email = storeEmail;
+        }
+
+        let isFingerprintEnabled = ApplicationSettings.getBoolean("fingerprintLoginEnabled", false);
+        if(isFingerprintEnabled) {
+            this.fingerprintAuth.available().then(available => {
+                if (storeEmail !== null && storePassword !== null) {
+                    this.fingerprintAuth.verifyFingerprintWithCustomFallback({
+                        fallbackMessage: "Enter Your Device Password",
+                        message: "Authenticate via a Fingerprint"
+                    }).then(() => {
+                        this.email = storeEmail;
+                        this.password = storePassword;
+                        this.onSigninButtonTap();
+                        console.log("Fingerprint was OK");
+                    }, () => {
+                        dialogs.alert("The fingerprint was not valid");
+                    });
+                }
+            });
+        }
+
     }
 
     onRememberMeToggle(args): void {
         let rememberMeSwitch = <Switch>args.object;
-        // remove this line when it actually works
-        rememberMeSwitch.isEnabled = false
-        if (rememberMeSwitch.checked) {
-            this.rememberMe = true;
-            // https://github.com/EddyVerbruggen/nativescript-plugin-firebase/issues/629
-            //AuthService.setPersistence('local')
-        } else {
-            this.rememberMe = false;
-            //AuthService.setPersistence('none')
-        }
+        this.rememberEmailEnabled = rememberMeSwitch.checked;
+        ApplicationSettings.setBoolean("rememberEmailEnabled", this.rememberEmailEnabled);
     }
 
     onSigninButtonTap(): void {
-      this.loginFailed = false
-      this.loading = true
-      firebase.login(
-        {
-          type: firebase.LoginType.PASSWORD,
-          passwordOptions: {
-            email: this.email,
-            password: this.password
-          }
+
+        if (this.email === '' || this.password === '') {
+            dialogs.alert({
+                title: "Missing Required Fields",
+                message: "Please enter both your email address and password to login",
+                okButtonText: "OK"
+            });
+            return;
+        }
+
+        this.loader.show();
+        this.loginFailed = false;
+        this.loading = true;
+        firebase.login(
+            {
+                type: firebase.LoginType.PASSWORD,
+                passwordOptions: {
+                email: this.email,
+                password: this.password
+            }
         })
         .then(result => {
-          firebase.analytics.logEvent({key: "log_in", parameters: [{key: "email", value: this.email}]})
-            .then(() => console.log("Firebase Analytics event logged"));
-          this.routerExtensions.navigate(["/home"], { clearHistory: true })
+            ApplicationSettings.setString("email", this.email);
+            ApplicationSettings.setString("password", this.password);
+            firebase.analytics.logEvent({key: "log_in", parameters: [{key: "email", value: this.email}]}).then(() => console.log("Firebase Analytics event logged"));
+            this.routerExtensions.navigate(["/home"], { clearHistory: true });
+            this.loader.hide();
         })
         .catch(error => {
-          this.loading = false
-          this.loginFailed = true
-          console.log(error)
+            this.loading = false;
+            this.loginFailed = true;
+            this.loader.hide();
+            console.log(error);
+            dialogs.alert({
+                title: "Login Failed",
+                message: "The email address or password you entered was incorrect, please try again",
+                okButtonText: "OK"
+            });
         });
 
         /* ***********************************************************

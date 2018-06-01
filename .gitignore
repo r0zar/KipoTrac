@@ -20,3 +20,11 @@ app/App_Resources
 haxm_silent_run.log
 
 app/shared/shared.env.json
+
+app/app.android.css
+app/app.ios.css
+app/shared/my-drawer-item/my-drawer-item.component.android.css
+app/shared/my-drawer-item/my-drawer-item.component.ios.css
+app/shared/my-drawer/my-drawer.component.android.css
+app/shared/my-drawer/my-drawer.component.ios.css
+

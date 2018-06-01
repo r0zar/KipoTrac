@@ -1,0 +1,170 @@
+<ActionBar class="action-bar">
+    <Label class="action-bar-title" text="KipoTrac"></Label>
+</ActionBar>
+
+
+<ScrollView>
+<AbsoluteLayout width="100%" height="100%">
+
+    <GridLayout left="0" top="0" width="100%" height="100%" rows="*" columns="*">
+
+        <Carousel height="100%" indicatorAnimation="worm" indicatorOffset="0,-200">
+
+            <CarouselItem id="green-slide" class="text-center" verticalAlignment="center" backgroundColor="#2E7D32">
+
+                <Label
+                    class="fas"
+                    text="&#xf4d8;"
+                    style="font-size:120;color:#43A047;margin-top:25%;" 
+                    width="120" 
+                    verticalAlign="center"
+                    height="120">
+                </Label>
+
+                <Label
+                    id=""
+                    class="m-t-15"
+                    text="Track&nbsp;and&nbsp;Trace" 
+                    style="font-size:28;color:#E8F5E9;font-weight:bold;"
+                    width="75%"
+                    textWrap="true">
+                </Label>
+
+                <Label
+                    id=""
+                    class=""
+                    text="Keep on track with your plants in every grow phase" 
+                    style="font-size:24;color:#E8F5E9;font-weight:normal;"
+                    width="75%"
+                    textWrap="true">
+                </Label>
+
+            </CarouselItem>
+
+            <CarouselItem id="blue-slide" class="text-center" verticalAlignment="center" backgroundColor="#01579B">
+
+                <Label
+                    class="fas rotate-90"
+                    text="&#xf362;" 
+                    style="font-size:120;color:#0288D1;margin-top:25%;" 
+                    width="120" 
+                    height="120">
+                </Label>
+
+                <Label
+                    class="m-t-15"
+                    text="Real&nbsp;Time&nbsp;Compliance" 
+                    style="font-size:28;color:#E1F5FE;font-weight:bold;"
+                    width="75%"
+                    textWrap="true">
+                </Label>
+
+                <Label
+                    text="Sync with metrc&#8482; as you work, ensuring compliance" 
+                    style="font-size:24;color:#E1F5FE;font-weight:normal;"
+                    width="75%"
+                    textWrap="true">
+                </Label>
+
+            </CarouselItem>
+        
+
+            <CarouselItem id="orange-slide" class="text-center" backgroundColor="#E65100">
+
+                <Label
+                    class="fas"
+                    text="&#xf51e;" 
+                    style="font-size:120;color:#F57C00;margin-top:25%;" 
+                    width="120" 
+                    height="120">
+                </Label>
+
+                <Label
+                    class="m-t-15"
+                    text="Flat Rate Pricing" 
+                    style="font-size:32;color:#FFE0B2;font-weight:bold;"
+                    width="75%"
+                    textWrap="true">
+                </Label>
+
+                <Label
+                    text="No hidden fees or extra hardware costs to deal with" 
+                    style="font-size:24;color:#FFE0B2;font-weight:normal;"
+                    width="80%"
+                    textWrap="true">
+                </Label>
+
+            </CarouselItem>
+            
+            <CarouselItem id="grey-slide" class="text-center" verticalAlignment="center" backgroundColor="#424242">
+
+                <Label
+                    class="fas"
+                    text="&#xf023;"
+                    style="font-size:120;color:#757575;margin-top:25%;" 
+                    width="120" 
+                    height="120">
+                </Label>
+
+                <Label
+                    class="m-t-15"
+                    text="Safe&nbsp;and&nbsp;Secure" 
+                    style="font-size:28;color:#F5F5F5;font-weight:bold;"
+                    width="65%"
+                    textWrap="true">
+                </Label>
+
+                <Label
+                    text="Subtext to show under the main header" 
+                    style="font-size:24;color:#F5F5F5;font-weight:normal;"
+                    width="65%"
+                    textWrap="true">
+                </Label>
+
+                <!--<Button class="btn btn-primary" text="Get Started Today" [nsRouterLink]="['/signup']"></Button>-->
+
+            </CarouselItem>
+
+            
+
+        </Carousel>
+
+    </GridLayout>
+
+    <GridLayout 
+        columns="auto,*" 
+        top="0"
+        left="0"
+        height="75"
+        width="100%"
+        class="m-t-15" 
+        padding="15">
+
+        <Image 
+            col="0"  
+            width="32" 
+            height="32" 
+            src="~/images/kipo-logo-transparent.png" 
+            stretch="fill">
+        </Image>
+
+        <Label  
+            col="1" 
+            class="m-l-10"
+            style="font-size: 32; color: white; font-weight: bold;"
+            text="KipoTrac">
+        </Label>
+
+    </GridLayout>
+
+
+    <GridLayout left="0" top="600" width="100%" height="65" columns="*, *">
+    
+        <Button col="0" class="btn btn-primary" text="Get Started" [nsRouterLink]="['/signup']"></Button>
+        <Button col="1" class="btn btn-primary" text="Login" [nsRouterLink]="['/login']"></Button>
+        <!--<Button col="1" class="btn btn-primary" text="Login" (tap)="onTap()"></Button>-->
+        
+    </GridLayout>
+
+</AbsoluteLayout>
+</ScrollView>

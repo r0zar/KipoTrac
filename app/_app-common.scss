@@ -1,20 +1,43 @@
+$kipotrac-primary: #db7d34;
+$kipotrac-primary-light: lighten($kipotrac-primary,15%);
+$kipotrac-primary-lighter: lighten($kipotrac-primary,30%);
+$kipotrac-primary-dark: darken($kipotrac-primary,15%);
+$kipotrac-primary-darker: darken($kipotrac-primary,30%);
+
+/*$kipotrac-secondary: #7ead2d;*/
+/*$kipotrac-secondary: #7AB317;*/
+$kipotrac-secondary: #6aa84f;
+/*$kipotrac-secondary: #2E7D32;*/
+$kipotrac-secondary-light: lighten($kipotrac-secondary,15%);
+$kipotrac-secondary-lighter: lighten($kipotrac-secondary,30%);
+$kipotrac-secondary-dark: darken($kipotrac-secondary,15%);
+$kipotrac-secondary-darker: darken($kipotrac-secondary,30%);
+
+$kipotrac-accent: #bada55;
+$kipotrac-accent-light: lighten($kipotrac-accent,15%);
+$kipotrac-accent-lighter: lighten($kipotrac-accent,30%);
+$kipotrac-accent-dark: darken($kipotrac-accent,15%);
+$kipotrac-accent-darker: darken($kipotrac-accent,30%);
+
+$kiportrac-grey: #424242;
+
 // Import the theme’s variables. If you’re using a color scheme
 // other than “light”, switch the path to the alternative scheme,
 // for example '~nativescript-theme-core/scss/dark'.
 @import '~nativescript-theme-core/scss/light';
+@import '~nativescript-theme-core/scss/index';
 
 // Customize any of the theme’s variables here, for instance $btn-color: red;
 // Import the theme’s main ruleset.
-@import '~nativescript-theme-core/scss/index';
-
-// Place any CSS rules you want to apply on both iOS and Android here.
-// This is where the vast majority of your CSS code goes.
 
 /* Import custom theme */
 @import './_custom';
 
+// Place any CSS rules you want to apply on both iOS and Android here.
+// This is where the vast majority of your CSS code goes.
+
 /* Import shared animations */
-@import './shared/animate';
+@import './_animate';
 
 /* Import font family */
 * {
@@ -23,31 +46,31 @@
 
 /* Font icon */
 .mdi {
-  font-family: "Material Icons", "MaterialIcons-Regular";
+    font-family: "Material Icons", "MaterialIcons-Regular";
 }
 
 .fa {
-    font-family: "FontAwesome";
+    font-family: "fa-regular-400";
 }
 
 .fab {
-    font-family: "Font Awesome 5 Free Brands";
+    font-family: "fa-brands-400";
 }
 
 .fas {
-    font-family: "Font Awesome 5 Free";
+    font-family: "fa-solid-900";
 }
 
 .far {
-    font-family: "FontAwesome", "fa-regular-400";
+    font-family: "fa-regular-400";
 }
 
 .fab-button {
-  height: 60;
-  width: 60;
-  margin: 15;
-  horizontal-align: right;
-  vertical-align: bottom;
+    height: 60;
+    width: 60;
+    margin: 15;
+    horizontal-align: right;
+    vertical-align: bottom;
 }
 
 .floating-action-menu {
@@ -75,11 +98,105 @@
   animation-duration: 3s;
 }
 
-.login-stack>.login-failed {
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.rotate-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.loading {
+    animation-name: pulse;
+    animation-duration: 3s;
+}
+
+.login-failed {
     animation-name: shake;
     animation-duration: 3s;
 }
 
+.login-bottom-border-fix {
+    border-width: 0 0 1 0;
+    border-bottom-color: #757575;
+}
+
+.login-stack {
+    background-color: #424242;
+    color: #F5F5F5;
+    /*
+    background-image:url('~/images/kipo-logo-transparent-fade-20.png');
+    background-repeat:no-repeat;
+    background-size:cover;
+    */
+}
+.kipotrac-switch {
+    color: #ECECEC;
+    background-color: #757575;
+}
+.kipotrac-switch[checked=true] {
+    color: $kipotrac-secondary;
+    background-color: #757575;
+}
+
+.light {
+    .page,
+    .scroll-view,
+    .text-view,
+    .grid-layout {
+        background-color:#f3f3f3;
+        color: #252525;
+    }
+
+    .sidedrawer-header { background-color: $kipotrac-primary; }
+    .sidedrawer-header-image { color: #f3f3f3; background-color: transparent; }
+    .sidedrawer-list-item {
+        Label { color: #252525; }
+        .fa, .fas { color: #252525; }
+        &.selected {
+            Label { color: #f3f3f3; }
+            color: #f3f3f3;
+            background-color: $kipotrac-secondary;
+        }
+    }
+}
+
+/*.dark, .page.dark, .page.dark > .page, .page > .dark {*/
+.dark {
+    background-color:#252525;
+    color: #f3f3f3;
+
+    .page,
+    .scroll-view,
+    .text-view,
+    .grid-layout {
+        background-color:#252525;
+        color: #f3f3f3;
+    }
+
+    Label {
+        color: #f3f3f3;
+    }
+
+    .sidedrawer-header { background-color: $kipotrac-primary-dark; }
+    .sidedrawer-header-brand { color: #ffffff; }
+    .sidedrawer-header-image { color: #f3f3f3; background-color: transparent; }
+    .sidedrawer-content { background-color: #252525; color: #f3f3f3; }
+    .sidedrawer-list-item, &.sidedrawer-list-item {
+        background-color: #252525;
+        color: #f3f3f3;
+        Label { color: #f3f3f3; }
+        .fa, .fas { color: #f3f3f3; }
+        &.selected { color: #f3f3f3; background-color: $kipotrac-secondary-dark; }
+    }
+}
+
+
+/*
 .page-content {
     .page-placeholder {
         @extend .text-muted;
@@ -96,10 +213,72 @@
     }
 }
 
-.selected {
-  background-color: $kipotrac-secondary;
+
+
+
+
+
+
+.login-stack {
+    background-image:url('~/images/kipo-logo-transparent-fade-20.png');
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-color:#ffffff;
+    color:#36393B;
+    Label {
+        color: #787878;
+    }
+    TextField, .textfield {
+        border-width: 0 0 1 0;
+        border-bottom-color: #36393B;
+        color: black;
+    }
+    .login-logo {
+        text-align:left;
+        font-size:72px;
+        font-weight:bold;
+        color:#656565;
+        text-shadow: 0px 0px 2px #343434;
+    }
+    .loading {
+        animation-name: pulse;
+        animation-duration: 3s;
+    }
+
+    .login-failed {
+        animation-name: shake;
+        animation-duration: 3s;
+    }
 }
 
-.notSelected {
-  background-color: #cecece;
+.dark {
+
+    background-color:#36393B !important;
+    color:#ffffff !important;
+
+    .login-stack {
+        background-color:#36393B;
+        color:#ffffff;
+        .login-logo {
+            color:white;
+        }
+    }
+
+    Label {
+        color: #aaaaaa;
+    }
+
+    TextField, .textfield {
+        border-width: 0 0 1 0;
+        border-bottom-color: #898989;
+        color: white;
+    }
+
+    ScrollView {
+        background-color:#36393B !important;
+        color:#ffffff !important;
+    }
+
 }
+
+*/

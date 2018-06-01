@@ -1,6 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
-import { NativeScriptFormsModule } from "nativescript-angular/forms"
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { ModalDialogService } from "nativescript-angular/modal-dialog";
 import { AuthProviders, AppRoutingModule } from "./app.routing";
 import { MetrcService } from "./shared/metrc.service";
 import { Data } from "./shared/data.service";
@@ -8,13 +9,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
+import { WelcomeComponent } from "./welcome/welcome.component";
+import { ThemeService } from "./theme.service";
 import "./rxjs.imports";
 
 @NgModule({
   providers: [
     MetrcService,
     AuthProviders,
-    Data
+    Data,
+    ModalDialogService,
+    ThemeService
   ],
   bootstrap: [
     AppComponent
@@ -28,7 +33,8 @@ import "./rxjs.imports";
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    WelcomeComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

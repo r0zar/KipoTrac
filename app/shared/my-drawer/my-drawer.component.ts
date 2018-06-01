@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Data } from "../data.service";
 import firebase = require("nativescript-plugin-firebase");
+import * as ApplicationSettings from "application-settings";
+import { ThemeService } from "../../theme.service";
 
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer component class.
@@ -21,6 +23,7 @@ export class MyDrawerComponent implements OnInit {
     batchesActivated: boolean;
     plantsActivated: boolean;
     harvestsActivated: boolean;
+    darkThemeEnabled: boolean;
     /* ***********************************************************
     * The "selectedPage" is a component input property.
     * It is used to pass the current page title from the containing page component.
@@ -28,12 +31,17 @@ export class MyDrawerComponent implements OnInit {
     *************************************************************/
     @Input() selectedPage: string;
 
-    constructor(private data: Data) {}
+    constructor(private data: Data, public themeService: ThemeService) {}
 
     ngOnInit(): void {
         /* ***********************************************************
         * Use the MyDrawerComponent "onInit" event handler to initialize the properties data values.
         *************************************************************/
+
+        this.darkThemeEnabled = ApplicationSettings.getBoolean("darkThemeEnabled", false);
+        this.themeService.onThemeChanged.subscribe( (enableDarkTheme : any ) => {
+            this.handleOnThemeChanged(enableDarkTheme);
+        });
 
         // this receives an async message to check if facility is selected
         this.data.isFacilitySelected.subscribe(selected => this.facilitySelected = selected)
@@ -69,5 +77,10 @@ export class MyDrawerComponent implements OnInit {
     *************************************************************/
     isPageSelected(pageTitle: string): boolean {
         return pageTitle === this.selectedPage;
+    }
+
+    handleOnThemeChanged(enableDarkTheme) {
+        console.log(`received theme change event, setting darkThemeEnabled to ${enableDarkTheme}`);
+        this.darkThemeEnabled = enableDarkTheme;
     }
 }

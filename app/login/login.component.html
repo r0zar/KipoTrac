@@ -1,46 +1,113 @@
 <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="KipoTrac"></Label>
+    <Label class="action-bar-title" text="Login"></Label>
+    <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" (tap)="this.routerExtensions.back()"></NavigationButton>
 </ActionBar>
-<ScrollView class="page">
-    <StackLayout class="login-stack page p-t-15 m-t-10" style="background-image:url('~/images/kipo-logo-transparent-fade-20.png');background-repeat:no-repeat;background-size:cover;">
 
-        <Image [ngClass]="{'loading': loading, 'login-failed': loginFailed}" class="m-t-20 m-b-30" src="~/images/kipo-logo-transparent.png" stretch="fill" height="200" width="200" horizontalAlignment="center"></Image>
+<ScrollView>
+    <StackLayout class="login-stack">
 
-
-        <!-- <RadDataForm tkExampleTitle tkToggleNavButton [source]="login" >
-
-        </RadDataForm> -->
-
-        <GridLayout columns="auto,*" class="input input-border m-l-15 m-r-15" padding="10">
-  				<Label col="0" class="fa" text="&#xf0e0;" style="font-size:22px;" width="24" height="24"></Label>
-  				<TextField col="1" hint="Email Address" class="input m-l-5" horizontalAlignment="stretch" keyboardType="email" autocorrect="false" autocapitalization="none" [(ngModel)]="email"></TextField>
-  			</GridLayout>
-  			<GridLayout columns="auto,*" class="input input-border m-l-15 m-r-15" padding="10">
-  				<Label col="0" class="fa" text="&#xf023;" style="font-size:24px;" width="24" height="24"></Label>
-  				<TextField col="1" hint="Password" class="input m-l-5" horizontalAlignment="stretch" secure="true" autocorrect="false" autocapitalization="none" [(ngModel)]="password" (returnPress)="onSigninButtonTap()"></TextField>
-  			</GridLayout>
-
+        <GridLayout
+            columns="auto,*" 
+            top="0"
+            left="0"
+            height="75"
+            width="100%"
+            class="m-t-15" 
+            padding="15">
+    
+            <Image  col="0"  
+                    width="32" 
+                    height="32" 
+                    src="~/images/kipo-logo-transparent.png" 
+                    stretch="fill">
+            </Image>
+    
+            <Label  col="1" 
+                    class="m-l-10"
+                    style="font-size: 32; color: white; font-weight: bold;"
+                    text="KipoTrac">
+            </Label>
+    
+        </GridLayout>
 <!--
-        <TextField col="1" row="0" class="m-t-30 m-b-10 m-l-15 m-r-15" hint="Email Address" keyboardType="email" autocorrect="false" autocapitalization="none" [(ngModel)]="email"></TextField>
-        <TextField class="m-t-10 m-b-10 m-l-15 m-r-15" hint="Password" secure="true" autocorrect="false" autocapitalization="none" [(ngModel)]="password" (returnPress)="onSigninButtonTap()"></TextField>
--->
+        <GridLayout columns="auto,*" class="m-t-15" padding="15">
 
-        <!-- <TextField class="m-t-20 m-l-15 m-r-15" hint="Email Address" keyboardType="email" autocorrect="false" autocapitalization="none"
-            [(ngModel)]="email"></TextField>
+            <Image 
+                col="0" 
+                class="m-l-10" 
+                [ngClass]="{'loading': loading, 'login-failed': loginFailed}" 
+                width="75" 
+                height="75" 
+                src="~/images/kipo-logo-transparent.png"
+                stretch="fill">
+            </Image>
 
-        <TextField class="m-l-15 m-r-15" hint="Password" secure="true" autocorrect="false" autocapitalization="none"
-            [(ngModel)]="password"></TextField> -->
+            <Label col="1" class="m-l-10 login-logo" text="KipoTrac">
+            </Label>
 
-        <Button class="btn btn-primary m-t-10" text="SIGN IN" (tap)="onSigninButtonTap()"></Button>
+        </GridLayout>
+    -->
 
-        <!-- <GridLayout columns="90, *, auto" rows="auto, *" >
-          <Switch col="0" class="m-t-8 m-b-10 m-l-25" checked="{{rememberMe}}" (checkedChange)="onRememberMeToggle($event)" horizontalAlignment="right"></Switch>
-          <Label col="1" class="m-t-8 m-b-10 m-l-15 m-r-15" text="Remember Me" horizontalAlignment="left"></Label>
-        </GridLayout> -->
+        <!--
+        <Label class="m-t-15 login-title" style="text-align:center;font-size:64px;font-weight:bold;color:white;" text="KipoTrac"></Label>
+        <Image [ngClass]="{'loading': loading, 'login-failed': loginFailed}" class="m-t-5 m-b-10" src="~/images/kipo-logo-transparent.png" stretch="fill" height="250" width="250" horizontalAlignment="center"></Image>
+        -->
 
-        <Label class="m-t-10 m-b-10 m-l-15 m-r-15" text="Forgot password?" (tap)="onForgotPasswordTap()" horizontalAlignment="center"></Label>
 
-        <Label class="m-t-10 m-b-10 m-l-15 m-r-15" text="Sign Up" [nsRouterLink]="['/signup']" horizontalAlignment="center"></Label>
+        <!--<GridLayout class="text-center" rows="auto" padding="10">
+
+            <Label
+                row="0"
+                class="fas m-t-15"
+                text="&#xf2f6;"
+                style="font-size:120;color:#757575;margin-top:25%;" 
+                width="120" 
+                height="120">
+            </Label>
+            
+        </GridLayout>-->
+
+        <GridLayout columns="auto,*" class="m-l-15 m-r-15" padding="10">
+
+            <Label col="0" class="fas text-center" text="&#xf0e0;" style="font-size:24px;color:#757575;" width="24" height="24">
+            </Label>
+
+            <TextField style.placeholderColor="#898989" col="1" hint="Email Address" class="m-l-5 login-bottom-border-fix" horizontalAlignment="stretch"
+                keyboardType="email" autocorrect="false" autocapitalization="none" [(ngModel)]="email">
+            </TextField>
+
+        </GridLayout>
+
+
+        <GridLayout row="2" columns="auto,*" class="m-l-15 m-r-15 m-b-10" padding="10">
+
+            <Label col="0" class="fas text-center" text="&#xf023;" style="font-size:24px;color:#757575;" width="24" height="24">
+            </Label>
+
+            <TextField style.placeholderColor="#898989" col="1" hint="Password" class="m-l-5 login-bottom-border-fix" horizontalAlignment="stretch" secure="true"
+                autocorrect="false" autocapitalization="none" [(ngModel)]="password" (returnPress)="onSigninButtonTap()">
+            </TextField>
+
+        </GridLayout>
+
+        <Button class="btn btn-primary m-t-30" text="Login" (tap)="onSigninButtonTap()"></Button>
+
+        <GridLayout columns="auto, *" class="m-b-10 p-t-10" padding="10">
+            <Label (tap)="rememberEmailEnabled = !rememberEmailEnabled" col="0" class="m-l-15 m-t-5" text="Remember My Email Address" horizontalAlignment="left"></Label>
+            <Switch 
+                col="1" 
+                class="kipotrac-switch m-r-15" 
+                checked="{{rememberEmailEnabled}}" 
+                (checkedChange)="onRememberMeToggle($event)" 
+                horizontalAlignment="right">
+            </Switch>
+        </GridLayout>
+
+        <Label class="m-t-10 m-b-10 m-l-15 m-r-15" text="Forgot password?" (tap)="onForgotPasswordTap()" horizontalAlignment="center">
+        </Label>
+
+        <Label class="m-t-10 m-b-10 m-l-15 m-r-15" text="Sign Up" [nsRouterLink]="['/signup']" horizontalAlignment="center">
+        </Label>
 
     </StackLayout>
 </ScrollView>
