@@ -14,8 +14,6 @@ export class Facility {
     LicenseStartDate: string;
     LicenseEndDate: string;
     LicenseType: string;
-    imageUrl: string;
-    imageStoragePath: string;
 
     constructor(options: any) {
         this.HireDate = options.HireDate;
@@ -29,11 +27,9 @@ export class Facility {
         this.SupportActivationDate = options.SupportActivationDate;
         this.SupportExpirationDate = options.SupportExpirationDate;
         this.SupportLastPaidDate = options.SupportLastPaidDate;
-        this.LicenseNumber = options.License.Number,
-        this.LicenseStartDate = options.License.StartDate,
-        this.LicenseEndDate = options.License.EndDate,
-        this.LicenseType = options.License.LicenseType
-        this.imageUrl = options.imageUrl;
-        this.imageStoragePath = options.imageStoragePath;
+        this.LicenseNumber = options.License.Number;
+        this.LicenseStartDate = options.License.StartDate;
+        this.LicenseEndDate = options.License.EndDate;
+        this.LicenseType = options.License.LicenseType;
     }
 }

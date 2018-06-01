@@ -1,4 +1,4 @@
-import { map, assign } from "lodash";
+import { forEach, assign } from "lodash";
 import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { ObservableArray } from "data/observable-array";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -25,7 +25,7 @@ export class FacilityListComponent implements OnInit {
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
     private _sideDrawerTransition: DrawerTransitionBase;
     private _isLoading: boolean = false;
-    private _facilities: ObservableArray<Facility> = new ObservableArray<Facility>([]);
+    private _facilities: ObservableArray<Facility> = new ObservableArray([]);
 
     constructor (
         private _facilityService: FacilityService,
@@ -44,9 +44,8 @@ export class FacilityListComponent implements OnInit {
 
         this._metrcService.getFacilities()
             .subscribe((facilities: Array<any>) => {
-                let f = map(facilities, facility => {
-                  let selectedFacility = facility.License.Number == FacilityService.facility
-                  return selectedFacility ? assign(facility, {selected: true}) : facility
+                forEach(facilities, facility => {
+                  if (facility.License.Number == FacilityService.facility) {facility.selected = true}
                 })
                 this._facilities = new ObservableArray(facilities);
                 this._isLoading = false;
@@ -65,9 +64,8 @@ export class FacilityListComponent implements OnInit {
     public onPullToRefreshInitiated(args: ListViewEventData) {
         this._metrcService.getFacilities()
             .subscribe((facilities: Array<any>) => {
-                let f = map(facilities, facility => {
-                  let selectedFacility = facility.License.Number == FacilityService.facility
-                  return selectedFacility ? assign(facility, {selected: true}) : facility
+                forEach(facilities, facility => {
+                  if (facility.License.Number == FacilityService.facility) {facility.selected = true}
                 })
                 this._facilities = new ObservableArray(facilities);
                 args.object.notifyPullToRefreshFinished();

@@ -90,7 +90,19 @@ $kiportrac-grey: #424242;
   border-radius: 35;
   horizontal-align: right;
   vertical-align: bottom;
+  color: #ffffff;
   background-color: $kipotrac-secondary;
+}
+
+.selected {
+  background-color: $kipotrac-secondary;
+  Label {
+    color: #ffffff;
+  }
+}
+
+.notSelected {
+  background-color: $kiportrac-grey;
 }
 
 .login-stack > .loading {
