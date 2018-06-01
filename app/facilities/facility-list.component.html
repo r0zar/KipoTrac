@@ -37,7 +37,7 @@ it shouldn't have any other siblings other than the <ActionBar> component.
           <ng-template let-item="item">
               <StackLayout [class.odd]="odd" [class.even]="even" [ngClass]="{'selected': item.selected}">
                 <GridLayout columns="auto, *, 40" rows="auto, auto">
-                  <Label col="0" class="m-t-20 m-b-20 m-l-20 fa fa-small" text="&#xf275;"></Label>
+                  <Label col="0" class="m-t-20 m-b-20 m-l-20 fas" text="&#xf275;"></Label>
                   <Label col="1" class="m-t-20 m-b-20 m-l-20" [text]='item.DisplayName'></Label>
                   <Label col="2" class="m-t-20 m-b-20 m-l-10 m-r-10" [text]='item.Id'></Label>
                 </GridLayout>
@@ -45,7 +45,7 @@ it shouldn't have any other siblings other than the <ActionBar> component.
           </ng-template>
       </RadListView>
       <GridLayout *ngIf="!facilities.length && !isLoading" class="page page-content">
-          <Label class="page-icon fa" text="&#xf275;"></Label>
+          <Label class="page-icon fas" text="&#xf275;"></Label>
           <Label class="page-placeholder" text="Enter your API key to view your licenced facilities."></Label>
       </GridLayout>
       <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
