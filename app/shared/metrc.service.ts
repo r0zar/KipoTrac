@@ -17,7 +17,7 @@ import { Package } from "../packages/shared/package.model"
 import { Transfer } from "../transfers/shared/transfer.model"
 import { Harvest } from "../harvests/shared/harvest.model"
 import { Data } from "./data.service";
-
+import * as ApplicationSettings from "application-settings";
 import _ = require('lodash');
 require('./base64');
 const metrc = require('./shared.env.json')
@@ -32,11 +32,13 @@ export class MetrcService {
   constructor(private http: HttpClient, private data: Data) {
     // message to set the new api key
     this.data.isApiKeySet.subscribe(apiKey => {
-      this.header = new HttpHeaders().set("authorization", "Basic " + btoa(metrc.sandbox+apiKey))
-      this.getRooms().subscribe(() => this.data.activateRooms(true), () => this.data.activateRooms(false))
-      this.getBatches().subscribe(() => this.data.activateBatches(true), () => this.data.activateBatches(false))
-      this.getVegetativePlants().subscribe(() => this.data.activatePlants(true), () => this.data.activatePlants(false))
-      this.getHarvests('active').subscribe(() => this.data.activateHarvests(true), () => this.data.activateHarvests(false))
+      if (apiKey) {
+        this.header = new HttpHeaders().set("authorization", "Basic " + btoa(metrc.sandbox+apiKey))
+        this.getRooms().subscribe(() => this.data.activateRooms(true), () => this.data.activateRooms(false))
+        this.getBatches().subscribe(() => this.data.activateBatches(true), () => this.data.activateBatches(false))
+        this.getVegetativePlants().subscribe(() => this.data.activatePlants(true), () => this.data.activatePlants(false))
+        this.getHarvests('active').subscribe(() => this.data.activateHarvests(true), () => this.data.activateHarvests(false))
+      }
     })
   }
 

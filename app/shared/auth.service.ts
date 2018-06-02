@@ -15,20 +15,4 @@ export class AuthService {
     setString("token", theToken);
   }
 
-  static get apiKey(): string {
-    return getString("apiKey");
-  }
-
-  static set apiKey(apiKey: string) {
-    setString("apiKey", apiKey);
-  }
-
-  static get activeSubscription(): boolean {
-    return getBoolean("activeSubscription") || false;
-  }
-
-  static set activeSubscription(activeSubscription: boolean) {
-    setBoolean("activeSubscription", activeSubscription);
-  }
-
 }

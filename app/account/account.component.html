@@ -6,19 +6,12 @@
     </ActionItem>
 </ActionBar>
 
-<ScrollView class="page" #scrollView (scroll)="onScroll($event, scrollView, topView)">
-	<StackLayout>
-		<StackLayout #topView height="200" style="background-image: url('~/images/profile-icon.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
-			<!-- this is the header for collapsing --->
-			<!-- Note: this can be any type of layout you want -->
-      <GridLayout rows="0, *">
-          <!-- <FAB #fabView row="1" (tap)="fabTap()" icon="~/images/starr.png" rippleColor="#f1f1f1" class="fab-button" [backgroundColor]="facility.selected" style="height: 60; width: 60; margin: 15; horizontal-align: right; vertical-align: bottom; "></FAB> -->
-      </GridLayout>
-		</StackLayout>
-		<StackLayout width="100%" backgroundColor="white" padding="10">
-			<!--Add your page content here-->
-      <RadDataForm tkExampleTitle tkToggleNavButton [source]="account" [isReadOnly]="false">
-      </RadDataForm>
-		</StackLayout>
-	</StackLayout>
+<ScrollView class="page">
+    <StackLayout padding="15">
+
+        <TextField class="m-t-10 m-b-10 textfield" disabled hint="Name" autocorrect="false" autocapitalization="none" [(ngModel)]="this.name"></TextField>
+        <TextField class="m-t-10 m-b-10 textfield" disabled hint="Email Address" keyboardType="email" autocorrect="false" autocapitalization="none" [(ngModel)]="email"></TextField>
+        <TextField class="m-t-10 m-b-10 textfield" hint="METRC API Key" secure="true" autocorrect="false" autocapitalization="none" [(ngModel)]="apiKey"></TextField>
+
+    </StackLayout>
 </ScrollView>

@@ -79,49 +79,17 @@ export class AppComponent implements OnInit {
       },
       onAuthStateChanged: (data: any) => {
         if (data.loggedIn) {
-          // TODO all remote initialization should be set from here
-          // it will trigger on login and reactivly set the users state and ui
-          // the best way i've found to do this is with the data service observables
-          // they will get picked up by subscribers in other components and then will
-          // dynamically change the relevant options. this works much better than services
-          // which will only be set when the sidebar menu is intialized.
-
-          // initializate users API key
+          //store the user id token for usage during session
           AuthService.token = data.user.uid;
-          this.dataService.user = data.user;
-          firebase.getValue("/users/" + AuthService.token + "/account/apiKey")
-            .then(key => {
-              // HACK hardcode the API key
-              this.dataService.setApiKey('FusVbe4Yv6W1DGNuxKNhByXU6RO6jSUPcbRCoRDD98VNXc4D')
-              // this.dataService.setApiKey(key.value)
-            })
-            .catch(error => console.dir(error))
-
-          // initializate users selected facility
-          firebase.getValue("/users/" + data.user.uid + "/license")
-            .then(license => {
-              FacilityService.facility = license.value.number
-            })
-            .then(() => {
-              this.dataService.setFacilitySelected(true)
-            })
-            .catch(error => console.dir(error))
-
-          // get users active subscription and validate it against android/itunes APIs
-          // TODO add support for itunes to this and the cloud function
-          firebase.getValue("/users/" + AuthService.token + "/subscription")
-            .then(subscription => {
-              this.http.get<any>(`https://us-central1-kiposoft-6ae15.cloudfunctions.net/subscription?subscriptionId=${subscription.value.productIdentifier}&token=${subscription.value.transactionReceipt}`)
-                .subscribe(resp => this.dataService.setSubscription(resp), error => console.dir(error))
-            })
-            .catch(error => console.dir(error))
-
+          // use the data service functions to load the application settings information.
+          // these functions check local storage first, then firebase, then default.
+          this.dataService.loadAPIKey()
+          this.dataService.loadSelectedFacility()
+          this.dataService.loadSubscriptionStatus()
         }
         else {
           // unset state when user logs out
           AuthService.token = ''
-          this.dataService.setApiKey('')
-          this.dataService.setFacilitySelected(false)
         }
       }
     })

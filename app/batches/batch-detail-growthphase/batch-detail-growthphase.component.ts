@@ -52,7 +52,6 @@ export class BatchDetailGrowthPhaseComponent implements OnInit {
                 this._itemCategories = _.map(itemCategories, 'Name')
             });
 
-
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => this._batchGrowthPhase = new BatchGrowthPhase({Id: params.id, GrowthDate: new Date(), GrowthPhase: 'Vegetative'}));

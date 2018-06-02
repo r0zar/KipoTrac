@@ -42,15 +42,6 @@ export class FacilityDetailComponent implements OnInit {
     * private property that holds it inside the component.
     *************************************************************/
     ngOnInit(): void {
-        // BUG BOUNTY - $20
-        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethodNative(Native Method)
-        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.dispatchCallJSMethodNative(Runtime.java:1088)
-        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethodImpl(Runtime.java:970)
-        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:957)
-        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:941)
-        // 05-13 19:18:41.254 19446 19446 W ExifInterface:         at com.tns.Runtime.callJSMethod(Runtime.java:933)
-        // FOUND -> https://github.com/bradmartin/nativescript-floatingactionbutton/issues/70
-        // WORKAROUND -> https://github.com/bradmartin/nativescript-floatingactionbutton/issues/61
         this._pageRoute.activatedRoute
             .switchMap((activatedRoute) => activatedRoute.params)
             .forEach((params) => {
@@ -75,7 +66,7 @@ export class FacilityDetailComponent implements OnInit {
 
     fabTap(): void {
       FacilityService.facility = this._facility.LicenseNumber
-      this.data.setFacilitySelected(true)
+      this.data.setFacilitySelected(FacilityService.facility)
       this.selectedFacility = true
       this._metrcService.getRooms().subscribe(() => this.data.activateRooms(true), () => this.data.activateRooms(false))
       this._metrcService.getBatches().subscribe(() => this.data.activateBatches(true), () => this.data.activateBatches(false))

@@ -25,7 +25,6 @@ export class AddPaymentComponent implements OnInit {
         .then((products: Array<Product>) => {
             this._subscriptions = products;
             this._isLoading = false
-            console.dir(this._subscriptions.length)
         })
 
     }
