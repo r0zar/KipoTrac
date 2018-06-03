@@ -43,14 +43,14 @@ export class Data {
     isHarvestsActivated = this.harvestsActivated.asObservable();
 
     forceSubscription(activated: boolean) {
-      ApplicationSettings.setBoolean(`${AuthService.token}-SUBSCRIPTION`, activated)
       this.subscribed = activated
+      ApplicationSettings.setBoolean(`${AuthService.token}-SUBSCRIPTION`, activated)
       this.subscription.next(activated)
     }
 
     setSubscription(subscription: any) {
       this.subscribed = moment(Number(subscription.expiryTimeMillis)).isAfter()
-      this.subscription.next(this.subscribed)
+      this.forceSubscription(this.subscribed)
     }
 
     setFacilitySelected(facility: any) {
@@ -86,7 +86,6 @@ export class Data {
       if (key) {
         this.setApiKey(key)
       }
-
       return key
     }
 
@@ -101,20 +100,18 @@ export class Data {
 
     loadSubscriptionStatus() {
       //TODO finish this so its both secure and fast
-
       // load subscription status from local storage with a user specific name
       // so there is no collision with multiple users sharing one device
       let subscription = ApplicationSettings.getBoolean(`${AuthService.token}-SUBSCRIPTION`)
       if (subscription) {
         this.subscription.next(subscription)
       }
-
-      // get users active subscription and validate it against android/itunes APIs
+      // get users active subscription receipt and validate it against android/itunes API
       // TODO add support for itunes to this and the cloud function
       firebase.getValue("/users/" + AuthService.token + "/subscription")
         .then(subscription => {
           this.http.get<any>(`${BACKEND_URL}=${subscription.value.productIdentifier}&token=${subscription.value.transactionReceipt}`)
-            .subscribe(resp => this.setSubscription(resp), error => console.dir(error))
+            .subscribe(resp => this.setSubscription(resp), error => ApplicationSettings.setBoolean(`${AuthService.token}-SUBSCRIPTION`, false))
         })
         .catch(error => console.dir(error))
     }

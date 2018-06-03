@@ -3,6 +3,7 @@ import { PageRoute, RouterExtensions } from "nativescript-angular/router";
 import { ListViewEventData } from "nativescript-ui-listview";
 import { Product } from "nativescript-purchase/product";
 import *  as purchase from "nativescript-purchase";
+import { Data } from "../shared/data.service";
 
 @Component({
     selector: "Add",
@@ -15,7 +16,8 @@ export class AddPaymentComponent implements OnInit {
     private _isLoading: boolean;
 
     constructor(
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private data: Data
     ) { }
 
 
@@ -39,6 +41,10 @@ export class AddPaymentComponent implements OnInit {
             alert("Sorry, your account is not eligible to make payments!");
         }
 
+    }
+
+    enableSubscription(): void {
+      this.data.forceSubscription(true)
     }
 
     get subscriptions(): Array<Product> {
