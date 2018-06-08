@@ -5,10 +5,10 @@
 
 <ScrollView>
   <StackLayout class="list-group-item">
-    <Label *ngIf="isLoading" text="Finding best value compliance plans, please wait..." class="font-weight-bold m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
+    <Label *ngIf="isLoading" text="Finding the best-value compliance plans possible, please wait..." textWrap="true" class="font-weight-bold m-t-20 m-t-10 m-b-10 m-l-20 m-r-20"></Label>
+    <ActivityIndicator *ngIf="isLoading" [busy]="isLoading"></ActivityIndicator>
 
-    <ActivityIndicator [busy]="isLoading"></ActivityIndicator>
-    <RadListView [items]="subscriptions" (itemTap)="onSubscriptionItemTap($event)">
+    <RadListView class="page" [items]="subscriptions" [height]="screenHeight" (itemTap)="onSubscriptionItemTap($event)" *ngIf="!isLoading">
         <ng-template let-item="item">
             <StackLayout [class.odd]="odd" [class.even]="even">
               <GridLayout columns="auto, *" rows="auto">
@@ -17,13 +17,13 @@
               </GridLayout>
               <GridLayout columns="auto, *" rows="auto">
                 <Label col="0" row="1" class="m-t-20 m-l-20" [text]='item.priceFormatted'></Label>
-                <Label col="1" row="1" class="m-t-20 m-l-5" [text]='item.productIdentifier'></Label>
+                <Label col="1" row="1" class="m-t-20 m-l-5" [text]='item.subscriptionPeriod'></Label>
               </GridLayout>
               <Label class="m-t-10 m-b-20 m-l-20" [text]='item.localizedDescription' textWrap="true"></Label>
             </StackLayout>
         </ng-template>
     </RadListView>
-    <Button text="Enable Subscription for Single Session" (tap)="enableSubscription()"></Button>
+    <!-- <Button text="Enable Subscription for Single Session" (tap)="enableSubscription()"></Button> -->
 
   </StackLayout>
 </ScrollView>

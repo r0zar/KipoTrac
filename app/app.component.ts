@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     });
 
     // this is for the purchase plugin
-    purchase.init(['monthly', 'metrc.monthly', 'test', 'testsub'])
+    purchase.init(['monthly', 'metrc.monthly'])
     purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
         if (transaction.transactionState === TransactionState.Purchased) {
             console.log(`Congratulations you just bought ${transaction.productIdentifier}!`);
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
         }
         else if (transaction.transactionState === TransactionState.Failed) {
             console.log(`Purchase of ${transaction.productIdentifier} failed!`);
-            firebase.push("/users/" + AuthService.token + '/transactions', transaction)
+            // firebase.push("/users/" + AuthService.token + '/transactions', transaction)
         }
     });
     purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
