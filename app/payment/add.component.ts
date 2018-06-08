@@ -26,7 +26,6 @@ export class AddPaymentComponent implements OnInit {
       this._isLoading = true
       purchase.getProducts()
         .then((products: Array<Product>) => {
-          console.log(products)
           products = products.map((p) => {
             if (p.localizedTitle == null) {
               p.localizedTitle = p.productIdentifier
@@ -40,14 +39,12 @@ export class AddPaymentComponent implements OnInit {
 
     onSubscriptionItemTap(args: ListViewEventData) : void {
         const tappedSubscription = args.view.bindingContext;
-
         if (purchase.canMakePayments()) {
             purchase.buyProduct(tappedSubscription);
         }
         else {
             alert("Sorry, your account is not eligible to make payments!");
         }
-
     }
 
     enableSubscription(): void {
@@ -56,10 +53,6 @@ export class AddPaymentComponent implements OnInit {
 
     get subscriptions(): Array<Product> {
         return this._subscriptions;
-    }
-
-    get firstItem(): any {
-      return this._subscriptions[0].localizedTitle
     }
 
     get isLoading(): boolean {
